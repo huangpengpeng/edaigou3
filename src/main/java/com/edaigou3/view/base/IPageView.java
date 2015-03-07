@@ -1,16 +1,18 @@
 package com.edaigou3.view.base;
 
-public interface IPageView {
+import com.common.jdbc.page.Pagination;
 
-	/**
-	 * 设置显示试图
-	 * @param tableView
-	 */
-	void addTableView(ITableView tableView);
+public interface IPageView extends IBaseView {
+
+	public Pagination getPage();
+	
+	public void setPage(Pagination page);
 	
 	/**
 	 * 设置查询试图
 	 * @param searchView
 	 */
 	void addSearchView(ISearchView searchView);
+	
+	Integer getPageNo();
 }

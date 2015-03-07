@@ -3,12 +3,10 @@ package com.edaigou3;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.custom.CLabel;
-import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
@@ -19,14 +17,16 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import org.springframework.stereotype.Component;
 
 import com.edaigou3.view.BrowserView;
+import com.edaigou3.view.FolderView;
+import com.edaigou3.view.ItemPageView;
+import com.edaigou3.view.ItemSearchView;
 import com.edaigou3.view.ItemView;
+import com.edaigou3.view.TableView_0;
 import com.edaigou3.view.base.IMainView;
 
 @Component
 public class MainView extends IMainView {
 
-	private Text text_12;
-	private Table table;
 	private Text text_13;
 	private Table table_1;
 	private Text text_14;
@@ -73,21 +73,17 @@ public class MainView extends IMainView {
 
 	@Override
 	public void createContents() {
+
 		addView(NewInstance.get(ItemView.class));
 
-		CTabFolder tabFolder = new CTabFolder(shell, SWT.BORDER);
-		tabFolder.setBounds(0, 102, 1094, 574);
-		tabFolder.setSelectionBackground(Display.getCurrent().getSystemColor(
-				SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT));
+		addView(NewInstance.get(FolderView.class));
 
-		CTabItem tbtmNewItem = new CTabItem(tabFolder, SWT.NONE);
-		tbtmNewItem.setText("新增商品");
-		tabFolder.setSelection(tbtmNewItem);
-
-		CTabItem tbtmNewItem_1 = new CTabItem(tabFolder, SWT.NONE);
+		CTabItem tbtmNewItem_1 = new CTabItem(NewInstance.get(FolderView.class)
+				.getTabFolder(), SWT.NONE);
 		tbtmNewItem_1.setText("新品发布");
 
-		Composite composite_1 = new Composite(tabFolder, SWT.NONE);
+		Composite composite_1 = new Composite(NewInstance.get(FolderView.class)
+				.getTabFolder(), SWT.NONE);
 		tbtmNewItem_1.setControl(composite_1);
 
 		Label lblNewLabel_18 = new Label(composite_1, SWT.NONE);
@@ -124,7 +120,7 @@ public class MainView extends IMainView {
 		btnNewButton_9.setBounds(1040, 7, 48, 22);
 		btnNewButton_9.setText("自动");
 
-		addView(composite_1,NewInstance.get(BrowserView.class));
+		addView(composite_1, NewInstance.get(BrowserView.class));
 
 		Button btnNewButton_21 = new Button(composite_1, SWT.NONE);
 		btnNewButton_21.setBounds(775, 5, 42, 22);
@@ -148,10 +144,12 @@ public class MainView extends IMainView {
 		text_20.setBackground(SWTResourceManager.getColor(SWT.COLOR_RED));
 		text_20.setBounds(1002, 10, 32, 18);
 
-		CTabItem tbtmNewItem_2 = new CTabItem(tabFolder, SWT.NONE);
+		CTabItem tbtmNewItem_2 = new CTabItem(NewInstance.get(FolderView.class)
+				.getTabFolder(), SWT.NONE);
 		tbtmNewItem_2.setText("已上架");
 
-		Composite composite_2 = new Composite(tabFolder, SWT.NONE);
+		Composite composite_2 = new Composite(NewInstance.get(FolderView.class)
+				.getTabFolder(), SWT.NONE);
 		tbtmNewItem_2.setControl(composite_2);
 
 		Button btnNewButton_10 = new Button(composite_2, SWT.NONE);
@@ -197,10 +195,12 @@ public class MainView extends IMainView {
 		Combo combo_9 = new Combo(composite_2, SWT.NONE);
 		combo_9.setBounds(678, 12, 86, 20);
 
-		CTabItem tbtmNewItem_3 = new CTabItem(tabFolder, SWT.NONE);
+		CTabItem tbtmNewItem_3 = new CTabItem(NewInstance.get(FolderView.class)
+				.getTabFolder(), SWT.NONE);
 		tbtmNewItem_3.setText("已下架");
 
-		Composite composite_3 = new Composite(tabFolder, SWT.NONE);
+		Composite composite_3 = new Composite(NewInstance.get(FolderView.class)
+				.getTabFolder(), SWT.NONE);
 		tbtmNewItem_3.setControl(composite_3);
 
 		Button btnNewButton_15 = new Button(composite_3, SWT.NONE);
@@ -239,66 +239,22 @@ public class MainView extends IMainView {
 		table_2.setHeaderVisible(true);
 		table_2.setLinesVisible(true);
 
-		Composite composite = new Composite(tabFolder, SWT.NONE);
-		tbtmNewItem.setControl(composite);
+		addView(NewInstance.get(FolderView.class).getC_新增商品(),
+				NewInstance.get(ItemPageView.class));
 
-		Button btnNewButton_4 = new Button(composite, SWT.NONE);
-		btnNewButton_4.setBounds(10, 8, 54, 22);
-		btnNewButton_4.setText("上一页");
+		addView(NewInstance.get(FolderView.class).getC_新增商品(),
+				NewInstance.get(ItemSearchView.class));
 
-		CLabel lblNewLabel_14 = new CLabel(composite, SWT.NONE);
-		lblNewLabel_14.setAlignment(SWT.CENTER);
-		lblNewLabel_14.setBounds(78, 10, 60, 18);
-		lblNewLabel_14.setText("0/0/0");
+		addView(NewInstance.get(FolderView.class).getC_新增商品(),
+				NewInstance.get(TableView_0.class));
 
-		Button btnNewButton_5 = new Button(composite, SWT.NONE);
-		btnNewButton_5.setBounds(152, 8, 72, 22);
-		btnNewButton_5.setText("下一页");
 
-		Label lblNewLabel_15 = new Label(composite, SWT.NONE);
-		lblNewLabel_15.setBounds(359, 12, 54, 22);
-		lblNewLabel_15.setText("淘宝店铺");
-
-		Combo combo_2 = new Combo(composite, SWT.NONE);
-		combo_2.setBounds(417, 8, 86, 20);
-
-		Label lblNewLabel_16 = new Label(composite, SWT.NONE);
-		lblNewLabel_16.setBounds(526, 13, 54, 17);
-		lblNewLabel_16.setText("错误类型");
-
-		Combo combo_3 = new Combo(composite, SWT.NONE);
-		combo_3.setBounds(597, 8, 86, 20);
-
-		Label lblNewLabel_17 = new Label(composite, SWT.NONE);
-		lblNewLabel_17.setBounds(701, 13, 56, 17);
-		lblNewLabel_17.setText("商品标题");
-
-		text_12 = new Text(composite, SWT.BORDER);
-		text_12.setBounds(763, 8, 222, 18);
-
-		Button btnNewButton_6 = new Button(composite, SWT.NONE);
-		btnNewButton_6.setBounds(1006, 6, 72, 22);
-		btnNewButton_6.setText("查询");
-
-		table = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
-		table.setBounds(0, 37, 1088, 508);
-		table.setHeaderVisible(true);
-		table.setLinesVisible(true);
-
-		Menu menu = new Menu(shell, SWT.POP_UP);
-		MenuItem menuItem1 = new MenuItem(menu, SWT.CASCADE);
-		menuItem1.setText("全部导出");
-		MenuItem menuItem2 = new MenuItem(menu, SWT.CASCADE);
-		menuItem2.setText("全部上架");
-		MenuItem menuItem3 = new MenuItem(menu, SWT.CASCADE);
-		menuItem3.setText("全修低价");
-
-		table.setMenu(menu);
-
-		CTabItem tbtmNewItem_4 = new CTabItem(tabFolder, SWT.NONE);
+		CTabItem tbtmNewItem_4 = new CTabItem(NewInstance.get(FolderView.class)
+				.getTabFolder(), SWT.NONE);
 		tbtmNewItem_4.setText("商品同步");
 
-		Composite composite_4 = new Composite(tabFolder, SWT.NONE);
+		Composite composite_4 = new Composite(NewInstance.get(FolderView.class)
+				.getTabFolder(), SWT.NONE);
 		tbtmNewItem_4.setControl(composite_4);
 
 		Button btnNewButton_12 = new Button(composite_4, SWT.NONE);
@@ -360,10 +316,12 @@ public class MainView extends IMainView {
 		Browser browser_2 = new Browser(composite_4, SWT.BORDER);
 		browser_2.setBounds(0, 33, 1089, 512);
 
-		CTabItem tabItem = new CTabItem(tabFolder, SWT.NONE);
+		CTabItem tabItem = new CTabItem(NewInstance.get(FolderView.class)
+				.getTabFolder(), SWT.NONE);
 		tabItem.setText("非低价格|店售错误");
 
-		Composite composite_5 = new Composite(tabFolder, SWT.NONE);
+		Composite composite_5 = new Composite(NewInstance.get(FolderView.class)
+				.getTabFolder(), SWT.NONE);
 		tabItem.setControl(composite_5);
 
 		Combo combo_8 = new Combo(composite_5, SWT.NONE);
@@ -409,10 +367,12 @@ public class MainView extends IMainView {
 		btnNewButton_22.setBounds(181, 8, 72, 22);
 		btnNewButton_22.setText("全部最低价");
 
-		CTabItem tabItem_3 = new CTabItem(tabFolder, SWT.NONE);
+		CTabItem tabItem_3 = new CTabItem(NewInstance.get(FolderView.class)
+				.getTabFolder(), SWT.NONE);
 		tabItem_3.setText("售利过低");
 
-		Composite composite_6 = new Composite(tabFolder, SWT.NONE);
+		Composite composite_6 = new Composite(NewInstance.get(FolderView.class)
+				.getTabFolder(), SWT.NONE);
 		tabItem_3.setControl(composite_6);
 
 		Button button_4 = new Button(composite_6, SWT.NONE);
@@ -437,10 +397,12 @@ public class MainView extends IMainView {
 		lblNewLabel_20.setBounds(1024, 17, 54, 12);
 		lblNewLabel_20.setText("全部下架");
 
-		CTabItem tabItem_5 = new CTabItem(tabFolder, SWT.NONE);
+		CTabItem tabItem_5 = new CTabItem(NewInstance.get(FolderView.class)
+				.getTabFolder(), SWT.NONE);
 		tabItem_5.setText("淘客变动");
 
-		Composite composite_7 = new Composite(tabFolder, SWT.NONE);
+		Composite composite_7 = new Composite(NewInstance.get(FolderView.class)
+				.getTabFolder(), SWT.NONE);
 		tabItem_5.setControl(composite_7);
 
 		Button button_6 = new Button(composite_7, SWT.NONE);
@@ -465,10 +427,12 @@ public class MainView extends IMainView {
 		label_8.setText("全部下架");
 		label_8.setBounds(1024, 17, 54, 12);
 
-		CTabItem tabItem_6 = new CTabItem(tabFolder, SWT.NONE);
+		CTabItem tabItem_6 = new CTabItem(NewInstance.get(FolderView.class)
+				.getTabFolder(), SWT.NONE);
 		tabItem_6.setText("天猫下架");
 
-		Composite composite_8 = new Composite(tabFolder, SWT.NONE);
+		Composite composite_8 = new Composite(NewInstance.get(FolderView.class)
+				.getTabFolder(), SWT.NONE);
 		tabItem_6.setControl(composite_8);
 
 		Button button_8 = new Button(composite_8, SWT.NONE);
@@ -493,10 +457,12 @@ public class MainView extends IMainView {
 		label_10.setText("全部下架");
 		label_10.setBounds(1024, 17, 54, 12);
 
-		CTabItem tbtmSku_1 = new CTabItem(tabFolder, SWT.NONE);
+		CTabItem tbtmSku_1 = new CTabItem(NewInstance.get(FolderView.class)
+				.getTabFolder(), SWT.NONE);
 		tbtmSku_1.setText("SKU数量变动");
 
-		Composite composite_9 = new Composite(tabFolder, SWT.NONE);
+		Composite composite_9 = new Composite(NewInstance.get(FolderView.class)
+				.getTabFolder(), SWT.NONE);
 		tbtmSku_1.setControl(composite_9);
 
 		Button button_10 = new Button(composite_9, SWT.NONE);
@@ -521,10 +487,12 @@ public class MainView extends IMainView {
 		lblNewLabel_30.setBounds(1024, 21, 54, 12);
 		lblNewLabel_30.setText("全部修复");
 
-		CTabItem tabItem_2 = new CTabItem(tabFolder, SWT.NONE);
+		CTabItem tabItem_2 = new CTabItem(NewInstance.get(FolderView.class)
+				.getTabFolder(), SWT.NONE);
 		tabItem_2.setText("店铺授权");
 
-		Composite composite_12 = new Composite(tabFolder, SWT.NONE);
+		Composite composite_12 = new Composite(NewInstance
+				.get(FolderView.class).getTabFolder(), SWT.NONE);
 		tabItem_2.setControl(composite_12);
 
 		Label lblNewLabel_33 = new Label(composite_12, SWT.NONE);
@@ -561,10 +529,12 @@ public class MainView extends IMainView {
 		btnNewButton_24.setBounds(1035, 5, 43, 22);
 		btnNewButton_24.setText("获取");
 
-		CTabItem tabItem_1 = new CTabItem(tabFolder, SWT.NONE);
+		CTabItem tabItem_1 = new CTabItem(NewInstance.get(FolderView.class)
+				.getTabFolder(), SWT.NONE);
 		tabItem_1.setText("商品过滤");
 
-		Composite composite_11 = new Composite(tabFolder, SWT.NONE);
+		Composite composite_11 = new Composite(NewInstance
+				.get(FolderView.class).getTabFolder(), SWT.NONE);
 		tabItem_1.setControl(composite_11);
 
 		Label lblNewLabel_31 = new Label(composite_11, SWT.NONE);
@@ -590,10 +560,12 @@ public class MainView extends IMainView {
 		table_8.setHeaderVisible(true);
 		table_8.setLinesVisible(true);
 
-		CTabItem tabItem_7 = new CTabItem(tabFolder, SWT.NONE);
+		CTabItem tabItem_7 = new CTabItem(NewInstance.get(FolderView.class)
+				.getTabFolder(), SWT.NONE);
 		tabItem_7.setText("猫价变动");
 
-		Composite composite_10 = new Composite(tabFolder, SWT.NONE);
+		Composite composite_10 = new Composite(NewInstance
+				.get(FolderView.class).getTabFolder(), SWT.NONE);
 		tabItem_7.setControl(composite_10);
 
 		Button button_12 = new Button(composite_10, SWT.NONE);

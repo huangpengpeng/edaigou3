@@ -30,9 +30,10 @@ public abstract class IMainView {
 	}
 
 	protected void addView(Composite composite, IBaseView baseView) {
+		baseView.preHandle();
+		baseView.createContents(shell);
 		baseView.createContents(composite);
 		baseView.createListenter();
-		baseView.preHandle();
 	}
 
 	/**
