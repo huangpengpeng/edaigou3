@@ -1,4 +1,4 @@
-package com.edaigou3.view;
+package com.edaigou3.view._0;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Menu;
@@ -7,12 +7,13 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.springframework.stereotype.Component;
 
+import com.edaigou3.view.FolderView;
 import com.edaigou3.view.base.IMainView.NewInstance;
 import com.edaigou3.view.base.ITableView;
 import com.edaigou3.view.ext.Column;
 
 @Component
-public class TableView_0 extends ITableView {
+public class TableView extends ITableView {
 
 	private Table table;
 

@@ -21,7 +21,7 @@ import com.edaigou3.view.FolderView;
 import com.edaigou3.view.ItemPageView;
 import com.edaigou3.view.ItemSearchView;
 import com.edaigou3.view.ItemView;
-import com.edaigou3.view.TableView_0;
+import com.edaigou3.view._0.TableView;
 import com.edaigou3.view.base.IMainView;
 
 @Component
@@ -246,7 +246,7 @@ public class MainView extends IMainView {
 				NewInstance.get(ItemSearchView.class));
 
 		addView(NewInstance.get(FolderView.class).getC_新增商品(),
-				NewInstance.get(TableView_0.class));
+				NewInstance.get(TableView.class));
 
 
 		CTabItem tbtmNewItem_4 = new CTabItem(NewInstance.get(FolderView.class)
