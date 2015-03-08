@@ -18,7 +18,6 @@ public class TableView extends ITableView {
 	private Table table;
 
 	public void createListenter() {
-
 	}
 
 	public void preHandle() {
@@ -28,8 +27,6 @@ public class TableView extends ITableView {
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
 	}
-	
-	
 
 	@Override
 	public void createContents(Shell shell) {
@@ -44,15 +41,19 @@ public class TableView extends ITableView {
 		super.createContents(shell);
 	}
 
-
 	@Override
 	protected Column[] getColumns() {
-		return new Column[] { new Column("商品图片", 100, 1),
-				new Column("掌柜昵称", 100,0) };
+		return new Column[] { new Column("imageByte", "商品图片", 100, Column.IMAGE),
+				new Column("title", "商品标题", 100, Column.PUTONG) };
 	}
 
 	@Override
 	protected Table getTable() {
 		return table;
+	}
+
+	@Override
+	protected Integer getHeight() {
+		return 80;
 	}
 }

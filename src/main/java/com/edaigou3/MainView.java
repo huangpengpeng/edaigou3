@@ -8,19 +8,17 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Menu;
-import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.springframework.stereotype.Component;
 
+import com.edaigou3.view.BasePageView;
 import com.edaigou3.view.BrowserView;
 import com.edaigou3.view.FolderView;
-import com.edaigou3.view.ItemPageView;
-import com.edaigou3.view.ItemSearchView;
 import com.edaigou3.view.ItemView;
+import com.edaigou3.view._0.SearchView;
 import com.edaigou3.view._0.TableView;
 import com.edaigou3.view.base.IMainView;
 
@@ -74,17 +72,13 @@ public class MainView extends IMainView {
 	@Override
 	public void createContents() {
 
-		addView(NewInstance.get(ItemView.class));
+		View.addView(NewInstance.get(ItemView.class));
 
-		addView(NewInstance.get(FolderView.class));
-
-		CTabItem tbtmNewItem_1 = new CTabItem(NewInstance.get(FolderView.class)
-				.getTabFolder(), SWT.NONE);
-		tbtmNewItem_1.setText("新品发布");
+		View.addView(NewInstance.get(FolderView.class));
 
 		Composite composite_1 = new Composite(NewInstance.get(FolderView.class)
 				.getTabFolder(), SWT.NONE);
-		tbtmNewItem_1.setControl(composite_1);
+		NewInstance.get(FolderView.class).get_新品发布().setControl(composite_1);
 
 		Label lblNewLabel_18 = new Label(composite_1, SWT.NONE);
 		lblNewLabel_18.setBounds(9, 10, 54, 22);
@@ -120,7 +114,7 @@ public class MainView extends IMainView {
 		btnNewButton_9.setBounds(1040, 7, 48, 22);
 		btnNewButton_9.setText("自动");
 
-		addView(composite_1, NewInstance.get(BrowserView.class));
+		View.addView(composite_1, NewInstance.get(BrowserView.class));
 
 		Button btnNewButton_21 = new Button(composite_1, SWT.NONE);
 		btnNewButton_21.setBounds(775, 5, 42, 22);
@@ -239,15 +233,14 @@ public class MainView extends IMainView {
 		table_2.setHeaderVisible(true);
 		table_2.setLinesVisible(true);
 
-		addView(NewInstance.get(FolderView.class).getC_新增商品(),
-				NewInstance.get(ItemPageView.class));
+		View.addView(NewInstance.get(FolderView.class).getC_新增商品(),
+				NewInstance.get(BasePageView.class));
 
-		addView(NewInstance.get(FolderView.class).getC_新增商品(),
-				NewInstance.get(ItemSearchView.class));
+		View.addView(NewInstance.get(FolderView.class).getC_新增商品(),
+				NewInstance.get(SearchView.class));
 
-		addView(NewInstance.get(FolderView.class).getC_新增商品(),
+		View.addView(NewInstance.get(FolderView.class).getC_新增商品(),
 				NewInstance.get(TableView.class));
-
 
 		CTabItem tbtmNewItem_4 = new CTabItem(NewInstance.get(FolderView.class)
 				.getTabFolder(), SWT.NONE);

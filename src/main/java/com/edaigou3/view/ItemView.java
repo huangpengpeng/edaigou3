@@ -1,7 +1,9 @@
 package com.edaigou3.view;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
@@ -14,10 +16,14 @@ import org.eclipse.swt.widgets.Text;
 import org.springframework.stereotype.Component;
 
 import com.edaigou3.entity.Item;
+import com.edaigou3.manager.ItemMng;
+import com.edaigou3.view._0.SearchView;
 import com.edaigou3.view.base.BaseViewAdapter;
 import com.edaigou3.view.base.IBrowserView;
 import com.edaigou3.view.base.IBrowserView.IRequestProvider;
+import com.edaigou3.view.base.IMainView.MessageBox2;
 import com.edaigou3.view.base.IMainView.NewInstance;
+import com.edaigou3.view.base.IMainView.View;
 import com.edaigou3.view.ext.ImageUtils;
 import com.edaigou3.view.ext.TbkInfoProvider;
 
@@ -26,17 +32,20 @@ public class ItemView extends BaseViewAdapter {
 
 	private Text title;
 	private Text url;
-	private Text text_2;
+	private Text originalPrice;
 	private Text rebateProportion;
 	private Text rebateFee;
 	private Text serviceFee;
-	private Text text_8;
-	private Text text_9;
-	private Text text_10;
-	private Text text_11;
+	private Text realPrice;
+	private Text profitFee;
+	private Text lowPrice;
+	private Text numIid;
 	private Button btnloginalimama;
 	private Button btnovershot;
 	private Button image;
+	private Combo channel;
+	private Button save;
+	private ShopView shopView;
 
 	@Override
 	public void createContents(Shell shell) {
@@ -51,15 +60,19 @@ public class ItemView extends BaseViewAdapter {
 		lblNewLabel.setBounds(107, 19, 54, 22);
 		lblNewLabel.setText("淘宝店铺");
 
-		Combo combo = new Combo(grpSp, SWT.NONE);
-		combo.setBounds(171, 16, 86, 20);
+		shopView = NewInstance.get(ShopView.class);
+		View.addView(grpSp, shopView);
+		shopView.setBounds(171, 16, 86, 20);
 
 		Label lblNewLabel_1 = new Label(grpSp, SWT.NONE);
 		lblNewLabel_1.setBounds(270, 19, 54, 22);
 		lblNewLabel_1.setText("商品渠道 ");
 
-		Combo combo_1 = new Combo(grpSp, SWT.NONE);
-		combo_1.setBounds(330, 16, 86, 20);
+		channel = new Combo(grpSp, SWT.NONE);
+		channel.setBounds(330, 16, 86, 20);
+		channel.setText("普通淘客");
+		channel.add("普通淘客");
+		channel.add("高级淘客");
 
 		Label labTitle = new Label(grpSp, SWT.NONE);
 		labTitle.setBounds(440, 19, 54, 18);
@@ -83,8 +96,8 @@ public class ItemView extends BaseViewAdapter {
 		lblNewLabel_4.setBounds(107, 52, 54, 14);
 		lblNewLabel_4.setText("原售价格");
 
-		text_2 = new Text(grpSp, SWT.BORDER);
-		text_2.setBounds(171, 48, 86, 18);
+		originalPrice = new Text(grpSp, SWT.BORDER);
+		originalPrice.setBounds(171, 48, 86, 18);
 
 		Label labrebateProportion = new Label(grpSp, SWT.NONE);
 		labrebateProportion.setBounds(270, 52, 54, 14);
@@ -111,34 +124,34 @@ public class ItemView extends BaseViewAdapter {
 		lblNewLabel_10.setBounds(108, 78, 54, 18);
 		lblNewLabel_10.setText("实际售价");
 
-		text_8 = new Text(grpSp, SWT.BORDER);
-		text_8.setToolTipText("");
-		text_8.setBounds(171, 74, 86, 18);
+		realPrice = new Text(grpSp, SWT.BORDER);
+		realPrice.setToolTipText("");
+		realPrice.setBounds(171, 74, 86, 18);
 
 		Label lblNewLabel_11 = new Label(grpSp, SWT.NONE);
 		lblNewLabel_11.setBounds(270, 78, 54, 18);
 		lblNewLabel_11.setText("实际利润");
 
-		text_9 = new Text(grpSp, SWT.BORDER);
-		text_9.setBounds(330, 74, 86, 18);
+		profitFee = new Text(grpSp, SWT.BORDER);
+		profitFee.setBounds(330, 74, 86, 18);
 
 		Label lblNewLabel_12 = new Label(grpSp, SWT.NONE);
 		lblNewLabel_12.setBounds(440, 78, 54, 18);
 		lblNewLabel_12.setText("最低售价");
 
-		text_10 = new Text(grpSp, SWT.BORDER);
-		text_10.setBounds(502, 74, 70, 18);
+		lowPrice = new Text(grpSp, SWT.BORDER);
+		lowPrice.setBounds(502, 74, 70, 18);
 
 		Label lblNewLabel_13 = new Label(grpSp, SWT.NONE);
 		lblNewLabel_13.setBounds(595, 78, 48, 18);
 		lblNewLabel_13.setText("商品编号");
 
-		text_11 = new Text(grpSp, SWT.BORDER);
-		text_11.setBounds(655, 74, 70, 18);
+		numIid = new Text(grpSp, SWT.BORDER);
+		numIid.setBounds(655, 74, 70, 18);
 
-		Button btnNewButton_2 = new Button(grpSp, SWT.NONE);
-		btnNewButton_2.setBounds(1043, 72, 41, 22);
-		btnNewButton_2.setText("保存");
+		save = new Button(grpSp, SWT.NONE);
+		save.setBounds(1043, 72, 41, 22);
+		save.setText("保存");
 
 		Button btnNewButton_3 = new Button(grpSp, SWT.NONE);
 		btnNewButton_3.setBounds(996, 72, 41, 22);
@@ -150,25 +163,87 @@ public class ItemView extends BaseViewAdapter {
 	}
 
 	@Override
-	public void fullContents(Object... values) throws IOException {
+	public void fullContents(Object... values) {
 		Item item = (Item) values[0];
-		image.setImage(ImageUtils.base64StringToImg(item.getImageByte()));
+		try {
+			image.setImage(ImageUtils.base64StringToImg(item.getImageByte()));
+		} catch (IOException e) {
+			throw new IllegalStateException(e);
+		}
 		title.setText(item.getTitle());
-		rebateProportion.setText(String.valueOf(item.getRebateProportion()));
+		if (!StringUtils.equals("高级淘客", channel.getText())) {
+			rebateProportion
+					.setText(String.valueOf(item.getRebateProportion()));
+		} else {
+			item.setRebateProportion(Double.valueOf(rebateProportion.getText()));
+		}
+		item.caleRebate();
 		rebateFee.setText(String.valueOf(item.getRebateFee()));
 		serviceFee.setText(String.valueOf(item.getServiceFee()));
+		originalPrice.setText(String.valueOf(item.getOriginalPrice()));
+		item.setRealPrice(item.getOriginalPrice().multiply(
+				new BigDecimal("0.88")));
+		realPrice.setText(String.valueOf(item.getRealPrice()));
+		item.caleProfieFee();
+		profitFee.setText(String.valueOf(item.getProfitFee()));
+	}
+
+	public Item getViewToModel() {
+		try {
+			Item item = new Item();
+			item.setShopId(shopView.getNumber());
+			item.setChannel(channel.getText());
+			item.setTitle(title.getText());
+			item.setUrl(url.getText());
+			item.setOriginalPrice(new BigDecimal(originalPrice.getText()));
+			item.setRebateProportion(Double.valueOf(rebateProportion.getText()));
+			item.setRebateFee(new BigDecimal(rebateFee.getText()));
+			item.setServiceFee(new BigDecimal(serviceFee.getText()));
+			item.setRealPrice(new BigDecimal(realPrice.getText()));
+			item.setProfitFee(new BigDecimal(profitFee.getText()));
+			if (StringUtils.isNotBlank(lowPrice.getText())) {
+				item.setLowPrice(new BigDecimal(lowPrice.getText()));
+			}
+			if (StringUtils.isNotBlank(numIid.getText())) {
+				item.setNumIid(Long.valueOf(numIid.getText()));
+			}
+			item.setImageByte(ImageUtils.imgToBase64String(image.getImage()));
+			return item;
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	public void clearText() {
+		title.setText("");
+		url.setText("");
+		originalPrice.setText("");
+		if (!StringUtils.equals("高级淘客", channel.getText())) {
+			rebateProportion.setText("");
+		}
+		rebateFee.setText("");
+		serviceFee.setText("");
+		realPrice.setText("");
+		profitFee.setText("");
+		lowPrice.setText("");
+		numIid.setText("");
+		image.setImage(null);
 	}
 
 	@Override
 	public void createListenter() {
 		btnloginalimama.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event arg0) {
+				NewInstance.get(FolderView.class).selection(
+						NewInstance.get(FolderView.class).get_新品发布());
 				NewInstance.get(BrowserView.class).doRequest(
 						"http://www.alimama.com/member/login.htm");
 			}
 		});
 		btnovershot.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event arg0) {
+				NewInstance.get(FolderView.class).selection(
+						NewInstance.get(FolderView.class).get_新增商品());
 				final String urlValue = url.getText();
 				NewInstance.get(BrowserView.class).doRequest(
 						new IRequestProvider() {
@@ -179,6 +254,55 @@ public class ItemView extends BaseViewAdapter {
 								return buffer.toString();
 							}
 						}, NewInstance.get(TbkInfoProvider.class), 0);
+			}
+		});
+		save.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event arg0) {
+				Item item = getViewToModel();
+				if (item == null) {
+					MessageBox2.showErrorMsg("参数转换错误");
+					return;
+				}
+				if (item.getShopId() == null) {
+					MessageBox2.showErrorMsg("请选择店铺");
+					return;
+				}
+				if (StringUtils.isBlank(item.getChannel())) {
+					MessageBox2.showErrorMsg("请选择渠道");
+					return;
+				}
+				if (StringUtils.isBlank(item.getTitle())) {
+					MessageBox2.showErrorMsg("请输入标题");
+					return;
+				}
+				if (StringUtils.isBlank(item.getUrl())) {
+					MessageBox2.showErrorMsg("请输入地址");
+					return;
+				}
+				if (item.getOriginalPrice() == null) {
+					MessageBox2.showErrorMsg("请输入原价");
+					return;
+				}
+				if (item.getRebateProportion() == null) {
+					MessageBox2.showErrorMsg("请输入淘客返点比率");
+					return;
+				}
+				if (item.getRebateFee() == null) {
+					MessageBox2.showErrorMsg("请输入返点金额");
+					return;
+				}
+				if (item.getRealPrice() == null) {
+					MessageBox2.showErrorMsg("请输入实际销售价格");
+					return;
+				}
+				NewInstance.get(ItemMng.class).add(item.getShopId(),
+						item.getImageByte(), item.getChannel(),
+						item.getTitle(), item.getUrl(), item.getTbkNumIid(),
+						item.getOriginalPrice(), item.getRebateProportion(),
+						item.getRebateFee(), item.getServiceFee(),
+						item.getRealPrice());
+				clearText();
+				NewInstance.get(SearchView.class).query(1);
 			}
 		});
 	}

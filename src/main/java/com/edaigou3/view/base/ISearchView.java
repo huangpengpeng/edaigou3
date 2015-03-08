@@ -1,14 +1,10 @@
 package com.edaigou3.view.base;
 
-import java.io.IOException;
+import com.common.jdbc.page.Pagination;
 
 public interface ISearchView extends IBaseView{
 	
-	public void addTableView(ITableView tableView);
-	
-	public void addPageView(IPageView pageView);
-
-	public void query() throws IOException;
+	public Pagination query(Integer pageNo) ;
 	
 	/**
 	 * 根据名称设置值

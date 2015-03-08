@@ -34,5 +34,5 @@ public interface IBaseView {
 	 * 填充内容
 	 * @throws IOException 
 	 */
-	void fullContents(Object... values) throws IOException;
+	void fullContents(Object... values);
 }

@@ -1,10 +1,12 @@
 package com.edaigou3.view.base;
 
 import java.awt.Toolkit;
+import java.lang.reflect.InvocationTargetException;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
@@ -23,17 +25,26 @@ public abstract class IMainView {
 
 	public abstract String getApplicationXml();
 
-	protected void addView(IBaseView baseView) {
-		baseView.createContents(shell);
-		baseView.createListenter();
-		baseView.preHandle();
-	}
+	/**
+	 * 视图操作对象
+	 * 
+	 * @author zoro
+	 *
+	 */
+	public static class View {
 
-	protected void addView(Composite composite, IBaseView baseView) {
-		baseView.preHandle();
-		baseView.createContents(shell);
-		baseView.createContents(composite);
-		baseView.createListenter();
+		public static void addView(IBaseView baseView) {
+			baseView.createContents(shell);
+			baseView.createListenter();
+			baseView.preHandle();
+		}
+
+		public static void addView(Composite composite, IBaseView baseView) {
+			baseView.preHandle();
+			baseView.createContents(shell);
+			baseView.createContents(composite);
+			baseView.createListenter();
+		}
 	}
 
 	/**
@@ -119,14 +130,28 @@ public abstract class IMainView {
 		 * 
 		 * @param msg
 		 */
-		public static void showErrorMsg(String msg, Exception e) {
+		public static void showErrorMsg(final String msg, final Exception e) {
 			if (msg == null) {
 				return;
 			}
-			MessageBox messageBox = new MessageBox(shell, SWT.OK
-					| SWT.ICON_ERROR);
-			messageBox.setMessage(msg + (e != null ? e.getMessage() : ""));
-			messageBox.open();
+			Display.getDefault().syncExec(new Runnable() {
+				public void run() {
+					MessageBox messageBox = new MessageBox(shell, SWT.OK
+							| SWT.ICON_ERROR);
+					messageBox.setMessage(msg
+							+ (e != null ? e.getMessage() : ""));
+					messageBox.open();
+				}
+			});
+		}
+
+		/**
+		 * 弹出错误消息
+		 * 
+		 * @param msg
+		 */
+		public static void showErrorMsg(String msg) {
+			showErrorMsg(msg, null);
 		}
 	}
 
@@ -152,6 +177,15 @@ public abstract class IMainView {
 				}
 			});
 			return jFrameValue;
+		}
+
+		public static void setEditable(final Control control,
+				final Boolean editable) {
+			Display.getDefault().syncExec(new Runnable() {
+				public void run() {
+					control.setEnabled(editable);
+				}
+			});
 		}
 	}
 

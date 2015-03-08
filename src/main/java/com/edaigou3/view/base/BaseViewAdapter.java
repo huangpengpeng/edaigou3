@@ -16,7 +16,7 @@ public class BaseViewAdapter implements IBaseView {
 	public void createListenter() {
 	}
 
-	public void fullContents(Object... values) throws IOException {
+	public void fullContents(Object... values){
 	}
 
 	public void preHandle() {

@@ -1,33 +1,30 @@
-package com.edaigou3.view;
-
-import java.io.IOException;
+package com.edaigou3.view._0;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.springframework.stereotype.Component;
 
 import com.common.jdbc.page.Pagination;
-import com.edaigou3.view.base.IPageView;
+import com.edaigou3.manager.ItemMng;
+import com.edaigou3.view.base.IMainView.NewInstance;
 import com.edaigou3.view.base.ISearchView;
-import com.edaigou3.view.base.ITableView;
 
 @Component
-public class ItemSearchView implements ISearchView {
-	
+public class SearchView implements ISearchView {
 
-	private IPageView pageView;
-	private ITableView tableView;
 	private Text _商品标题;
 	private Combo _淘宝店铺;
 	private Combo _错误类型;
+	private Button _查询;
 
 	public void createContents(Shell shell) {
-
 	}
 
 	public void createContents(Composite composite) {
@@ -52,26 +49,25 @@ public class ItemSearchView implements ISearchView {
 		_商品标题 = new Text(composite, SWT.BORDER);
 		_商品标题.setBounds(763, 8, 222, 18);
 
-		Button btnNewButton_6 = new Button(composite, SWT.NONE);
-		btnNewButton_6.setBounds(1006, 6, 72, 22);
-		btnNewButton_6.setText("查询");
+		_查询 = new Button(composite, SWT.NONE);
+		_查询.setBounds(1006, 6, 72, 22);
+		_查询.setText("查询");
 	}
 
 	public void createListenter() {
-
+		_查询.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event arg0) {
+				query(1);
+			}
+		});
 	}
 
 	public void preHandle() {
 
 	}
 
-	public void fullContents(Object... values) throws IOException {
+	public void fullContents(Object... values) {
 	}
-
-	public void addTableView(ITableView tableView) {
-		this.tableView=tableView;
-	}
-
 
 	public void setValue(String name, String value) {
 		if ("_商品标题".equals(name)) {
@@ -91,12 +87,11 @@ public class ItemSearchView implements ISearchView {
 		_错误类型.setText("");
 	}
 
-	public void query() throws IOException {
-		this.pageView.setPage(new Pagination(0, 0, 0));
-		tableView.fullContents(this.pageView.getPage());
-	}
-
-	public void addPageView(IPageView pageView) {
-		this.pageView = pageView;
+	public Pagination query(Integer pageNo) {
+		Pagination page = NewInstance.get(ItemMng.class).getPage(null, null,
+				null, pageNo);
+		NewInstance.get(PageView.class).setPage(page);
+		NewInstance.get(TableView.class).fullContents(page.getList());
+		return page;
 	}
 }

@@ -1,25 +1,19 @@
 package com.edaigou3.view;
 
-import java.io.IOException;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
-import org.springframework.stereotype.Component;
 
 import com.common.jdbc.page.Pagination;
-import com.edaigou3.view.base.IMainView.NewInstance;
 import com.edaigou3.view.base.IPageView;
-import com.edaigou3.view.base.ISearchView;
 
-@Component
-public class ItemPageView implements IPageView {
-	
-	private Pagination page;
+public abstract class BasePageView implements IPageView {
 
-	private ISearchView searchView;
+	protected Pagination page;
 
 	private Button _上一页;
 	private CLabel _分页数据;
@@ -32,6 +26,7 @@ public class ItemPageView implements IPageView {
 		_上一页 = new Button(composite, SWT.NONE);
 		_上一页.setBounds(10, 8, 54, 22);
 		_上一页.setText("上一页");
+		_上一页.setEnabled(false);
 
 		_分页数据 = new CLabel(composite, SWT.NONE);
 		_分页数据.setAlignment(SWT.CENTER);
@@ -43,25 +38,27 @@ public class ItemPageView implements IPageView {
 		_下一页.setText("下一页");
 	}
 
-	public void createListenter() {
-
-	}
-
 	public void preHandle() {
 
 	}
 
-	public void fullContents(Object... values) throws IOException {
+	public void fullContents(Object... values) {
 		if (values == null || values.length == 0) {
 			return;
 		}
 		Pagination page = (Pagination) values[0];
 		_分页数据.setText(page.getTotalCount() + "/" + page.getTotalPage() + "/"
 				+ page.getPageNo());
-	}
-
-	public void addSearchView(ISearchView searchView) {
-		this.searchView = searchView;
+		if (page.isFirstPage()) {
+			_上一页.setEnabled(false);
+		} else {
+			_上一页.setEnabled(true);
+		}
+		if (page.isLastPage()) {
+			_下一页.setEnabled(false);
+		} else {
+			_下一页.setEnabled(true);
+		}
 	}
 
 	public Integer getPageNo() {
@@ -73,6 +70,23 @@ public class ItemPageView implements IPageView {
 	}
 
 	public void setPage(Pagination page) {
-		this.page=page;
+		this.page = page;
 	}
+
+	public void createListenter() {
+		_上一页.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event arg0) {
+				fullContents(pre());
+			}
+		});
+		_下一页.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event arg0) {
+				fullContents(next());
+			}
+		});
+	}
+
+	public abstract Pagination pre();
+
+	public abstract Pagination next();
 }

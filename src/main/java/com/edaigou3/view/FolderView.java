@@ -9,6 +9,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.springframework.stereotype.Component;
 
 import com.edaigou3.view.base.BaseViewAdapter;
+import com.edaigou3.view.base.IMainView.NewInstance;
 
 @Component
 public class FolderView extends BaseViewAdapter {
@@ -16,6 +17,7 @@ public class FolderView extends BaseViewAdapter {
 	private CTabFolder tabFolder;
 	private CTabItem _新增商品;
 	private Composite c_新增商品;
+	private CTabItem _新品发布;
 
 	@Override
 	public void createContents(Shell shell) {
@@ -31,8 +33,19 @@ public class FolderView extends BaseViewAdapter {
 
 		c_新增商品 = new Composite(tabFolder, SWT.NONE);
 		_新增商品.setControl(c_新增商品);
-		
-		
+
+		_新品发布 = new CTabItem(NewInstance.get(FolderView.class).getTabFolder(),
+				SWT.NONE);
+		_新品发布.setText("新品发布");
+
+	}
+
+	public CTabItem get_新品发布() {
+		return _新品发布;
+	}
+
+	public void selection(CTabItem item) {
+		getTabFolder().setSelection(item);
 	}
 
 	@Override

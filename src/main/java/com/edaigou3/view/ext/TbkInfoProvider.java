@@ -68,10 +68,12 @@ public class TbkInfoProvider implements IOperatorProvider {
 		String title = (String) model.get("title");
 		String auctionUrl = (String) model.get("auctionUrl");
 		String tbkNumIid = (String) model.get("userNumberId");
+		BigDecimal originalPrice = BigDecimal.valueOf(((Double) model
+				.get("zkPrice")).intValue());
 		item = new Item(null, imageByteValue, null, title, auctionUrl,
-				Long.valueOf(tbkNumIid), null, rebateProportion, rebateFee,
-				rebateFee.multiply(new BigDecimal("0.1")), null, null, null,
-				null, null, null, null);
+				Long.valueOf(tbkNumIid), originalPrice, rebateProportion,
+				rebateFee, rebateFee.multiply(new BigDecimal("0.1")), null,
+				null, null, null, null, null, null);
 		return item;
 	}
 

@@ -8,11 +8,5 @@ public interface IPageView extends IBaseView {
 	
 	public void setPage(Pagination page);
 	
-	/**
-	 * 设置查询试图
-	 * @param searchView
-	 */
-	void addSearchView(ISearchView searchView);
-	
 	Integer getPageNo();
 }
