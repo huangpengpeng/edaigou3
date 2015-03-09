@@ -36,8 +36,10 @@ public class Item extends BaseItem {
 	public void caleRebate() {
 		this.setRebateFee(getOriginalPrice().multiply(
 				new BigDecimal(getRebateProportion().toString()).divide(
-						new BigDecimal("100"), 2, BigDecimal.ROUND_HALF_UP)));
-		this.setServiceFee(getRebateFee().multiply(new BigDecimal("0.1")));
+						new BigDecimal("100"), 2, BigDecimal.ROUND_HALF_UP))
+				.setScale(2, BigDecimal.ROUND_HALF_UP));
+		this.setServiceFee(getRebateFee().multiply(new BigDecimal("0.1"))
+				.setScale(2, BigDecimal.ROUND_HALF_UP));
 	}
 
 	private static final long serialVersionUID = 7519304894586925507L;

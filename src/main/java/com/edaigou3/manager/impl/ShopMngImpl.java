@@ -21,6 +21,10 @@ public class ShopMngImpl implements ShopMng{
 	public Shop getByNick(String nick) {
 		return dao.getByNick(nick);
 	}
+
+	public Shop get(Long id) {
+		return dao.get(id);
+	}
 	
 	@Autowired
 	private ShopDao dao;

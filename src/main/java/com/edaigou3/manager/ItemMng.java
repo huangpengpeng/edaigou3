@@ -12,7 +12,12 @@ public interface ItemMng {
 			Double rebateProportion, BigDecimal rebateFee,
 			BigDecimal serviceFee, BigDecimal realPrice);
 
-	public Pagination getPage(Long shopId, String errorType, String title,
+	void update(Long id, Long shopId, String imageByte, String channel,
+			String title, BigDecimal originalPrice, Double rebateProportion,
+			BigDecimal rebateFee, BigDecimal serviceFee, BigDecimal realPrice,
+			BigDecimal profitFee, BigDecimal lowPrice, Long numIid);
+
+	public Pagination getPage(Long shopId, Long[] ids, String title,
 			Integer pageNo);
 
 	void delete(Long id);
@@ -22,4 +27,6 @@ public interface ItemMng {
 	Item getByTitle(String title);
 
 	Item getByNumIid(Long numIid);
+
+	Item get(Long id);
 }

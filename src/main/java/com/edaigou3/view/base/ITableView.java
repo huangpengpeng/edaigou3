@@ -65,6 +65,7 @@ public abstract class ITableView implements IBaseView {
 					}
 				} catch (Exception e) {
 				}
+				ti.setData(value);
 			}
 		}
 	}

@@ -83,4 +83,8 @@ public class ShopView implements IBaseView {
 	public void clearText(){
 		shopcommbo.setText("请选择");
 	}
+	
+	public void setText(String text){
+		shopcommbo.setText(text);
+	}
 }

@@ -1,16 +1,20 @@
 package com.edaigou3.view._0;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableItem;
 import org.springframework.stereotype.Component;
 
 import com.edaigou3.entity.Item;
 import com.edaigou3.manager.ItemMng;
 import com.edaigou3.view.FolderView;
+import com.edaigou3.view.ItemView;
 import com.edaigou3.view.base.IMainView.NewInstance;
 import com.edaigou3.view.base.ITableView;
 import com.edaigou3.view.ext.Column;
@@ -22,6 +26,15 @@ public class TableView extends ITableView {
 	private Table table;
 
 	public void createListenter() {
+		table.addSelectionListener(new SelectionListener() {
+			public void widgetSelected(SelectionEvent arg0) {
+				Item item = (Item) arg0.item.getData();
+				NewInstance.get(ItemView.class).fullContents(item, true);
+			}
+
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+			}
+		});
 	}
 
 	public void preHandle() {
@@ -49,7 +62,7 @@ public class TableView extends ITableView {
 	protected Column[] getColumns() {
 		return new Column[] {
 				new Column("imageByte", "商品图片", 88, Column.IMAGE),
-				new Column("title", "商品标题", 110, Column.PUTONG),
+				new Column("title", "商品标题", 128, Column.PUTONG),
 				new Column("originalPrice", "原售价格", 88, Column.PUTONG),
 				new Column("rebateProportion", "淘返比例", 80, Column.PUTONG),
 				new Column("rebateFee", "淘返金额", 100, Column.PUTONG),
@@ -79,5 +92,20 @@ public class TableView extends ITableView {
 	@Override
 	protected Integer getHeight() {
 		return 80;
+	}
+
+	public void selectionValue(Object value) {
+		TableItem ti = table.getSelection()[table.getSelectionIndex()];
+		if (ti != null) {
+			ti.setData(value);
+		}
+	}
+
+	public Item getSelectionValue() {
+		TableItem ti = table.getSelection()[table.getSelectionIndex()];
+		if (ti != null) {
+			return ((Item) ti.getData());
+		}
+		return null;
 	}
 }

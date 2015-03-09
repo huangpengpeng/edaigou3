@@ -27,4 +27,8 @@ public class ShopDaoImpl extends JdbcTemplateBaseDao implements ShopDao {
 	protected Class<?> getEntityClass() {
 		return Shop.class;
 	}
+
+	public Shop get(Long id) {
+		return super.queryForObject(id);
+	}
 }

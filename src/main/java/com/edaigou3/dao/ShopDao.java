@@ -8,5 +8,7 @@ public interface ShopDao {
 
 	public	List<Shop> query();
 	
+	public Shop get(Long id);
+	
 	public Shop getByNick(String nick);
 }

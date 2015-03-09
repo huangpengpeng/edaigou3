@@ -17,9 +17,12 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.springframework.stereotype.Component;
 
+import com.common.util.ParamentersUtils;
 import com.edaigou3.entity.Item;
 import com.edaigou3.manager.ItemMng;
+import com.edaigou3.manager.ShopMng;
 import com.edaigou3.view._0.SearchView;
+import com.edaigou3.view._0.TableView;
 import com.edaigou3.view.base.BaseViewAdapter;
 import com.edaigou3.view.base.IBrowserView;
 import com.edaigou3.view.base.IBrowserView.IRequestProvider;
@@ -47,6 +50,7 @@ public class ItemView extends BaseViewAdapter {
 	private Button image;
 	private Combo channel;
 	private Button save;
+	private Button edit;
 	private ShopView shopView;
 
 	@Override
@@ -153,31 +157,40 @@ public class ItemView extends BaseViewAdapter {
 
 		save = new Button(grpSp, SWT.NONE);
 		save.setBounds(1043, 72, 41, 22);
-		save.setText("保存");
+		save.setText("增加");
 
-		Button btnNewButton_3 = new Button(grpSp, SWT.NONE);
-		btnNewButton_3.setBounds(996, 72, 41, 22);
-		btnNewButton_3.setText("编辑");
+		edit = new Button(grpSp, SWT.NONE);
+		edit.setBounds(996, 72, 41, 22);
+		edit.setText("编辑");
 
 		btnloginalimama = new Button(grpSp, SWT.NONE);
 		btnloginalimama.setBounds(797, 72, 80, 22);
 		btnloginalimama.setText("登录阿里妈妈");
 	}
 
+	
+	
 	@Override
 	public void fullContents(Object... values) {
 		Item item = (Item) values[0];
+		Boolean isallfilling = values.length > 1 ? (Boolean) values[1] : false;
 		try {
 			image.setImage(ImageUtils.base64StringToImg(item.getImageByte()));
 		} catch (IOException e) {
 			throw new IllegalStateException(e);
 		}
+		if (isallfilling) {
+			shopView.setText(NewInstance.get(ShopMng.class)
+					.get(item.getShopId()).getNick());
+			channel.setText(item.getChannel());
+			url.setText(item.getUrl());
+		}
 		title.setText(item.getTitle());
-		if (!StringUtils.equals("高级淘客", channel.getText())) {
+		if (!isallfilling && StringUtils.equals("高级淘客", channel.getText())) {
+			item.setRebateProportion(Double.valueOf(rebateProportion.getText()));
+		} else {
 			rebateProportion
 					.setText(String.valueOf(item.getRebateProportion()));
-		} else {
-			item.setRebateProportion(Double.valueOf(rebateProportion.getText()));
 		}
 		item.caleRebate();
 		rebateFee.setText(String.valueOf(item.getRebateFee()));
@@ -185,9 +198,17 @@ public class ItemView extends BaseViewAdapter {
 		originalPrice.setText(String.valueOf(item.getOriginalPrice()));
 		item.setRealPrice(item.getOriginalPrice().multiply(
 				new BigDecimal("0.88")));
-		realPrice.setText(String.valueOf(item.getRealPrice()));
+		realPrice.setText(String.valueOf(item.getRealPrice().intValue()));
 		item.caleProfieFee();
 		profitFee.setText(String.valueOf(item.getProfitFee()));
+		if (item.getLowPrice() != null)
+			lowPrice.setText(String.valueOf(item.getLowPrice()));
+		else
+			lowPrice.setText("");
+		if (item.getNumIid() != null)
+			numIid.setText(String.valueOf(item.getNumIid()));
+		else
+			numIid.setText("");
 	}
 
 	public Item getViewToModel() {
@@ -197,6 +218,8 @@ public class ItemView extends BaseViewAdapter {
 			item.setChannel(channel.getText());
 			item.setTitle(title.getText());
 			item.setUrl(url.getText());
+			item.setTbkNumIid(Long.valueOf(ParamentersUtils.getQueryParams(
+					item.getUrl(), "id")));
 			item.setOriginalPrice(new BigDecimal(originalPrice.getText()));
 			item.setRebateProportion(Double.valueOf(rebateProportion.getText()));
 			item.setRebateFee(new BigDecimal(rebateFee.getText()));
@@ -230,6 +253,42 @@ public class ItemView extends BaseViewAdapter {
 		lowPrice.setText("");
 		numIid.setText("");
 		image.setImage(null);
+	}
+
+	protected boolean validate(Item item) {
+		if (item.getShopId() == null) {
+			MessageBox2.showErrorMsg("请选择店铺");
+			return false;
+		}
+		if (StringUtils.isBlank(item.getChannel())) {
+			MessageBox2.showErrorMsg("请选择渠道");
+			return false;
+		}
+		if (StringUtils.isBlank(item.getTitle())) {
+			MessageBox2.showErrorMsg("请输入标题");
+			return false;
+		}
+		if (StringUtils.isBlank(item.getUrl())) {
+			MessageBox2.showErrorMsg("请输入地址");
+			return false;
+		}
+		if (item.getOriginalPrice() == null) {
+			MessageBox2.showErrorMsg("请输入原价");
+			return false;
+		}
+		if (item.getRebateProportion() == null) {
+			MessageBox2.showErrorMsg("请输入淘客返点比率");
+			return false;
+		}
+		if (item.getRebateFee() == null) {
+			MessageBox2.showErrorMsg("请输入返点金额");
+			return false;
+		}
+		if (item.getRealPrice() == null) {
+			MessageBox2.showErrorMsg("请输入实际销售价格");
+			return false;
+		}
+		return true;
 	}
 
 	@Override
@@ -266,39 +325,19 @@ public class ItemView extends BaseViewAdapter {
 			public void handleEvent(Event arg0) {
 				Item item = getViewToModel();
 				if (item == null) {
-					MessageBox2.showErrorMsg("参数转换错误");
+					MessageBox2.showErrorMsg("商品信息错误");
 					return;
 				}
-				if (item.getShopId() == null) {
-					MessageBox2.showErrorMsg("请选择店铺");
+				if (!validate(item)) {
 					return;
 				}
-				if (StringUtils.isBlank(item.getChannel())) {
-					MessageBox2.showErrorMsg("请选择渠道");
+				ItemMng itemMng = NewInstance.get(ItemMng.class);
+				if (itemMng.getByTbkNumIid(item.getTbkNumIid()) != null) {
+					MessageBox2.showErrorMsg("商品已经存在");
 					return;
 				}
-				if (StringUtils.isBlank(item.getTitle())) {
-					MessageBox2.showErrorMsg("请输入标题");
-					return;
-				}
-				if (StringUtils.isBlank(item.getUrl())) {
-					MessageBox2.showErrorMsg("请输入地址");
-					return;
-				}
-				if (item.getOriginalPrice() == null) {
-					MessageBox2.showErrorMsg("请输入原价");
-					return;
-				}
-				if (item.getRebateProportion() == null) {
-					MessageBox2.showErrorMsg("请输入淘客返点比率");
-					return;
-				}
-				if (item.getRebateFee() == null) {
-					MessageBox2.showErrorMsg("请输入返点金额");
-					return;
-				}
-				if (item.getRealPrice() == null) {
-					MessageBox2.showErrorMsg("请输入实际销售价格");
+				if (itemMng.getByTitle(item.getTitle()) != null) {
+					MessageBox2.showErrorMsg("商品已经存在");
 					return;
 				}
 				NewInstance.get(ItemMng.class).add(item.getShopId(),
@@ -309,6 +348,33 @@ public class ItemView extends BaseViewAdapter {
 						item.getRealPrice());
 				clearText();
 				NewInstance.get(SearchView.class).query(1);
+			}
+		});
+		edit.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event arg0) {
+				Item item = getViewToModel();
+				if (item == null) {
+					MessageBox2.showErrorMsg("商品信息错误");
+					return;
+				}
+				if (!validate(item)) {
+					return;
+				}
+				Item old = NewInstance.get(TableView.class).getSelectionValue();
+				if (old == null) {
+					MessageBox2.showErrorMsg("操作错误,不能编辑");
+					return;
+				}
+				NewInstance.get(ItemMng.class).update(old.getId(),
+						item.getShopId(), item.getImageByte(),
+						item.getChannel(), item.getTitle(),
+						item.getOriginalPrice(), item.getRebateProportion(),
+						item.getRebateFee(), item.getServiceFee(),
+						item.getRealPrice(), item.getProfitFee(),
+						item.getLowPrice(), item.getNumIid());
+				item.setId(old.getId());
+				NewInstance.get(TableView.class).selectionValue(item);
+				clearText();
 			}
 		});
 	}

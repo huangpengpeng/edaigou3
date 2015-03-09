@@ -28,9 +28,9 @@ public class ItemMngImpl implements ItemMng {
 	}
 
 
-	public Pagination getPage(Long shopId, String errorType, String title,
+	public Pagination getPage(Long shopId, Long [] ids, String title,
 			Integer pageNo) {
-		return dao.getPage(shopId, errorType, title, pageNo);
+		return dao.getPage(shopId, ids, title, pageNo);
 	}
 	
 	public void delete(Long id) {
@@ -52,7 +52,18 @@ public class ItemMngImpl implements ItemMng {
 		return dao.getByNumIid(numIid);
 	}
 	
+	public Item get(Long id) {
+		return dao.get(id);
+	}
+	
+
+	public void update(Long id, Long shopId, String imageByte, String channel,
+			String title, BigDecimal originalPrice, Double rebateProportion,
+			BigDecimal rebateFee, BigDecimal serviceFee, BigDecimal realPrice,
+			BigDecimal profitFee, BigDecimal lowPrice, Long numIid) {
+		dao.update(id, shopId, imageByte, channel, title, originalPrice, rebateProportion, rebateFee, serviceFee, realPrice, profitFee, lowPrice, numIid);
+	}
+	
 	@Autowired
 	private ItemDao dao;
-
 }

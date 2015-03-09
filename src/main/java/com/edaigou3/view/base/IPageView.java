@@ -6,7 +6,5 @@ public interface IPageView extends IBaseView {
 
 	public Pagination getPage();
 	
-	public void setPage(Pagination page);
-	
 	Integer getPageNo();
 }

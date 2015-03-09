@@ -49,7 +49,7 @@ public abstract class BasePageView implements IPageView {
 		if (values == null || values.length == 0) {
 			return;
 		}
-		Pagination page = (Pagination) values[0];
+		this.page = (Pagination) values[0];
 		_分页数据.setText(page.getTotalCount() + "/" + page.getTotalPage() + "/"
 				+ page.getPageNo());
 		if (page.isFirstPage()) {
@@ -72,9 +72,6 @@ public abstract class BasePageView implements IPageView {
 		return page;
 	}
 
-	public void setPage(Pagination page) {
-		this.page = page;
-	}
 
 	public void createListenter() {
 		_上一页.addListener(SWT.Selection, new Listener() {

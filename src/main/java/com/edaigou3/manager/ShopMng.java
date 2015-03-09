@@ -9,4 +9,6 @@ public interface ShopMng {
 	List<Shop> query();
 	
 	Shop getByNick(String nick);
+	
+	Shop get(Long id);
 }
