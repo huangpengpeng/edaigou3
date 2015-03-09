@@ -1,7 +1,9 @@
 package com.edaigou3.view;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
+import java.net.URLEncoder;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.swt.SWT;
@@ -250,7 +252,11 @@ public class ItemView extends BaseViewAdapter {
 							public String getRequestUrl(IBrowserView browserView) {
 								StringBuffer buffer = new StringBuffer(
 										"http://pub.alimama.com/pubauc/searchAuctionList.json?q=");
-								buffer.append(urlValue);
+								try {
+									buffer.append(URLEncoder.encode(urlValue,
+											"UTF-8"));
+								} catch (UnsupportedEncodingException e) {
+								}
 								return buffer.toString();
 							}
 						}, NewInstance.get(TbkInfoProvider.class), 0);

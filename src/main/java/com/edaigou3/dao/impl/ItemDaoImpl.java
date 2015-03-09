@@ -34,4 +34,32 @@ public class ItemDaoImpl extends JdbcTemplateBaseDao implements ItemDao {
 		}
 		return super.getPage(sqlBuilder, pageNo == null ? 1 : pageNo, 10);
 	}
+
+	public void delete(Long id) {
+		super.delete(id);
+	}
+
+	public Item getByTbkNumIid(Long tbkNumIid) {
+		SqlBuilder sqlBuilder = new SqlBuilder("select * from Item where 1=1");
+		if (tbkNumIid != null) {
+			sqlBuilder.andEqualTo("tbkNumIid", tbkNumIid);
+		}
+		return queryForObject(sqlBuilder);
+	}
+
+	public Item getByTitle(String title) {
+		SqlBuilder sqlBuilder = new SqlBuilder("select * from Item where 1=1");
+		if (title != null) {
+			sqlBuilder.andEqualTo("title", title);
+		}
+		return queryForObject(sqlBuilder);
+	}
+
+	public Item getByNumIid(Long numIid) {
+		SqlBuilder sqlBuilder = new SqlBuilder("select * from Item where 1=1");
+		if (numIid != null) {
+			sqlBuilder.andEqualTo("numIid", numIid);
+		}
+		return queryForObject(sqlBuilder);
+	}
 }

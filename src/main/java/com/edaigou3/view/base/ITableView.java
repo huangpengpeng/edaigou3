@@ -1,5 +1,6 @@
 package com.edaigou3.view.base;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.beanutils.PropertyUtils;
@@ -28,27 +29,47 @@ public abstract class ITableView implements IBaseView {
 	@SuppressWarnings("unchecked")
 	public void fullContents(Object... values) {
 		removeControlAndEditorFormUserTable(getTable());
-		getTable().removeAll();
 		List<Object> list = (List<Object>) values[0];
 		for (Object value : list) {
 			TableItem ti = new TableItem(getTable(), SWT.NONE);
 			for (int i = 0; i < getColumns().length; i++) {
 				try {
-					Column column = getColumns()[i];
-					Object obj = PropertyUtils.getProperty(value,
-							column.getName());
+					final Column column = getColumns()[i];
+					Object obj = null;
+					if (column.getName() != null) {
+						obj = PropertyUtils
+								.getProperty(value, column.getName());
+					}
 					if (column.getMode() == Column.IMAGE) {
-						ti.setImage(i, ImageUtils
-								.base64StringToImg((String) obj));
+						ti.setImage(i,
+								ImageUtils.base64StringToImg((String) obj));
 					}
 					if (column.getMode() == Column.PUTONG) {
 						ti.setText(i, obj == null ? "" : obj.toString());
+					}
+					if (column.getMode() == Column.BUTTON) {
+						Button btn = new Button(getTable(), SWT.NONE);
+						btn.setText(column.getButtonText());
+						btn.addListener(SWT.Selection, new Listener() {
+							public void handleEvent(Event arg0) {
+								column.getListener().handleEvent(arg0);
+							}
+						});
+						btn.setData(value);
+						TableEditor editor = new TableEditor(getTable());
+						editor.horizontalAlignment = SWT.CENTER;
+						editor.minimumWidth = column.getWidth();
+						editor.setEditor(btn, ti, i);
+						editors.add(btn);
+						editors.add(editor);
 					}
 				} catch (Exception e) {
 				}
 			}
 		}
 	}
+
+	private List<Object> editors = new ArrayList<Object>();
 
 	public void createContents(Composite composite) {
 		Column[] columns = getColumns();
@@ -68,19 +89,16 @@ public abstract class ITableView implements IBaseView {
 	public void createContents(Shell shell) {
 	}
 
-	public static void removeControlAndEditorFormUserTable(Table table) {
-		TableItem[] items = table.getItems();
-		for (TableItem item : items) {
-			for (int i = 0; i < 3; i++) {
-				TableEditor ctl = (TableEditor) item.getData(i + "e");
-				if (ctl != null) {
-					ctl.dispose();
-				}
-				Button button = (Button) item.getData(i + "b");
-				if (button != null) {
-					button.dispose();
-				}
+	public void removeControlAndEditorFormUserTable(Table table) {
+		for (Object obj : editors) {
+			if (obj instanceof TableEditor) {
+				((TableEditor) obj).dispose();
+			}
+			if (obj instanceof Button) {
+				((Button) obj).dispose();
 			}
 		}
+		editors.clear();
+		getTable().removeAll();
 	}
 }

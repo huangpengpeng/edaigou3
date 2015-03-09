@@ -5,6 +5,8 @@ import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Lob;
 
+import org.apache.openjpa.persistence.jdbc.ClassCriteria;
+
 import com.common.jdbc.BaseEntity;
 
 @javax.persistence.MappedSuperclass
@@ -15,12 +17,12 @@ public class BaseItem extends BaseEntity {
 	public BaseItem() {
 	}
 
-	public BaseItem(Long shopId, String imageByte,String channel, String title, String url,
-			Long tbkNumIid, BigDecimal originalPrice, Double rebateProportion,
-			BigDecimal rebateFee, BigDecimal serviceFee, BigDecimal realPrice,
-			BigDecimal profitFee, BigDecimal lowPrice, Long numIid,
-			Double freshRebateProportion, BigDecimal freshOriginalPrice,
-			String freshTitle) {
+	public BaseItem(Long shopId, String imageByte, String channel,
+			String title, String url, Long tbkNumIid, BigDecimal originalPrice,
+			Double rebateProportion, BigDecimal rebateFee,
+			BigDecimal serviceFee, BigDecimal realPrice, BigDecimal profitFee,
+			BigDecimal lowPrice, Long numIid, Double freshRebateProportion,
+			BigDecimal freshOriginalPrice, String freshTitle) {
 		this.setShopId(shopId);
 		this.setImageByte(imageByte);
 		this.setChannel(channel);
@@ -70,6 +72,7 @@ public class BaseItem extends BaseEntity {
 	/**
 	 * 淘宝客商品编号
 	 */
+	@Column(unique = true)
 	private Long tbkNumIid;
 
 	/**
@@ -117,6 +120,7 @@ public class BaseItem extends BaseEntity {
 	/**
 	 * 店铺商品编号
 	 */
+	@Column(unique = true)
 	private Long numIid;
 
 	/**

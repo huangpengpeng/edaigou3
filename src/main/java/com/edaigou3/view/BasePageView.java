@@ -10,6 +10,7 @@ import org.eclipse.swt.widgets.Shell;
 
 import com.common.jdbc.page.Pagination;
 import com.edaigou3.view.base.IPageView;
+import com.edaigou3.view.base.ISearchView;
 
 public abstract class BasePageView implements IPageView {
 
@@ -21,6 +22,8 @@ public abstract class BasePageView implements IPageView {
 
 	public void createContents(Shell shell) {
 	}
+
+	public abstract ISearchView getSearchView();
 
 	public void createContents(Composite composite) {
 		_上一页 = new Button(composite, SWT.NONE);
@@ -76,17 +79,23 @@ public abstract class BasePageView implements IPageView {
 	public void createListenter() {
 		_上一页.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event arg0) {
-				fullContents(pre());
+				if (page == null) {
+					page = getSearchView().query(1);
+				} else {
+					getSearchView().query(page.getPrePage());
+				}
+				fullContents(page);
 			}
 		});
 		_下一页.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event arg0) {
-				fullContents(next());
+				if (page == null) {
+					page = getSearchView().query(1);
+				} else {
+					getSearchView().query(page.getNextPage());
+				}
+				fullContents(page);
 			}
 		});
 	}
-
-	public abstract Pagination pre();
-
-	public abstract Pagination next();
 }

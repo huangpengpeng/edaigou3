@@ -9,4 +9,12 @@ public interface ItemDao {
 	
 	Pagination getPage(Long shopId, String errorType, String title,
 			Integer pageNo) ;
+	
+	void delete(Long id);
+	
+	Item getByTbkNumIid(Long tbkNumIid);
+	
+	Item getByTitle(String title );
+	
+	Item getByNumIid(Long numIid);
 }

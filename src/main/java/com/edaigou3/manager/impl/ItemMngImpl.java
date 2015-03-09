@@ -33,6 +33,26 @@ public class ItemMngImpl implements ItemMng {
 		return dao.getPage(shopId, errorType, title, pageNo);
 	}
 	
+	public void delete(Long id) {
+		dao.delete(id);
+	}
+
+
+	public Item getByTbkNumIid(Long tbkNumIid) {
+		return dao.getByTbkNumIid(tbkNumIid);
+	}
+
+
+	public Item getByTitle(String title) {
+		return dao.getByTitle(title);
+	}
+
+
+	public Item getByNumIid(Long numIid) {
+		return dao.getByNumIid(numIid);
+	}
+	
 	@Autowired
 	private ItemDao dao;
+
 }
