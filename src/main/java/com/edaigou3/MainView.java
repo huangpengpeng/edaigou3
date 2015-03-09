@@ -94,31 +94,24 @@ public class MainView extends IMainView {
 		Combo combo_5 = new Combo(composite_1, SWT.NONE);
 		combo_5.setBounds(228, 7, 86, 20);
 
-		Button btnRadioButton = new Button(composite_1, SWT.RADIO);
-		btnRadioButton.setBounds(458, 8, 69, 16);
-		btnRadioButton.setText("抓低价格");
+		Button btnRadioButton = new Button(composite_1, SWT.NONE);
+		btnRadioButton.setBounds(420, 8, 84, 22);
+		btnRadioButton.setText("同步最低售价");
 
-		Button btnRadioButton_1 = new Button(composite_1, SWT.RADIO);
-		btnRadioButton_1.setBounds(533, 8, 69, 16);
+		Button btnRadioButton_1 = new Button(composite_1, SWT.NONE);
+		btnRadioButton_1.setBounds(520, 8, 69, 22);
 		btnRadioButton_1.setText("抓取编号");
 
-		Button btnRadioButton_2 = new Button(composite_1, SWT.RADIO);
-		btnRadioButton_2.setBounds(608, 8, 75, 16);
+		Button btnRadioButton_2 = new Button(composite_1, SWT.NONE);
+		btnRadioButton_2.setBounds(608, 8, 75, 22);
 		btnRadioButton_2.setText("修售价格");
 
-		Button btnRadioButton_3 = new Button(composite_1, SWT.RADIO);
-		btnRadioButton_3.setBounds(689, 8, 80, 16);
+		Button btnRadioButton_3 = new Button(composite_1, SWT.NONE);
+		btnRadioButton_3.setBounds(695, 8, 80, 22);
 		btnRadioButton_3.setText("抓售价格");
-
-		Button btnNewButton_9 = new Button(composite_1, SWT.NONE);
-		btnNewButton_9.setBounds(1040, 7, 48, 22);
-		btnNewButton_9.setText("自动");
 
 		View.addView(composite_1, NewInstance.get(BrowserView.class));
 
-		Button btnNewButton_21 = new Button(composite_1, SWT.NONE);
-		btnNewButton_21.setBounds(775, 5, 42, 22);
-		btnNewButton_21.setText("操作");
 
 		text_18 = new Text(composite_1, SWT.BORDER);
 		text_18.setBounds(902, 10, 32, 18);
