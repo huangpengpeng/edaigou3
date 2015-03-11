@@ -1,6 +1,7 @@
 package com.edaigou3.dao;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import com.common.jdbc.page.Pagination;
 import com.edaigou3.entity.Item;
@@ -26,4 +27,6 @@ public interface ItemDao {
 	Item getByNumIid(Long numIid);
 	
 	Item get(Long id);
+	
+	 List<Item> query(String status);
 }

@@ -1,11 +1,8 @@
 package com.edaigou3.view.ext;
 
-import java.io.File;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

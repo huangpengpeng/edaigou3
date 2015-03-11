@@ -1,6 +1,7 @@
 package com.edaigou3.dao.impl;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
@@ -23,13 +24,16 @@ public class ItemDaoImpl extends JdbcTemplateBaseDao implements ItemDao {
 	}
 
 	public Pagination getPage(Long shopId, Long[] ids, String title,
-			Integer pageNo,Integer pageSize) {
+			Integer pageNo, Integer pageSize) {
 		SqlBuilder sqlBuilder = new SqlBuilder("select * from Item where 1=1");
 		if (shopId != null) {
 			sqlBuilder.andEqualTo("shopId", shopId);
 		}
 		if (sqlBuilder.ifNotNull(title)) {
 			sqlBuilder.andEqualTo("title", title);
+		}
+		if (sqlBuilder.ifNotNull(ids)) {
+			sqlBuilder.andIn("id", ids);
 		}
 		return super.getPage(sqlBuilder, pageNo == null ? 1 : pageNo, pageSize);
 	}
@@ -105,5 +109,13 @@ public class ItemDaoImpl extends JdbcTemplateBaseDao implements ItemDao {
 		sqlBuilder.set("lowPrice", lowPrice);
 		sqlBuilder.set("numIid", numIid);
 		super.update(id, sqlBuilder);
+	}
+
+	public List<Item> query(String status) {
+		SqlBuilder sqlBuilder = new SqlBuilder("select * from Item where 1=1");
+		if (status != null) {
+			sqlBuilder.andEqualTo("status", status);
+		}
+		return query(sqlBuilder);
 	}
 }

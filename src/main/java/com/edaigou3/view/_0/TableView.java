@@ -1,5 +1,11 @@
 package com.edaigou3.view._0;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.io.FileUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -12,6 +18,7 @@ import org.eclipse.swt.widgets.TableItem;
 import org.springframework.stereotype.Component;
 
 import com.edaigou3.entity.Item;
+import com.edaigou3.entity.Item.ItemStatus;
 import com.edaigou3.manager.ItemMng;
 import com.edaigou3.view.FolderView;
 import com.edaigou3.view.ItemView;
@@ -19,11 +26,13 @@ import com.edaigou3.view.base.IMainView.NewInstance;
 import com.edaigou3.view.base.ITableView;
 import com.edaigou3.view.ext.Column;
 import com.edaigou3.view.ext.Column.Listener;
+import com.edaigou3.view.ext.ResourceUtils;
 
 @Component
 public class TableView extends ITableView {
 
 	private Table table;
+	private MenuItem _全部导出;
 
 	public void createListenter() {
 		table.addSelectionListener(new SelectionListener() {
@@ -35,6 +44,26 @@ public class TableView extends ITableView {
 			public void widgetDefaultSelected(SelectionEvent arg0) {
 			}
 		});
+		_全部导出.addListener(SWT.Selection,
+				new org.eclipse.swt.widgets.Listener() {
+					public void handleEvent(Event arg0) {
+						String filename = ResourceUtils.getResource()
+								+ "url.txt";
+						List<Item> createItems = NewInstance.get(ItemMng.class)
+								.query(ItemStatus.创建.toString());
+						List<String> urls = new ArrayList<String>();
+						for (Item item : createItems) {
+							urls.add(item.getUrl());
+						}
+						try {
+							FileUtils.writeLines(new File(filename), urls);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						NewInstance.get(SearchView_0.class).setValue("_商品标题",
+								filename);
+					}
+				});
 	}
 
 	public void preHandle() {
@@ -48,8 +77,8 @@ public class TableView extends ITableView {
 	@Override
 	public void createContents(Shell shell) {
 		Menu menu = new Menu(shell, SWT.POP_UP);
-		MenuItem menuItem1 = new MenuItem(menu, SWT.CASCADE);
-		menuItem1.setText("全部导出");
+		_全部导出 = new MenuItem(menu, SWT.CASCADE);
+		_全部导出.setText("全部导出");
 		MenuItem menuItem2 = new MenuItem(menu, SWT.CASCADE);
 		menuItem2.setText("全部上架");
 		MenuItem menuItem3 = new MenuItem(menu, SWT.CASCADE);
