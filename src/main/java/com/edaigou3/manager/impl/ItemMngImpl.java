@@ -25,7 +25,7 @@ public class ItemMngImpl implements ItemMng {
 			Double rebateProportion, BigDecimal rebateFee,
 			BigDecimal serviceFee, BigDecimal realPrice) {
 		Item item = new Item(shopId, imageByte, channel, title, url, tbkNumIid,
-				originalPrice, rebateProportion, rebateFee, serviceFee,
+				null,originalPrice, rebateProportion, rebateFee, serviceFee,
 				realPrice, null, null, null, null, null, null, null);
 		item.caleProfieFee();
 		item.init();
@@ -58,12 +58,13 @@ public class ItemMngImpl implements ItemMng {
 	}
 
 	public void update(Long id, Long shopId, String imageByte, String channel,
-			String title, BigDecimal originalPrice, Double rebateProportion,
-			BigDecimal rebateFee, BigDecimal serviceFee, BigDecimal realPrice,
-			BigDecimal profitFee, BigDecimal lowPrice, Long numIid) {
-		dao.update(id, shopId, imageByte, channel, title, originalPrice,
-				rebateProportion, rebateFee, serviceFee, realPrice, profitFee,
-				lowPrice, numIid);
+			String title, BigDecimal marketPrice, BigDecimal originalPrice,
+			Double rebateProportion, BigDecimal rebateFee,
+			BigDecimal serviceFee, BigDecimal realPrice, BigDecimal profitFee,
+			BigDecimal lowPrice, Long numIid) {
+		dao.update(id, shopId, imageByte, channel, title, marketPrice,
+				originalPrice, rebateProportion, rebateFee, serviceFee,
+				realPrice, profitFee, lowPrice, numIid);
 
 		checkErrors(id);
 	}

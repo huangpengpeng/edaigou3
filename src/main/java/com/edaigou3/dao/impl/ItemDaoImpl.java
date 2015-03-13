@@ -71,7 +71,7 @@ public class ItemDaoImpl extends JdbcTemplateBaseDao implements ItemDao {
 	}
 
 	public void update(Long id, Long shopId, String imageByte, String channel,
-			String title, BigDecimal originalPrice, Double rebateProportion,
+			String title,BigDecimal marketPrice, BigDecimal originalPrice, Double rebateProportion,
 			BigDecimal rebateFee, BigDecimal serviceFee, BigDecimal realPrice,
 			BigDecimal profitFee, BigDecimal lowPrice, Long numIid) {
 		SqlBuilder sqlBuilder = new SqlBuilder(
@@ -96,6 +96,9 @@ public class ItemDaoImpl extends JdbcTemplateBaseDao implements ItemDao {
 		}
 		if (sqlBuilder.ifNotNull(rebateFee)) {
 			sqlBuilder.set("rebateFee", rebateFee);
+		}
+		if (sqlBuilder.ifNotNull(marketPrice)) {
+			sqlBuilder.set("marketPrice", marketPrice);
 		}
 		if (sqlBuilder.ifNotNull(serviceFee)) {
 			sqlBuilder.set("serviceFee", serviceFee);

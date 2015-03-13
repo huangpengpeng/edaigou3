@@ -42,11 +42,13 @@ public class ItemView extends BaseViewAdapter {
 	private Text rebateProportion;
 	private Text rebateFee;
 	private Text serviceFee;
+	private Text marketPrice;
 	private Text realPrice;
 	private Text profitFee;
 	private Text lowPrice;
 	private Text numIid;
 	private Button btnloginalimama;
+	private Button btnloginhuanleguan;
 	private Button btnovershot;
 	private Button image;
 	private Combo channel;
@@ -127,6 +129,13 @@ public class ItemView extends BaseViewAdapter {
 		serviceFee = new Text(grpSp, SWT.BORDER);
 		serviceFee.setBounds(655, 47, 70, 18);
 
+		Label labmarketPrice = new Label(grpSp, SWT.NONE);
+		labmarketPrice.setBounds(755, 52, 54, 14);
+		labmarketPrice.setText("市场价");
+
+		marketPrice = new Text(grpSp, SWT.BORDER);
+		marketPrice.setBounds(820, 47, 70, 18);
+
 		Label lblNewLabel_10 = new Label(grpSp, SWT.NONE);
 		lblNewLabel_10.setBounds(108, 78, 54, 18);
 		lblNewLabel_10.setText("实际售价");
@@ -167,6 +176,10 @@ public class ItemView extends BaseViewAdapter {
 		btnloginalimama = new Button(grpSp, SWT.NONE);
 		btnloginalimama.setBounds(797, 72, 80, 22);
 		btnloginalimama.setText("登录阿里妈妈");
+
+		btnloginhuanleguan = new Button(grpSp, SWT.NONE);
+		btnloginhuanleguan.setBounds(897, 72, 80, 22);
+		btnloginhuanleguan.setText("登录欢乐狂");
 	}
 
 	@Override
@@ -208,6 +221,10 @@ public class ItemView extends BaseViewAdapter {
 			numIid.setText(String.valueOf(item.getNumIid()));
 		else
 			numIid.setText("");
+		if (item.getMarketPrice() != null)
+			marketPrice.setText(String.valueOf(item.getMarketPrice()));
+		else
+			marketPrice.setText("");
 	}
 
 	public Item getViewToModel() {
@@ -225,6 +242,9 @@ public class ItemView extends BaseViewAdapter {
 			item.setServiceFee(new BigDecimal(serviceFee.getText()));
 			item.setRealPrice(new BigDecimal(realPrice.getText()));
 			item.setProfitFee(new BigDecimal(profitFee.getText()));
+			if (marketPrice.getText() != null) {
+				item.setMarketPrice(new BigDecimal(marketPrice.getText()));
+			}
 			if (StringUtils.isNotBlank(lowPrice.getText())) {
 				item.setLowPrice(new BigDecimal(lowPrice.getText()));
 			}
@@ -301,6 +321,16 @@ public class ItemView extends BaseViewAdapter {
 						"http://www.alimama.com/member/login.htm");
 			}
 		});
+		btnloginhuanleguan.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event arg0) {
+				NewInstance.get(FolderView.class).selection(
+						NewInstance.get(FolderView.class).get_新品发布());
+				NewInstance
+						.get(BrowserView_1.class)
+						.doRequest(
+								"http://tbgr.huanleguang.com/promotion/promo/index/?hpm=1");
+			}
+		});
 		btnovershot.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event arg0) {
 				NewInstance.get(FolderView.class).selection(
@@ -361,6 +391,14 @@ public class ItemView extends BaseViewAdapter {
 		lowPrice.setText(lowPriceValue.toString());
 	}
 
+	public void setMarketPrice(BigDecimal marketPriceValue) {
+		marketPrice.setText(marketPriceValue.toString());
+	}
+
+	public void setNumIid(String numIidValue) {
+		numIid.setText(numIidValue);
+	}
+
 	public void updateSubmit() {
 		Item item = getViewToModel();
 		if (item == null) {
@@ -379,9 +417,10 @@ public class ItemView extends BaseViewAdapter {
 		}
 		NewInstance.get(ItemMng.class).update(old.getId(), item.getShopId(),
 				item.getImageByte(), item.getChannel(), item.getTitle(),
-				item.getOriginalPrice(), item.getRebateProportion(),
-				item.getRebateFee(), item.getServiceFee(), item.getRealPrice(),
-				item.getProfitFee(), item.getLowPrice(), item.getNumIid());
+				item.getMarketPrice(), item.getOriginalPrice(),
+				item.getRebateProportion(), item.getRebateFee(),
+				item.getServiceFee(), item.getRealPrice(), item.getProfitFee(),
+				item.getLowPrice(), item.getNumIid());
 		item.setId(old.getId());
 
 		// 更新table选择

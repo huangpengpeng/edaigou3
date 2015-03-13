@@ -18,7 +18,7 @@ public class BaseItem extends BaseEntity {
 	}
 
 	public BaseItem(Long shopId, String imageByte, String channel,
-			String title, String url, Long tbkNumIid, BigDecimal originalPrice,
+			String title, String url, Long tbkNumIid,BigDecimal marketPrice, BigDecimal originalPrice,
 			Double rebateProportion, BigDecimal rebateFee,
 			BigDecimal serviceFee, BigDecimal realPrice, BigDecimal profitFee,
 			BigDecimal lowPrice, Long numIid, Double freshRebateProportion,
@@ -75,6 +75,12 @@ public class BaseItem extends BaseEntity {
 	@Column(unique = true)
 	private Long tbkNumIid;
 
+	/**
+	 * 市场价
+	 */
+	@Column(precision = 18, scale = 2)
+	private BigDecimal marketPrice;
+	
 	/**
 	 * 淘宝客原始销售价格
 	 */
@@ -301,4 +307,13 @@ public class BaseItem extends BaseEntity {
 	public void setFreshRealPrice(BigDecimal freshRealPrice) {
 		this.freshRealPrice = freshRealPrice;
 	}
+
+	public BigDecimal getMarketPrice() {
+		return marketPrice;
+	}
+
+	public void setMarketPrice(BigDecimal marketPrice) {
+		this.marketPrice = marketPrice;
+	}
+	
 }

@@ -11,9 +11,9 @@ import com.edaigou3.view.base.IBrowserView;
 import com.edaigou3.view.base.IMainView.JFrame;
 import com.edaigou3.view.base.IMainView.NewInstance;
 
-public abstract  class BaseBrowserView   implements IBrowserView {
+public abstract class BaseBrowserView implements IBrowserView {
 
-	private Browser browser;
+	protected Browser browser;
 	private IOperatorProvider operatorProvider;
 	private int waitingtime = 0;
 	private boolean completed = true;
@@ -55,7 +55,8 @@ public abstract  class BaseBrowserView   implements IBrowserView {
 
 	public void doRequest(IRequestProvider requestProvider,
 			IOperatorProvider operatorProvider, int time) {
-		doRequest(requestProvider.getRequestUrl(this), operatorProvider, time);
+			doRequest(requestProvider.getRequestUrl(this), operatorProvider,
+					time);
 	}
 
 	public String getResponseText() {

@@ -13,16 +13,16 @@ public class Item extends BaseItem {
 	}
 
 	public Item(Long shopId, String imageByte, String channel, String title,
-			String url, Long tbkNumIid, BigDecimal originalPrice,
-			Double rebateProportion, BigDecimal rebateFee,
-			BigDecimal serviceFee, BigDecimal realPrice, BigDecimal profitFee,
-			BigDecimal lowPrice, Long numIid, Double freshRebateProportion,
-			BigDecimal freshOriginalPrice, String freshTitle,
-			BigDecimal freshRealPrice) {
-		super(shopId, imageByte, channel, title, url, tbkNumIid, originalPrice,
-				rebateProportion, rebateFee, serviceFee, realPrice, profitFee,
-				lowPrice, numIid, freshRebateProportion, freshOriginalPrice,
-				freshTitle, freshRealPrice);
+			String url, Long tbkNumIid, BigDecimal marketPrice,
+			BigDecimal originalPrice, Double rebateProportion,
+			BigDecimal rebateFee, BigDecimal serviceFee, BigDecimal realPrice,
+			BigDecimal profitFee, BigDecimal lowPrice, Long numIid,
+			Double freshRebateProportion, BigDecimal freshOriginalPrice,
+			String freshTitle, BigDecimal freshRealPrice) {
+		super(shopId, imageByte, channel, title, url, tbkNumIid, marketPrice,
+				originalPrice, rebateProportion, rebateFee, serviceFee,
+				realPrice, profitFee, lowPrice, numIid, freshRebateProportion,
+				freshOriginalPrice, freshTitle, freshRealPrice);
 	}
 
 	public void caleProfieFee() {

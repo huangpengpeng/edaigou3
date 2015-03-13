@@ -11,7 +11,7 @@ public interface ItemDao {
 	void add(Item item);
 	
 	void update(Long id, Long shopId, String imageByte, String channel,
-			String title, BigDecimal originalPrice, Double rebateProportion,
+			String title,  BigDecimal marketPrice,BigDecimal originalPrice, Double rebateProportion,
 			BigDecimal rebateFee, BigDecimal serviceFee, BigDecimal realPrice,
 			BigDecimal profitFee, BigDecimal lowPrice, Long numIid);
 	
