@@ -23,11 +23,14 @@ public class ItemDaoImpl extends JdbcTemplateBaseDao implements ItemDao {
 		return Item.class;
 	}
 
-	public Pagination getPage(Long shopId, Long[] ids, String title,
+	public Pagination getPage(Long shopId, Long[] ids, String title,String status,
 			Integer pageNo, Integer pageSize) {
 		SqlBuilder sqlBuilder = new SqlBuilder("select * from Item where 1=1");
 		if (shopId != null) {
 			sqlBuilder.andEqualTo("shopId", shopId);
+		}
+		if (sqlBuilder.ifNotNull(status)) {
+			sqlBuilder.andEqualTo("status", status);
 		}
 		if (sqlBuilder.ifNotNull(title)) {
 			sqlBuilder.andEqualTo("title", title);
@@ -35,6 +38,7 @@ public class ItemDaoImpl extends JdbcTemplateBaseDao implements ItemDao {
 		if (sqlBuilder.ifNotNull(ids)) {
 			sqlBuilder.andIn("id", ids);
 		}
+		sqlBuilder.append(" order by id desc");
 		return super.getPage(sqlBuilder, pageNo == null ? 1 : pageNo, pageSize);
 	}
 

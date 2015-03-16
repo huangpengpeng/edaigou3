@@ -81,7 +81,7 @@ public class SearchView_1 implements ISearchView {
 	public Pagination query(Integer pageNo) {
 		if (shopView.getNumber() != null) {
 			page = NewInstance.get(ItemMng.class).getPage(shopView.getNumber(),
-					null, null, pageNo, 1);
+					null, null, null,pageNo, 1);
 		} else {
 			page = null;
 		}

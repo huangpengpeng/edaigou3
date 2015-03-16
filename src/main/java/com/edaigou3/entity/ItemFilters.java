@@ -13,7 +13,6 @@ public class ItemFilters extends BaseItemFilters{
 		super(pNumIid, nick);
 	}
 	
-	
 	public void init(){}
 
 	private static final long serialVersionUID = 8794528367563453019L;

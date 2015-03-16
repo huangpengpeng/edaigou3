@@ -9,7 +9,6 @@ import org.eclipse.swt.widgets.Shell;
 import org.springframework.stereotype.Component;
 
 import com.edaigou3.view.BaseBrowserView;
-import com.edaigou3.view.FolderView;
 import com.edaigou3.view.base.IMainView.NewInstance;
 import com.edaigou3.view.base.IMainView.View;
 import com.edaigou3.view.ext._修售价格Provider;

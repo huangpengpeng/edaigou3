@@ -22,7 +22,7 @@ public interface ItemMng {
 			BigDecimal freshOriginalPrice, String freshTitle,
 			BigDecimal freshRealPrice);
 
-	public Pagination getPage(Long shopId, Long[] ids, String title,
+	public Pagination getPage(Long shopId, Long[] ids, String title,String status,
 			Integer pageNo, Integer pageSize);
 
 	List<Item> query(String status);

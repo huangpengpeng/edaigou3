@@ -196,9 +196,9 @@ public class ItemView extends BaseViewAdapter {
 			rebateProportion
 					.setText(String.valueOf(item.getRebateProportion()));
 		}
-		if (item.getServiceFee() == null) {
-			item.caleRebate();
-		}
+		
+		item.caleRebate();
+		
 		rebateFee.setText(String.valueOf(item.getRebateFee()));
 		serviceFee.setText(String.valueOf(item.getServiceFee()));
 		originalPrice.setText(String.valueOf(item.getOriginalPrice()));
@@ -207,7 +207,9 @@ public class ItemView extends BaseViewAdapter {
 					new BigDecimal("0.88")));
 		}
 		realPrice.setText(String.valueOf(item.getRealPrice().intValue()));
+		
 		item.caleProfieFee();
+		
 		profitFee.setText(String.valueOf(item.getProfitFee()));
 		if (item.getLowPrice() != null)
 			lowPrice.setText(String.valueOf(item.getLowPrice()));
@@ -230,10 +232,13 @@ public class ItemView extends BaseViewAdapter {
 					item.getUrl(), "id")));
 			item.setOriginalPrice(new BigDecimal(originalPrice.getText()));
 			item.setRebateProportion(Double.valueOf(rebateProportion.getText()));
-			item.setRebateFee(new BigDecimal(rebateFee.getText()));
-			item.setServiceFee(new BigDecimal(serviceFee.getText()));
+
+			item.caleRebate();
+
 			item.setRealPrice(new BigDecimal(realPrice.getText()));
-			item.setProfitFee(new BigDecimal(profitFee.getText()));
+
+			item.caleProfieFee();
+
 			if (StringUtils.isNotBlank(lowPrice.getText())) {
 				item.setLowPrice(new BigDecimal(lowPrice.getText()));
 			}

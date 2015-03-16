@@ -32,9 +32,9 @@ public class ItemMngImpl implements ItemMng {
 		dao.add(item);
 	}
 
-	public Pagination getPage(Long shopId, Long[] ids, String title,
+	public Pagination getPage(Long shopId, Long[] ids, String title,String status,
 			Integer pageNo, Integer pageSize) {
-		return dao.getPage(shopId, ids, title, pageNo, pageSize);
+		return dao.getPage(shopId, ids, title,status, pageNo, pageSize);
 	}
 
 	public void delete(Long id) {
@@ -91,7 +91,7 @@ public class ItemMngImpl implements ItemMng {
 
 		// 当实际销售小于或者等于最低价格
 		if (item.getLowPrice() != null
-				&& item.getRealPrice().compareTo(item.getLowPrice()) <= 0) {
+				&& item.getRealPrice().compareTo(item.getLowPrice()) >= 0) {
 			itemErrorsMng.add(item.getId(), ItemErrorsType.非低价格.toString());
 		}
 

@@ -14,12 +14,17 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.springframework.stereotype.Component;
 
-import com.edaigou3.view.BasePageView;
 import com.edaigou3.view.FolderView;
 import com.edaigou3.view.ItemView;
+import com.edaigou3.view._0.PageView_0;
 import com.edaigou3.view._0.SearchView_0;
 import com.edaigou3.view._0.TableView_0;
 import com.edaigou3.view._1.BrowserView_1;
+import com.edaigou3.view._2.SearchView_2;
+import com.edaigou3.view._2.TableView_2;
+import com.edaigou3.view._3.PageView_3;
+import com.edaigou3.view._3.SearchView_3;
+import com.edaigou3.view._3.TableView_3;
 import com.edaigou3.view.base.IMainView;
 
 @Component
@@ -37,8 +42,6 @@ public class MainView extends IMainView {
 	private Table table_5;
 	private Table table_6;
 	private Table table_7;
-	private Text text_21;
-	private Table table_8;
 	private Text text_22;
 	private Text text_23;
 	private Text text_24;
@@ -76,56 +79,20 @@ public class MainView extends IMainView {
 		View.addView(NewInstance.get(FolderView.class).getC_新品发布(),
 				NewInstance.get(BrowserView_1.class));
 
-		CTabItem tbtmNewItem_2 = new CTabItem(NewInstance.get(FolderView.class)
-				.getTabFolder(), SWT.NONE);
-		tbtmNewItem_2.setText("已上架");
+		View.addView(NewInstance.get(FolderView.class).getC_商品过滤(),
+				NewInstance.get(SearchView_2.class));
 
-		Composite composite_2 = new Composite(NewInstance.get(FolderView.class)
-				.getTabFolder(), SWT.NONE);
-		tbtmNewItem_2.setControl(composite_2);
+		View.addView(NewInstance.get(FolderView.class).getC_商品过滤(),
+				NewInstance.get(TableView_2.class));
 
-		Button btnNewButton_10 = new Button(composite_2, SWT.NONE);
-		btnNewButton_10.setBounds(10, 8, 60, 27);
-		btnNewButton_10.setText("上一页");
+		View.addView(NewInstance.get(FolderView.class).getC_已上架(),
+				NewInstance.get(PageView_3.class));
 
-		CLabel lblNewLabel_21 = new CLabel(composite_2, SWT.NONE);
-		lblNewLabel_21.setAlignment(SWT.CENTER);
-		lblNewLabel_21.setBounds(82, 8, 67, 23);
-		lblNewLabel_21.setText("0/0/0");
+		View.addView(NewInstance.get(FolderView.class).getC_已上架(),
+				NewInstance.get(SearchView_3.class));
 
-		Button btnNewButton_11 = new Button(composite_2, SWT.NONE);
-		btnNewButton_11.setBounds(158, 8, 60, 27);
-		btnNewButton_11.setText("下一页");
-
-		Label label = new Label(composite_2, SWT.NONE);
-		label.setBounds(438, 15, 61, 17);
-		label.setText("淘宝店铺");
-
-		Combo combo_6 = new Combo(composite_2, SWT.NONE);
-		combo_6.setBounds(505, 12, 99, 25);
-
-		Label lblNewLabel_22 = new Label(composite_2, SWT.NONE);
-		lblNewLabel_22.setBounds(780, 15, 61, 17);
-		lblNewLabel_22.setText("商品标题");
-
-		text_13 = new Text(composite_2, SWT.BORDER);
-		text_13.setBounds(847, 10, 160, 23);
-
-		Button btnNewButton_14 = new Button(composite_2, SWT.NONE);
-		btnNewButton_14.setBounds(1018, 8, 60, 27);
-		btnNewButton_14.setText("查询");
-
-		table_1 = new Table(composite_2, SWT.BORDER | SWT.FULL_SELECTION);
-		table_1.setBounds(0, 40, 1088, 505);
-		table_1.setHeaderVisible(true);
-		table_1.setLinesVisible(true);
-
-		Label lblNewLabel_27 = new Label(composite_2, SWT.NONE);
-		lblNewLabel_27.setBounds(618, 15, 54, 12);
-		lblNewLabel_27.setText("错误类型");
-
-		Combo combo_9 = new Combo(composite_2, SWT.NONE);
-		combo_9.setBounds(678, 12, 86, 20);
+		View.addView(NewInstance.get(FolderView.class).getC_已上架(),
+				NewInstance.get(TableView_3.class));
 
 		CTabItem tbtmNewItem_3 = new CTabItem(NewInstance.get(FolderView.class)
 				.getTabFolder(), SWT.NONE);
@@ -172,7 +139,7 @@ public class MainView extends IMainView {
 		table_2.setLinesVisible(true);
 
 		View.addView(NewInstance.get(FolderView.class).getC_新增商品(),
-				NewInstance.get(BasePageView.class));
+				NewInstance.get(PageView_0.class));
 
 		View.addView(NewInstance.get(FolderView.class).getC_新增商品(),
 				NewInstance.get(SearchView_0.class));
@@ -489,34 +456,5 @@ public class MainView extends IMainView {
 		Button btnNewButton_24 = new Button(composite_12, SWT.NONE);
 		btnNewButton_24.setBounds(1035, 5, 43, 22);
 		btnNewButton_24.setText("获取");
-
-		Label lblNewLabel_31 = new Label(NewInstance.get(FolderView.class)
-				.getC_商品过滤(), SWT.NONE);
-		lblNewLabel_31.setBounds(10, 10, 54, 12);
-		lblNewLabel_31.setText("淘宝店铺");
-
-		Combo combo_10 = new Combo(NewInstance.get(FolderView.class)
-				.getC_商品过滤(), SWT.NONE);
-		combo_10.setBounds(70, 7, 86, 20);
-
-		Label lblNewLabel_32 = new Label(NewInstance.get(FolderView.class)
-				.getC_商品过滤(), SWT.NONE);
-		lblNewLabel_32.setBounds(175, 10, 54, 12);
-		lblNewLabel_32.setText("掌柜昵称");
-
-		text_21 = new Text(NewInstance.get(FolderView.class).getC_商品过滤(),
-				SWT.BORDER);
-		text_21.setBounds(238, 7, 97, 18);
-
-		Button btnNewButton_8 = new Button(NewInstance.get(FolderView.class)
-				.getC_商品过滤(), SWT.NONE);
-		btnNewButton_8.setBounds(1024, 5, 54, 22);
-		btnNewButton_8.setText("保存");
-
-		table_8 = new Table(NewInstance.get(FolderView.class).getC_商品过滤(),
-				SWT.BORDER | SWT.FULL_SELECTION);
-		table_8.setBounds(0, 28, 1088, 517);
-		table_8.setHeaderVisible(true);
-		table_8.setLinesVisible(true);
 	}
 }
