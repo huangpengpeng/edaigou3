@@ -104,7 +104,7 @@ public class SearchView_1 implements ISearchView {
 			}
 
 			page = NewInstance.get(ItemMng.class).getPage(shopView.getNumber(),
-					ids, null, ItemStatus.创建.toString(), pageNo, 1);
+					ids, null, ItemStatus.创建.toString(), pageNo, 1, sort);
 		} else {
 			page = null;
 		}
@@ -122,4 +122,6 @@ public class SearchView_1 implements ISearchView {
 	public void clearText() {
 
 	}
+
+	public static String sort = " order by id desc";
 }

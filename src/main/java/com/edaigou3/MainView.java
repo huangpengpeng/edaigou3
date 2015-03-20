@@ -15,6 +15,9 @@ import com.edaigou3.view.ItemView;
 import com.edaigou3.view._0.PageView_0;
 import com.edaigou3.view._0.SearchView_0;
 import com.edaigou3.view._0.TableView_0;
+import com.edaigou3.view._06.PageView_6;
+import com.edaigou3.view._06.SearchView_6;
+import com.edaigou3.view._06.TableView_6;
 import com.edaigou3.view._1.BrowserView_1;
 import com.edaigou3.view._2.SearchView_2;
 import com.edaigou3.view._2.TableView_2;
@@ -90,10 +93,18 @@ public class MainView extends IMainView {
 
 		View.addView(NewInstance.get(FolderView.class).getC_商品同步(),
 				NewInstance.get(BrowserView_4.class));
-		
+
 		View.addView(NewInstance.get(FolderView.class).getC_非低价格_店售错误(),
 				NewInstance.get(BrowserView_5.class));
 
+		View.addView(NewInstance.get(FolderView.class).getC_天猫下架(),
+				NewInstance.get(PageView_6.class));
+
+		View.addView(NewInstance.get(FolderView.class).getC_天猫下架(),
+				NewInstance.get(SearchView_6.class));
+
+		View.addView(NewInstance.get(FolderView.class).getC_天猫下架(),
+				NewInstance.get(TableView_6.class));
 
 		CTabItem tabItem_3 = new CTabItem(NewInstance.get(FolderView.class)
 				.getTabFolder(), SWT.NONE);
@@ -154,35 +165,5 @@ public class MainView extends IMainView {
 		Label label_8 = new Label(composite_7, SWT.NONE);
 		label_8.setText("全部下架");
 		label_8.setBounds(1024, 17, 54, 12);
-
-		CTabItem tabItem_6 = new CTabItem(NewInstance.get(FolderView.class)
-				.getTabFolder(), SWT.NONE);
-		tabItem_6.setText("天猫下架");
-
-		Composite composite_8 = new Composite(NewInstance.get(FolderView.class)
-				.getTabFolder(), SWT.NONE);
-		tabItem_6.setControl(composite_8);
-
-		Button button_8 = new Button(composite_8, SWT.NONE);
-		button_8.setText("上一页");
-		button_8.setBounds(10, 10, 60, 27);
-
-		CLabel label_9 = new CLabel(composite_8, SWT.NONE);
-		label_9.setText("0/0/0");
-		label_9.setAlignment(SWT.CENTER);
-		label_9.setBounds(82, 10, 67, 23);
-
-		Button button_9 = new Button(composite_8, SWT.NONE);
-		button_9.setText("下一页");
-		button_9.setBounds(158, 10, 60, 27);
-
-		table_5 = new Table(composite_8, SWT.BORDER | SWT.FULL_SELECTION);
-		table_5.setLinesVisible(true);
-		table_5.setHeaderVisible(true);
-		table_5.setBounds(0, 42, 1088, 505);
-
-		Label label_10 = new Label(composite_8, SWT.NONE);
-		label_10.setText("全部下架");
-		label_10.setBounds(1024, 17, 54, 12);
 	}
 }

@@ -26,6 +26,7 @@ import com.edaigou3.manager.ItemErrorsMng;
 import com.edaigou3.manager.ItemMng;
 import com.edaigou3.view.FolderView;
 import com.edaigou3.view.ItemView;
+import com.edaigou3.view._3.SearchView_3;
 import com.edaigou3.view.base.IMainView.NewInstance;
 import com.edaigou3.view.base.ITableView;
 import com.edaigou3.view.ext.Column;
@@ -39,6 +40,7 @@ public class TableView_0 extends ITableView {
 	private MenuItem _全部导出;
 	private MenuItem _全部上架;
 	private MenuItem _全修低价;
+	private MenuItem _利润排序;
 	private static Integer selectionIndex = 0;
 
 	public void createListenter() {
@@ -105,9 +107,22 @@ public class TableView_0 extends ITableView {
 						List<Item> createItems = NewInstance.get(ItemMng.class)
 								.query(ItemStatus.创建.toString());
 						for (Item item : createItems) {
-							NewInstance.get(ItemMng.class).update(item.getId(),
-									ItemStatus.上架.toString());
+							if (NewInstance.get(ItemErrorsMng.class)
+									.getByItem(item.getId()).isEmpty()) {
+								NewInstance.get(ItemMng.class).update(
+										item.getId(), ItemStatus.上架.toString());
+							}
 						}
+					}
+				});
+		_利润排序.addListener(SWT.Selection,
+				new org.eclipse.swt.widgets.Listener() {
+					public void handleEvent(Event arg0) {
+						if (" order by id desc".equals(SearchView_3.sort))
+							SearchView_0.sort = " order by profitFee asc";
+						else
+							SearchView_0.sort = " order by id desc";
+						NewInstance.get(SearchView_0.class).query(1);
 					}
 				});
 	}
@@ -129,6 +144,8 @@ public class TableView_0 extends ITableView {
 		_全部上架.setText("全部上架");
 		_全修低价 = new MenuItem(menu, SWT.CASCADE);
 		_全修低价.setText("全修低价");
+		_利润排序 = new MenuItem(menu, SWT.CASCADE);
+		_利润排序.setText("利润排序");
 		table.setMenu(menu);
 		super.createContents(shell);
 	}

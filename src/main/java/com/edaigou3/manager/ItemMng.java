@@ -25,7 +25,7 @@ public interface ItemMng {
 	void update(Long id,String status);
 
 	public Pagination getPage(Long shopId, Long[] ids, String title,String status,
-			Integer pageNo, Integer pageSize);
+			Integer pageNo, Integer pageSize,String sort);
 
 	List<Item> query(String status);
 

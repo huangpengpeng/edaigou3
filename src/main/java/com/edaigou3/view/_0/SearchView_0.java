@@ -112,11 +112,13 @@ public class SearchView_0 implements ISearchView {
 		String title = _商品标题.getText();
 
 		Pagination page = NewInstance.get(ItemMng.class).getPage(shopId, ids,
-				title, ItemStatus.创建.toString(), pageNo, 6);
+				title, ItemStatus.创建.toString(), pageNo, 6,sort);
 
 		NewInstance.get(TableView_0.class).fullContents(page.getList());
 
 		NewInstance.get(PageView_0.class).fullContents(page);
 		return page;
 	}
+	
+	public static String sort=" order by id desc";
 }

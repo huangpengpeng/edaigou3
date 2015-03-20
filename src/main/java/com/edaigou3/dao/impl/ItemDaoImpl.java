@@ -23,8 +23,8 @@ public class ItemDaoImpl extends JdbcTemplateBaseDao implements ItemDao {
 		return Item.class;
 	}
 
-	public Pagination getPage(Long shopId, Long[] ids, String title,String status,
-			Integer pageNo, Integer pageSize) {
+	public Pagination getPage(Long shopId, Long[] ids, String title,
+			String status, Integer pageNo, Integer pageSize, String sort) {
 		SqlBuilder sqlBuilder = new SqlBuilder("select * from Item where 1=1");
 		if (shopId != null) {
 			sqlBuilder.andEqualTo("shopId", shopId);
@@ -38,7 +38,7 @@ public class ItemDaoImpl extends JdbcTemplateBaseDao implements ItemDao {
 		if (sqlBuilder.ifNotNull(ids)) {
 			sqlBuilder.andIn("id", ids);
 		}
-		sqlBuilder.append(" order by id desc");
+		sqlBuilder.append(sort);
 		return super.getPage(sqlBuilder, pageNo == null ? 1 : pageNo, pageSize);
 	}
 
@@ -75,7 +75,7 @@ public class ItemDaoImpl extends JdbcTemplateBaseDao implements ItemDao {
 	}
 
 	public void update(Long id, Long shopId, String imageByte, String channel,
-			String title,BigDecimal originalPrice, Double rebateProportion,
+			String title, BigDecimal originalPrice, Double rebateProportion,
 			BigDecimal rebateFee, BigDecimal serviceFee, BigDecimal realPrice,
 			BigDecimal profitFee, BigDecimal lowPrice, Long numIid) {
 		SqlBuilder sqlBuilder = new SqlBuilder(

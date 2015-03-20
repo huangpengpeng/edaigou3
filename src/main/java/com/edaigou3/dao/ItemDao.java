@@ -16,7 +16,7 @@ public interface ItemDao {
 			BigDecimal profitFee, BigDecimal lowPrice, Long numIid);
 
 	Pagination getPage(Long shopId, Long[] ids, String title,String status, Integer pageNo,
-			Integer pageSize);
+			Integer pageSize,String sort);
 
 	void delete(Long id);
 

@@ -34,6 +34,8 @@ public class FolderView extends BaseViewAdapter {
 	private Composite c_商品同步;
 	private CTabItem _非低价格_店售错误;
 	private Composite c_非低价格_店售错误;
+	private CTabItem _天猫下架;
+	private Composite c_天猫下架;
 
 	@Override
 	public void createContents(Shell shell) {
@@ -81,6 +83,14 @@ public class FolderView extends BaseViewAdapter {
 		c_非低价格_店售错误 = new Composite(NewInstance.get(FolderView.class)
 				.getTabFolder(), SWT.NONE);
 		_非低价格_店售错误.setControl(c_非低价格_店售错误);
+
+		_天猫下架 = new CTabItem(NewInstance.get(FolderView.class).getTabFolder(),
+				SWT.NONE);
+		_天猫下架.setText("天猫下架");
+
+		c_天猫下架 = new Composite(
+				NewInstance.get(FolderView.class).getTabFolder(), SWT.NONE);
+		_天猫下架.setControl(c_天猫下架);
 
 		tabFolder.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent arg0) {
@@ -168,6 +178,14 @@ public class FolderView extends BaseViewAdapter {
 
 	public Composite getC_非低价格_店售错误() {
 		return c_非低价格_店售错误;
+	}
+
+	public CTabItem get_天猫下架() {
+		return _天猫下架;
+	}
+
+	public Composite getC_天猫下架() {
+		return c_天猫下架;
 	}
 
 }

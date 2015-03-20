@@ -78,7 +78,7 @@ public class SearchView_5 implements ISearchView {
 			}
 
 			page = NewInstance.get(ItemMng.class).getPage(shopView.getNumber(),
-					ids, null, ItemStatus.上架.toString(), pageNo, 1);
+					ids, null, ItemStatus.上架.toString(), pageNo, 1,"order by id desc");
 		} else {
 			page = null;
 		}

@@ -34,8 +34,8 @@ public class ItemMngImpl implements ItemMng {
 	}
 
 	public Pagination getPage(Long shopId, Long[] ids, String title,
-			String status, Integer pageNo, Integer pageSize) {
-		return dao.getPage(shopId, ids, title, status, pageNo, pageSize);
+			String status, Integer pageNo, Integer pageSize,String sort) {
+		return dao.getPage(shopId, ids, title, status, pageNo, pageSize,sort);
 	}
 
 	public void delete(Long id) {
