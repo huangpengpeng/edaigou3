@@ -33,8 +33,7 @@ public class MainView extends IMainView {
 
 	private Table table_3;
 	private Table table_4;
-	private Table table_5;
-
+	
 	/**
 	 * Launch the application.
 	 * 
