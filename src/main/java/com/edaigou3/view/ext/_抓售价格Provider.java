@@ -39,21 +39,25 @@ public class _抓售价格Provider implements IOperatorProvider {
 			element = document.getElementById("J_StrPrice");
 		}
 
-		String text = element.text().replace("¥", "");
-
-		NewInstance.get(ItemMng.class).update(item.getId(), null, null, null,
-				new BigDecimal(text));
-
-		ItemErrorsMng errorsMng = NewInstance.get(ItemErrorsMng.class);
-		if (document.text().contains("此宝贝已下架")) {
-			errorsMng.add(item.getId(), ItemErrorsType.天猫下架.toString());
-		} else {
-			ItemErrors itemErrors = errorsMng.getByItemAndType(item.getId(),
-					ItemErrorsType.天猫下架.toString());
-			if (itemErrors != null) {
-				errorsMng.delete(itemErrors.getId());
+		try {
+			String text = element.text().replace("¥", "");
+			NewInstance.get(ItemMng.class).update(item.getId(), null, null,
+					null, new BigDecimal(text));
+			ItemErrorsMng errorsMng = NewInstance.get(ItemErrorsMng.class);
+			if (document.text().contains("此宝贝已下架")) {
+				errorsMng.add(item.getId(), ItemErrorsType.天猫下架.toString());
 			}
+			else {
+				ItemErrors itemErrors = errorsMng.getByItemAndType(
+						item.getId(), ItemErrorsType.天猫下架.toString());
+				if (itemErrors != null) {
+					errorsMng.delete(itemErrors.getId());
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+		
 		// 500豪秒后执行保存 在执行下一条
 		Display.getDefault().timerExec(500, new Runnable() {
 			public void run() {
