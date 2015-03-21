@@ -89,9 +89,9 @@ public class SearchView_1 implements ISearchView {
 	}
 
 	public Pagination query(Integer pageNo) {
-		if (shopView.getNumber() != null) {
+		String errorType = _错误类型.getText();
 
-			String errorType = _错误类型.getText();
+		if (shopView.getNumber() != null) {
 
 			Long[] ids = ArrayUtils.EMPTY_LONG_OBJECT_ARRAY;
 			List<ItemErrors> itemErrors = NewInstance.get(ItemErrorsMng.class)
@@ -108,10 +108,14 @@ public class SearchView_1 implements ISearchView {
 		} else {
 			page = null;
 		}
+		
 		NewInstance.get(ProgressView_1.class).fullContents(page);
-		NewInstance.get(BrowserView_1.class).fullContents(
-				page == null ? 0 : page.getPageNo(),
-				page == null ? 0 : page.getTotalCount());
+
+		if (StringUtils.isNotBlank(errorType)) {
+			NewInstance.get(BrowserView_1.class).fullContents(
+					page == null ? 0 : page.getPageNo(),
+					page == null ? 0 : page.getTotalCount());
+		}
 		return page;
 	}
 
