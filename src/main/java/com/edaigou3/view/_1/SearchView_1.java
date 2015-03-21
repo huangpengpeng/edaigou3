@@ -109,7 +109,7 @@ public class SearchView_1 implements ISearchView {
 			page = null;
 		}
 		NewInstance.get(ProgressView_1.class).fullContents(page);
-		NewInstance.get(BrowserView_5.class).fullContents(
+		NewInstance.get(BrowserView_1.class).fullContents(
 				page == null ? 0 : page.getPageNo(),
 				page == null ? 0 : page.getTotalCount());
 		return page;

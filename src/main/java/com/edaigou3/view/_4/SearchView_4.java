@@ -21,6 +21,7 @@ import com.edaigou3.manager.ItemErrorsMng;
 import com.edaigou3.manager.ItemMng;
 import com.edaigou3.view.ShopView;
 import com.edaigou3.view.ShopView.Listener;
+import com.edaigou3.view._5.BrowserView_5;
 import com.edaigou3.view.base.IMainView.NewInstance;
 import com.edaigou3.view.base.IMainView.View;
 import com.edaigou3.view.base.ISearchView;
@@ -108,6 +109,9 @@ public class SearchView_4 implements ISearchView {
 			page = null;
 		}
 		NewInstance.get(ProgressView_4.class).fullContents(page);
+		NewInstance.get(BrowserView_4.class).fullContents(
+				page == null ? 0 : page.getPageNo(),
+				page == null ? 0 : page.getTotalCount());
 		return page;
 	}
 
