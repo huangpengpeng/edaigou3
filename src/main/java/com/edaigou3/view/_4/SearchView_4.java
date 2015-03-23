@@ -55,6 +55,7 @@ public class SearchView_4 implements ISearchView {
 		_错误类型 = new Combo(composite, SWT.NONE);
 		_错误类型.add("");
 		_错误类型.add(ItemErrorsType.抓低错误.toString());
+		_错误类型.add(ItemErrorsType.店售错误.toString());
 		_错误类型.setBounds(228, 7, 86, 20);
 	}
 
