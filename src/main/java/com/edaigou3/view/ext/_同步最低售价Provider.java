@@ -18,6 +18,7 @@ import com.edaigou3.view.ItemView;
 import com.edaigou3.view.base.IBrowserView;
 import com.edaigou3.view.base.IBrowserView.IOperatorProvider;
 import com.edaigou3.view.base.IBrowserView.IRequestProvider;
+import com.edaigou3.view.base.IMainView.MessageBox2;
 import com.edaigou3.view.base.IMainView.NewInstance;
 import com.edaigou3.view.base.ISearchView;
 
@@ -84,7 +85,15 @@ public class _同步最低售价Provider implements IOperatorProvider {
 				lowPrice = lowPrice.compareTo(new BigDecimal(price)) > 0 ? new BigDecimal(
 						price) : lowPrice;
 			} catch (Exception e) {
+				MessageBox2.showErrorMsg("最低价格抓取失败");
+				return;
 			}
+
+		}
+		
+		if (new BigDecimal(Integer.MAX_VALUE).compareTo(lowPrice) == 0) {
+			MessageBox2.showErrorMsg("最低价格抓取失败");
+			return;
 		}
 
 		NewInstance.get(ItemView.class).setLowPrice(lowPrice);

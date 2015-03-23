@@ -60,7 +60,7 @@ public class BrowserView_4 extends BaseBrowserView {
 				doRequest(
 						new com.edaigou3.view.ext._同步最低售价Provider.RequestProvider(
 								pageNo++, NewInstance.get(SearchView_4.class)),
-						new _同步最低售价Provider(this), 1000);
+						new _同步最低售价Provider(this), 3000);
 			}
 		});
 		_抓售价格_状态.addListener(SWT.Selection, new Listener() {
