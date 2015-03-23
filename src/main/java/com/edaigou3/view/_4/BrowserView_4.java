@@ -36,8 +36,8 @@ public class BrowserView_4 extends BaseBrowserView {
 		_同步最低售价.setText("最低售价");
 
 		_同步淘客 = new Button(composite, SWT.NONE);
-		_同步淘客.setBounds(420, 8, 69, 22);
-		_同步淘客.setText("同步淘客");
+		_同步淘客.setBounds(460, 8, 100, 22);
+		_同步淘客.setText("同步淘客|原价");
 
 		_抓售价格_状态 = new Button(composite, SWT.NONE);
 		_抓售价格_状态.setBounds(730, 8, 100, 22);

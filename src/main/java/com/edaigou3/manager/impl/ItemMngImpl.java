@@ -34,8 +34,8 @@ public class ItemMngImpl implements ItemMng {
 	}
 
 	public Pagination getPage(Long shopId, Long[] ids, String title,
-			String status, Integer pageNo, Integer pageSize,String sort) {
-		return dao.getPage(shopId, ids, title, status, pageNo, pageSize,sort);
+			String status, Integer pageNo, Integer pageSize, String sort) {
+		return dao.getPage(shopId, ids, title, status, pageNo, pageSize, sort);
 	}
 
 	public void delete(Long id) {
@@ -122,6 +122,13 @@ public class ItemMngImpl implements ItemMng {
 						item.getRebateProportion())) {
 			itemErrorsMng.add(item.getId(), ItemErrorsType.淘客错误.toString());
 		}
+
+		// 当同步店铺实际售价不为空 并且 实际销售价格和同步价格不一致
+		if (item.getFreshOriginalPrice() != null
+				&& item.getOriginalPrice().compareTo(
+						item.getFreshOriginalPrice()) != 0) {
+			itemErrorsMng.add(item.getId(), ItemErrorsType.猫价变动.toString());
+		}
 	}
 
 	public List<Item> query(String status) {
@@ -131,8 +138,11 @@ public class ItemMngImpl implements ItemMng {
 	public void update(Long id, Double freshRebateProportion,
 			BigDecimal freshOriginalPrice, String freshTitle,
 			BigDecimal freshRealPrice) {
+		
 		dao.update(id, freshRebateProportion, freshOriginalPrice, freshTitle,
 				freshRealPrice);
+
+		checkErrors(id);
 	}
 
 	public void update(Long id, String status) {

@@ -14,14 +14,13 @@ import org.eclipse.swt.widgets.Shell;
 import org.springframework.stereotype.Component;
 
 import com.common.jdbc.page.Pagination;
-import com.edaigou3.entity.ItemErrors;
 import com.edaigou3.entity.Item.ItemStatus;
+import com.edaigou3.entity.ItemErrors;
 import com.edaigou3.entity.ItemErrors.ItemErrorsType;
 import com.edaigou3.manager.ItemErrorsMng;
 import com.edaigou3.manager.ItemMng;
 import com.edaigou3.view.ShopView;
 import com.edaigou3.view.ShopView.Listener;
-import com.edaigou3.view._5.BrowserView_5;
 import com.edaigou3.view.base.IMainView.NewInstance;
 import com.edaigou3.view.base.IMainView.View;
 import com.edaigou3.view.base.ISearchView;
@@ -89,9 +88,10 @@ public class SearchView_4 implements ISearchView {
 	}
 
 	public Pagination query(Integer pageNo) {
+
+		String errorType = _错误类型.getText();
+
 		if (shopView.getNumber() != null) {
-			
-			String errorType = _错误类型.getText();
 
 			Long[] ids = ArrayUtils.EMPTY_LONG_OBJECT_ARRAY;
 			List<ItemErrors> itemErrors = NewInstance.get(ItemErrorsMng.class)
@@ -102,16 +102,20 @@ public class SearchView_4 implements ISearchView {
 			if (StringUtils.isNotBlank(errorType) && ArrayUtils.isEmpty(ids)) {
 				ids = (Long[]) ArrayUtils.add(ids, 0L);
 			}
-			
+
 			page = NewInstance.get(ItemMng.class).getPage(shopView.getNumber(),
-					ids, null, ItemStatus.上架.toString(), pageNo, 1,"order by id desc");
+					ids, null, ItemStatus.上架.toString(), pageNo, 1,
+					"order by id desc");
 		} else {
 			page = null;
 		}
 		NewInstance.get(ProgressView_4.class).fullContents(page);
-		NewInstance.get(BrowserView_4.class).fullContents(
-				page == null ? 0 : page.getPageNo(),
-				page == null ? 0 : page.getTotalCount());
+
+		if (StringUtils.isNotBlank(errorType)) {
+			NewInstance.get(BrowserView_4.class).fullContents(
+					page == null ? 0 : page.getPageNo(),
+					page == null ? 0 : page.getTotalCount());
+		}
 		return page;
 	}
 

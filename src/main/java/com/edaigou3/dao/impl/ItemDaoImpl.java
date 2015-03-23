@@ -33,7 +33,7 @@ public class ItemDaoImpl extends JdbcTemplateBaseDao implements ItemDao {
 			sqlBuilder.andEqualTo("status", status);
 		}
 		if (sqlBuilder.ifNotNull(title)) {
-			sqlBuilder.andEqualTo("title", title);
+			sqlBuilder.andLike("title", "%" + title + "%");
 		}
 		if (sqlBuilder.ifNotNull(ids)) {
 			sqlBuilder.andIn("id", ids);

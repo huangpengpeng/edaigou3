@@ -16,6 +16,9 @@ import com.common.jdbc.page.Pagination;
 import com.common.util.JsonUtils;
 import com.edaigou3.entity.Item;
 import com.edaigou3.entity.Item.ItemChannel;
+import com.edaigou3.entity.ItemErrors.ItemErrorsType;
+import com.edaigou3.manager.ItemErrorsMng;
+import com.edaigou3.manager.ItemMng;
 import com.edaigou3.view.ItemView;
 import com.edaigou3.view.base.IBrowserView;
 import com.edaigou3.view.base.IBrowserView.IOperatorProvider;
@@ -46,32 +49,41 @@ public class TbkInfoProvider implements IOperatorProvider {
 			}
 
 			Item itemModel = toModel(result);
-			if (itemModel == null) {
-				MessageBox2.showErrorMsg("此商品没有淘客", null);
-				return;
-			}
 
 			if (listener == null) {
+
+				if (itemModel == null) {
+					MessageBox2.showErrorMsg("此商品没有淘客", null);
+					return;
+				}
+
 				NewInstance.get(ItemView.class).fullContents(itemModel);
 			}
 
-			System.out.println("5 end completed ");
-
 			// 500豪秒后执行保存 在执行下一条
 			if (listener != null) {
+				if (itemModel == null) {
+					NewInstance.get(ItemErrorsMng.class).add(item.getId(),
+							ItemErrorsType.淘客错误.toString());
+					return;
+				}
 
 				if (!ItemChannel.高级淘客.toString().equals(item.getChannel())) {
 					NewInstance.get(ItemView.class).setRebateProportion(
-							item.getRebateProportion());
+							itemModel.getRebateProportion());
 				}
 
-				Display.getDefault().timerExec(500, new Runnable() {
+				NewInstance.get(ItemMng.class).update(item.getId(), null,
+						itemModel.getOriginalPrice(), null, null);
+
+				Display.getDefault().timerExec(1000, new Runnable() {
 					public void run() {
 						NewInstance.get(ItemView.class).updateSubmit();
 						listener.handleEvent(null);
 					}
 				});
 			}
+			System.out.println("5 end completed ");
 		} catch (Exception e) {
 			MessageBox2.showErrorMsg("获取失败,检查是否登录", e);
 		}

@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 import com.common.jdbc.page.Pagination;
 import com.edaigou3.entity.ItemErrors;
 import com.edaigou3.entity.Item.ItemStatus;
+import com.edaigou3.entity.ItemErrors.ItemErrorsType;
 import com.edaigou3.manager.ItemErrorsMng;
 import com.edaigou3.manager.ItemMng;
 import com.edaigou3.view.ShopView;
@@ -55,6 +56,7 @@ public class SearchView_3 implements ISearchView {
 		_错误类型.add("天猫下架");
 		_错误类型.add("非低价格");
 		_错误类型.add("店售错误");
+		_错误类型.add(ItemErrorsType.猫价变动.toString());
 
 		Label lblNewLabel_17 = new Label(composite, SWT.NONE);
 		lblNewLabel_17.setBounds(701, 13, 56, 17);
