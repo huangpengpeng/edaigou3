@@ -14,14 +14,13 @@ import org.eclipse.swt.widgets.Shell;
 import org.springframework.stereotype.Component;
 
 import com.common.jdbc.page.Pagination;
-import com.edaigou3.entity.ItemErrors;
 import com.edaigou3.entity.Item.ItemStatus;
+import com.edaigou3.entity.ItemErrors;
 import com.edaigou3.entity.ItemErrors.ItemErrorsType;
 import com.edaigou3.manager.ItemErrorsMng;
 import com.edaigou3.manager.ItemMng;
 import com.edaigou3.view.ShopView;
 import com.edaigou3.view.ShopView.Listener;
-import com.edaigou3.view._5.BrowserView_5;
 import com.edaigou3.view.base.IMainView.NewInstance;
 import com.edaigou3.view.base.IMainView.View;
 import com.edaigou3.view.base.ISearchView;
@@ -90,6 +89,7 @@ public class SearchView_4 implements ISearchView {
 	}
 
 	public Pagination query(Integer pageNo) {
+
 		String errorType = _错误类型.getText();
 
 		if (shopView.getNumber() != null) {
