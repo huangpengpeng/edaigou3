@@ -1,4 +1,4 @@
-package com.edaigou3.view._06;
+package com.edaigou3.view._7;
 
 import java.util.List;
 
@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 import com.common.jdbc.page.Pagination;
 import com.edaigou3.entity.ItemErrors;
 import com.edaigou3.entity.Item.ItemStatus;
+import com.edaigou3.entity.ItemErrors.ItemErrorsType;
 import com.edaigou3.manager.ItemErrorsMng;
 import com.edaigou3.manager.ItemMng;
 import com.edaigou3.view.ShopView;
@@ -26,7 +27,7 @@ import com.edaigou3.view.base.IMainView.View;
 import com.edaigou3.view.base.ISearchView;
 
 @Component
-public class SearchView_6 implements ISearchView {
+public class SearchView_7 implements ISearchView {
 
 	private Text _商品标题;
 	private Combo _错误类型;
@@ -55,6 +56,7 @@ public class SearchView_6 implements ISearchView {
 		_错误类型.add("天猫下架");
 		_错误类型.add("非低价格");
 		_错误类型.add("店售错误");
+		_错误类型.add(ItemErrorsType.猫价变动.toString());
 
 		Label lblNewLabel_17 = new Label(composite, SWT.NONE);
 		lblNewLabel_17.setBounds(701, 13, 56, 17);
@@ -95,7 +97,7 @@ public class SearchView_6 implements ISearchView {
 	public Pagination query(Integer pageNo) {
 		Long shopId = _淘宝店铺.getNumber();
 
-		String errorType = _错误类型.getText();
+		String errorType = ItemErrorsType.销利过低.toString();
 
 		Long[] ids = ArrayUtils.EMPTY_LONG_OBJECT_ARRAY;
 		List<ItemErrors> itemErrors = NewInstance.get(ItemErrorsMng.class)
@@ -103,18 +105,18 @@ public class SearchView_6 implements ISearchView {
 		for (ItemErrors error : itemErrors) {
 			ids = (Long[]) ArrayUtils.add(ids, error.getItemId());
 		}
-		if (StringUtils.isNotBlank(errorType) && ArrayUtils.isEmpty(ids)) {
+		if (ArrayUtils.isEmpty(ids)) {
 			ids = (Long[]) ArrayUtils.add(ids, 0L);
 		}
 
 		String title = _商品标题.getText();
 
 		Pagination page = NewInstance.get(ItemMng.class).getPage(shopId, ids,
-				title, ItemStatus.下架.toString(), pageNo, 6,sort);
+				title, ItemStatus.上架.toString(), pageNo, 6, sort);
 
-		NewInstance.get(TableView_6.class).fullContents(page.getList());
+		NewInstance.get(TableView_7.class).fullContents(page.getList());
 
-		NewInstance.get(PageView_6.class).fullContents(page);
+		NewInstance.get(PageView_7.class).fullContents(page);
 		return page;
 	}
 	

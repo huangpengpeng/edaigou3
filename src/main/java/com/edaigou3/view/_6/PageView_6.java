@@ -1,4 +1,4 @@
-package com.edaigou3.view._06;
+package com.edaigou3.view._6;
 
 import org.springframework.stereotype.Component;
 

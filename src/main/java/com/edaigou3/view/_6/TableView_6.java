@@ -1,24 +1,16 @@
-package com.edaigou3.view._3;
-
-import java.math.BigDecimal;
-import java.util.List;
+package com.edaigou3.view._6;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Menu;
-import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 import org.springframework.stereotype.Component;
 
 import com.edaigou3.entity.Item;
-import com.edaigou3.entity.ItemErrors;
-import com.edaigou3.entity.Item.ItemStatus;
-import com.edaigou3.entity.ItemErrors.ItemErrorsType;
-import com.edaigou3.manager.ItemErrorsMng;
 import com.edaigou3.manager.ItemMng;
 import com.edaigou3.view.FolderView;
 import com.edaigou3.view.ItemView;
@@ -28,11 +20,9 @@ import com.edaigou3.view.ext.Column;
 import com.edaigou3.view.ext.Column.Listener;
 
 @Component
-public class TableView_3 extends ITableView {
+public class TableView_6 extends ITableView {
 
 	private Table table;
-	private MenuItem _利润排序;
-	private MenuItem _全修低价;
 
 	public void createListenter() {
 		table.addSelectionListener(new SelectionListener() {
@@ -44,47 +34,10 @@ public class TableView_3 extends ITableView {
 			public void widgetDefaultSelected(SelectionEvent arg0) {
 			}
 		});
-		_利润排序.addListener(SWT.Selection,
-				new org.eclipse.swt.widgets.Listener() {
-					public void handleEvent(Event arg0) {
-						if (" order by id desc".equals(SearchView_3.sort))
-							SearchView_3.sort = " order by profitFee asc";
-						else
-							SearchView_3.sort = " order by id desc";
-						NewInstance.get(SearchView_3.class).query(1);
-					}
-				});
-		_全修低价.addListener(SWT.Selection,
-				new org.eclipse.swt.widgets.Listener() {
-					public void handleEvent(Event arg0) {
-						List<ItemErrors> itemErrors = NewInstance.get(
-								ItemErrorsMng.class).getByErrorType(
-								ItemErrorsType.非低价格.toString());
-						for (ItemErrors itemError : itemErrors) {
-							ItemMng itemMng = NewInstance.get(ItemMng.class);
-							Item item = itemMng.get(itemError.getItemId());
-							if (item == null) {
-								NewInstance.get(ItemErrorsMng.class).delete(
-										itemError.getId());
-								continue;
-							}
-							item.setRealPrice(item.getLowPrice().subtract(
-									BigDecimal.ONE));
-							item.caleProfieFee();
-							itemMng.update(item.getId(), item.getShopId(),
-									item.getImageByte(), item.getChannel(),
-									item.getTitle(), item.getOriginalPrice(),
-									item.getRebateProportion(),
-									item.getRebateFee(), item.getServiceFee(),
-									item.getRealPrice(), item.getProfitFee(),
-									item.getLowPrice(), item.getNumIid());
-						}
-					}
-				});
 	}
 
 	public void preHandle() {
-		table = new Table(NewInstance.get(FolderView.class).getC_已上架(),
+		table = new Table(NewInstance.get(FolderView.class).getC_天猫下架(),
 				SWT.BORDER | SWT.FULL_SELECTION);
 		table.setBounds(0, 37, 1088, 508);
 		table.setHeaderVisible(true);
@@ -94,10 +47,6 @@ public class TableView_3 extends ITableView {
 	@Override
 	public void createContents(Shell shell) {
 		Menu menu = new Menu(shell, SWT.POP_UP);
-		_利润排序 = new MenuItem(menu, SWT.CASCADE);
-		_利润排序.setText("利润排序");
-		_全修低价 = new MenuItem(menu, SWT.CASCADE);
-		_全修低价.setText("全修低价");
 		table.setMenu(menu);
 		super.createContents(shell);
 	}
@@ -115,23 +64,14 @@ public class TableView_3 extends ITableView {
 				new Column("profitFee", "实际利润", 100, Column.PUTONG),
 				new Column("lowPrice", "最低售价", 100, Column.PUTONG),
 				new Column("numIid", "商品编号", 100, Column.PUTONG),
-				new Column(null, "操作", 50, Column.BUTTON, "删除", new Listener() {
+				new Column(null, "操作", 100, Column.BUTTON, "删除", new Listener() {
 					public void handleEvent(Event arg0) {
 						Item item = (Item) arg0.widget.getData();
 						NewInstance.get(ItemMng.class).delete(item.getId());
-						NewInstance.get(SearchView_3.class).query(
-								NewInstance.get(PageView_3.class).getPageNo());
+						NewInstance.get(SearchView_6.class).query(
+								NewInstance.get(PageView_6.class).getPageNo());
 					}
-				}),
-				new Column(null, "操作", 50, Column.BUTTON, "下架", new Listener() {
-					public void handleEvent(Event arg0) {
-						Item item = (Item) arg0.widget.getData();
-						NewInstance.get(ItemMng.class).update(item.getId(),
-								ItemStatus.下架.toString());
-						NewInstance.get(SearchView_3.class).query(
-								NewInstance.get(PageView_3.class).getPageNo());
-					}
-				}) };
+				})};
 	}
 
 	@Override

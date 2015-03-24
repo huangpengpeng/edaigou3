@@ -1,4 +1,4 @@
-package com.edaigou3.view._06;
+package com.edaigou3.view._7;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -11,6 +11,7 @@ import org.eclipse.swt.widgets.TableItem;
 import org.springframework.stereotype.Component;
 
 import com.edaigou3.entity.Item;
+import com.edaigou3.entity.Item.ItemStatus;
 import com.edaigou3.manager.ItemMng;
 import com.edaigou3.view.FolderView;
 import com.edaigou3.view.ItemView;
@@ -20,7 +21,7 @@ import com.edaigou3.view.ext.Column;
 import com.edaigou3.view.ext.Column.Listener;
 
 @Component
-public class TableView_6 extends ITableView {
+public class TableView_7 extends ITableView {
 
 	private Table table;
 
@@ -37,7 +38,7 @@ public class TableView_6 extends ITableView {
 	}
 
 	public void preHandle() {
-		table = new Table(NewInstance.get(FolderView.class).getC_天猫下架(),
+		table = new Table(NewInstance.get(FolderView.class).getC_售利过低(),
 				SWT.BORDER | SWT.FULL_SELECTION);
 		table.setBounds(0, 37, 1088, 508);
 		table.setHeaderVisible(true);
@@ -64,14 +65,17 @@ public class TableView_6 extends ITableView {
 				new Column("profitFee", "实际利润", 100, Column.PUTONG),
 				new Column("lowPrice", "最低售价", 100, Column.PUTONG),
 				new Column("numIid", "商品编号", 100, Column.PUTONG),
-				new Column(null, "操作", 100, Column.BUTTON, "删除", new Listener() {
-					public void handleEvent(Event arg0) {
-						Item item = (Item) arg0.widget.getData();
-						NewInstance.get(ItemMng.class).delete(item.getId());
-						NewInstance.get(SearchView_6.class).query(
-								NewInstance.get(PageView_6.class).getPageNo());
-					}
-				})};
+				new Column(null, "操作", 100, Column.BUTTON, "删除",
+						new Listener() {
+							public void handleEvent(Event arg0) {
+								Item item = (Item) arg0.widget.getData();
+								NewInstance.get(ItemMng.class).delete(
+										item.getId());
+								NewInstance.get(SearchView_7.class).query(
+										NewInstance.get(PageView_7.class)
+												.getPageNo());
+							}
+						}) };
 	}
 
 	@Override

@@ -18,9 +18,9 @@ import com.edaigou3.view.base.IBaseView;
  */
 public class IProgressView implements IBaseView {
 
-	private Text _总数;
-	private Text _当前数;
-	private Text _错误数;
+	protected Text _总数;
+	protected Text _当前数;
+	protected Text _错误数;
 
 	public void createContents(Shell shell) {
 	}
