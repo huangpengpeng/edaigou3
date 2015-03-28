@@ -83,4 +83,8 @@ public class BrowserView_5 extends BaseBrowserView {
 	public String getUrl() {
 		return browser.getUrl();
 	}
+
+	public void setText(String text) {
+		browser.setText(text);
+	}
 }

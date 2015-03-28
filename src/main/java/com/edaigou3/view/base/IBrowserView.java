@@ -48,6 +48,8 @@ public interface IBrowserView extends IBaseView {
 	 */
 	public String getResponseText();
 	
+	public void setText(String text);
+	
 	public boolean execute(String javascript);
 	
 	

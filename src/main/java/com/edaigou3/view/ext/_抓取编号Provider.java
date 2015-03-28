@@ -34,6 +34,9 @@ public class _抓取编号Provider implements IOperatorProvider {
 			NewInstance.get(ItemView.class).setNumIid(
 					ParamentersUtils.getQueryParams(href, "id"));
 		}
+
+		browserView.setText("");
+
 		// 500豪秒后执行保存 在执行下一条
 		Display.getDefault().timerExec(2000, new Runnable() {
 			public void run() {
