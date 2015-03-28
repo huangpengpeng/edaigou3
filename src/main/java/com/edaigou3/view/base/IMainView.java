@@ -1,9 +1,9 @@
 package com.edaigou3.view.base;
 
 import java.awt.Toolkit;
-import java.lang.reflect.InvocationTargetException;
 
 import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -91,7 +91,8 @@ public abstract class IMainView {
 		private static ApplicationContext applicationContext;
 
 		public static void load(String file) {
-			applicationContext = new FileSystemXmlApplicationContext(file);
+			if (StringUtils.isNotBlank(file))
+				applicationContext = new FileSystemXmlApplicationContext(file);
 		}
 
 		public static <T> T get(Class<T> requiredType) {

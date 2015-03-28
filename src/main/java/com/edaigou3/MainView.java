@@ -117,7 +117,6 @@ public class MainView extends IMainView {
 				NewInstance.get(TableView_7.class));
 
 
-
 		CTabItem tabItem_5 = new CTabItem(NewInstance.get(FolderView.class)
 				.getTabFolder(), SWT.NONE);
 		tabItem_5.setText("淘客变动");
