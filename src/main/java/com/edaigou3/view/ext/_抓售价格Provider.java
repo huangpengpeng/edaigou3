@@ -35,6 +35,9 @@ public class _抓售价格Provider implements IOperatorProvider {
 		Document document = Jsoup.parse(browserView.getResponseText());
 
 		Element element = document.getElementById("J_Price");
+		if(element==null){
+			element = document.getElementById("J_PromoPriceNum");
+		}
 		if (element == null) {
 			element = document.getElementById("J_StrPrice");
 		}
