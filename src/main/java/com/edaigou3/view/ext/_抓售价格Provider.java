@@ -35,22 +35,20 @@ public class _抓售价格Provider implements IOperatorProvider {
 		Document document = Jsoup.parse(browserView.getResponseText());
 
 		Element element = document.getElementById("J_Price");
-		if(element==null){
+		if (element == null) {
 			element = document.getElementById("J_PromoPriceNum");
 		}
 		if (element == null) {
 			element = document.getElementById("J_StrPrice");
 		}
-
+		ItemErrorsMng errorsMng = NewInstance.get(ItemErrorsMng.class);
 		try {
 			String text = element.text().replace("¥", "");
 			NewInstance.get(ItemMng.class).update(item.getId(), null, null,
 					null, new BigDecimal(text));
-			ItemErrorsMng errorsMng = NewInstance.get(ItemErrorsMng.class);
 			if (document.text().contains("此宝贝已下架")) {
 				errorsMng.add(item.getId(), ItemErrorsType.天猫下架.toString());
-			}
-			else {
+			} else {
 				ItemErrors itemErrors = errorsMng.getByItemAndType(
 						item.getId(), ItemErrorsType.天猫下架.toString());
 				if (itemErrors != null) {
@@ -58,11 +56,13 @@ public class _抓售价格Provider implements IOperatorProvider {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			if (document.text().contains("您查看的宝贝不存在")) {
+				errorsMng.add(item.getId(), ItemErrorsType.天猫下架.toString());
+			}
 		}
-		
+
 		// 500豪秒后执行保存 在执行下一条
-		Display.getDefault().timerExec(500, new Runnable() {
+		Display.getDefault().timerExec(1000, new Runnable() {
 			public void run() {
 				NewInstance.get(ItemView.class).updateSubmit();
 				listener.handleEvent(null);

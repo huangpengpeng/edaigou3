@@ -42,15 +42,11 @@ public abstract class BaseBrowserView implements IBrowserView {
 			}
 
 			public void changed(ProgressEvent arg0) {
-				System.out.println("2 changed ProgressEvent ");
 				// arg0.current == arg0.total 此条件会进入多次 利用 completed控制只进入一次
 				if (completed == false && arg0.current == arg0.total) {
-					System.out.println(" changed ProgressEvent time ");
 					Display.getDefault().timerExec((int) waitingtime,
 							new Runnable() {
 								public void run() {
-									System.out
-											.println(" 3 operatorProvider changed ProgressEvent time ");
 									operatorProvider.completed(browserView);
 								}
 							});

@@ -40,7 +40,6 @@ public class TbkInfoProvider implements IOperatorProvider {
 
 	public void completed(IBrowserView browserView) {
 		try {
-			System.out.println("4 start completed ");
 			Map<String, Object> result = JsonUtils.toMap(JsonFilter
 					.filter(browserView.getResponseText()));
 			if (!(Boolean) result.get("ok")) {
@@ -83,7 +82,6 @@ public class TbkInfoProvider implements IOperatorProvider {
 					}
 				});
 			}
-			System.out.println("5 end completed ");
 		} catch (Exception e) {
 			MessageBox2.showErrorMsg("获取失败,检查是否登录", e);
 		}
@@ -143,7 +141,6 @@ public class TbkInfoProvider implements IOperatorProvider {
 			} catch (UnsupportedEncodingException e) {
 			}
 			NewInstance.get(ItemView.class).fullContents(item, true);
-			System.out.println(" 1 url ：" + buffer);
 			return buffer.toString();
 		}
 	}

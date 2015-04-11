@@ -332,6 +332,18 @@ public class ItemView extends BaseViewAdapter {
 				NewInstance.get(FolderView.class).selection(
 						NewInstance.get(FolderView.class).get_新增商品());
 				final String urlValue = url.getText();
+				try {
+					final String numIid = ParamentersUtils.getQueryParams(
+							urlValue, "id");
+					if (NewInstance.get(ItemMng.class).getByTbkNumIid(
+							Long.valueOf(numIid)) != null) {
+						MessageBox2.showErrorMsg("商品已存在");
+						return;
+					}
+				} catch (Exception e) {
+					MessageBox2.showErrorMsg("商品连接错误");
+					return;
+				}
 				NewInstance.get(BrowserView_1.class).doRequest(
 						new IRequestProvider() {
 							public String getRequestUrl(IBrowserView browserView) {
@@ -342,7 +354,6 @@ public class ItemView extends BaseViewAdapter {
 											"UTF-8"));
 								} catch (UnsupportedEncodingException e) {
 								}
-								System.out.println(" 1 url ：" + buffer);
 								return buffer.toString();
 							}
 						}, new TbkInfoProvider(null), 0);

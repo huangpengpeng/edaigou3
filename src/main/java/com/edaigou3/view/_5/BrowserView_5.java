@@ -60,7 +60,6 @@ public class BrowserView_5 extends BaseBrowserView {
 		_抓售价格.addListener(SWT.Selection, new Listener() {
 
 			public void handleEvent(Event arg0) {
-				System.out.println("count:" + totalCount + " pageNo:" + pageNo);
 				if (totalCount == 0 || pageNo > totalCount) {
 					return;
 				}
