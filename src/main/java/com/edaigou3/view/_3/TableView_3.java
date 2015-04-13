@@ -123,11 +123,11 @@ public class TableView_3 extends ITableView {
 								NewInstance.get(PageView_3.class).getPageNo());
 					}
 				}),
-				new Column(null, "操作", 50, Column.BUTTON, "下架", new Listener() {
+				new Column(null, "操作", 50, Column.BUTTON, "创建", new Listener() {
 					public void handleEvent(Event arg0) {
 						Item item = (Item) arg0.widget.getData();
 						NewInstance.get(ItemMng.class).update(item.getId(),
-								ItemStatus.下架.toString());
+								ItemStatus.创建.toString());
 						NewInstance.get(SearchView_3.class).query(
 								NewInstance.get(PageView_3.class).getPageNo());
 					}
