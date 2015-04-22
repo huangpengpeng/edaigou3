@@ -406,6 +406,9 @@ public class ItemView extends BaseViewAdapter {
 	public void setNumIid(String numIidValue) {
 		numIid.setText(numIidValue);
 	}
+	public void setTitle(String titleValue) {
+		title.setText(titleValue);
+	}
 
 	public void updateSubmit() {
 		Item item = getViewToModel();
