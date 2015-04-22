@@ -75,6 +75,8 @@ public class TbkInfoProvider implements IOperatorProvider {
 				NewInstance.get(ItemMng.class).update(item.getId(), null,
 						itemModel.getOriginalPrice(), null, null);
 
+				NewInstance.get(ItemView.class).setTitle(itemModel.getTitle());
+
 				Display.getDefault().timerExec(1000, new Runnable() {
 					public void run() {
 						NewInstance.get(ItemView.class).updateSubmit();

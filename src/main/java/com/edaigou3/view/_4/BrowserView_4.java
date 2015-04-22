@@ -72,7 +72,7 @@ public class BrowserView_4 extends BaseBrowserView {
 				doRequest(
 						new com.edaigou3.view.ext._抓售价格Provider.RequestProvider(
 								pageNo++, NewInstance.get(SearchView_4.class)),
-						new _抓售价格Provider(this), 3000);
+						new _抓售价格Provider(this), 1000);
 			}
 		});
 		_同步淘客.addListener(SWT.Selection, new Listener() {
