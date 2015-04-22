@@ -44,8 +44,13 @@ public class _抓售价格Provider implements IOperatorProvider {
 		ItemErrorsMng errorsMng = NewInstance.get(ItemErrorsMng.class);
 		try {
 			String text = element.text().replace("¥", "");
-			NewInstance.get(ItemMng.class).update(item.getId(), null, null,
-					null, new BigDecimal(text));
+			NewInstance.get(ItemMng.class).update(
+					item.getId(),
+					null,
+					null,
+					null,
+					new BigDecimal(text)
+							.setScale(0, BigDecimal.ROUND_DOWN));
 			if (document.text().contains("此宝贝已下架")) {
 				errorsMng.add(item.getId(), ItemErrorsType.天猫下架.toString());
 			} else {
