@@ -22,6 +22,10 @@ public abstract class BaseBrowserView implements IBrowserView {
 		browser.setUrl(url);
 	}
 
+	public boolean execute(String javascript) {
+		return browser.execute(javascript);
+	}
+
 	public void createContents(Composite composite) {
 		browser = new Browser(composite, SWT.BORDER);
 		browser.setBounds(0, 33, 1089, 512);
@@ -45,6 +49,18 @@ public abstract class BaseBrowserView implements IBrowserView {
 		});
 	}
 
+	public void doRequest(IJavascriptProvider javascriptProvider,
+			IOperatorProvider operator, int time) {
+		this.operatorProvider = operator;
+		this.waitingtime = time;
+		browser.execute(javascriptProvider.getRequestUrl(this));
+		Display.getDefault().timerExec((int) waitingtime, new Runnable() {
+			public void run() {
+				operatorProvider.completed(NewInstance.get(IBrowserView.class));
+			}
+		});
+	}
+
 	public void doRequest(String url, IOperatorProvider provider, int time) {
 		this.operatorProvider = provider;
 		this.waitingtime = time;
@@ -55,8 +71,7 @@ public abstract class BaseBrowserView implements IBrowserView {
 
 	public void doRequest(IRequestProvider requestProvider,
 			IOperatorProvider operatorProvider, int time) {
-			doRequest(requestProvider.getRequestUrl(this), operatorProvider,
-					time);
+		doRequest(requestProvider.getRequestUrl(this), operatorProvider, time);
 	}
 
 	public String getResponseText() {

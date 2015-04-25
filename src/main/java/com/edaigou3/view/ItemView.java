@@ -42,7 +42,6 @@ public class ItemView extends BaseViewAdapter {
 	private Text rebateProportion;
 	private Text rebateFee;
 	private Text serviceFee;
-	private Text marketPrice;
 	private Text realPrice;
 	private Text profitFee;
 	private Text lowPrice;
@@ -129,13 +128,6 @@ public class ItemView extends BaseViewAdapter {
 		serviceFee = new Text(grpSp, SWT.BORDER);
 		serviceFee.setBounds(655, 47, 70, 18);
 
-		Label labmarketPrice = new Label(grpSp, SWT.NONE);
-		labmarketPrice.setBounds(755, 52, 54, 14);
-		labmarketPrice.setText("市场价");
-
-		marketPrice = new Text(grpSp, SWT.BORDER);
-		marketPrice.setBounds(820, 47, 70, 18);
-
 		Label lblNewLabel_10 = new Label(grpSp, SWT.NONE);
 		lblNewLabel_10.setBounds(108, 78, 54, 18);
 		lblNewLabel_10.setText("实际售价");
@@ -204,12 +196,16 @@ public class ItemView extends BaseViewAdapter {
 			rebateProportion
 					.setText(String.valueOf(item.getRebateProportion()));
 		}
-		item.caleRebate();
+		if (item.getServiceFee() == null) {
+			item.caleRebate();
+		}
 		rebateFee.setText(String.valueOf(item.getRebateFee()));
 		serviceFee.setText(String.valueOf(item.getServiceFee()));
 		originalPrice.setText(String.valueOf(item.getOriginalPrice()));
-		item.setRealPrice(item.getOriginalPrice().multiply(
-				new BigDecimal("0.88")));
+		if (item.getRealPrice() == null) {
+			item.setRealPrice(item.getOriginalPrice().multiply(
+					new BigDecimal("0.88")));
+		}
 		realPrice.setText(String.valueOf(item.getRealPrice().intValue()));
 		item.caleProfieFee();
 		profitFee.setText(String.valueOf(item.getProfitFee()));
@@ -221,10 +217,6 @@ public class ItemView extends BaseViewAdapter {
 			numIid.setText(String.valueOf(item.getNumIid()));
 		else
 			numIid.setText("");
-		if (item.getMarketPrice() != null)
-			marketPrice.setText(String.valueOf(item.getMarketPrice()));
-		else
-			marketPrice.setText("");
 	}
 
 	public Item getViewToModel() {
@@ -242,9 +234,6 @@ public class ItemView extends BaseViewAdapter {
 			item.setServiceFee(new BigDecimal(serviceFee.getText()));
 			item.setRealPrice(new BigDecimal(realPrice.getText()));
 			item.setProfitFee(new BigDecimal(profitFee.getText()));
-			if (marketPrice.getText() != null) {
-				item.setMarketPrice(new BigDecimal(marketPrice.getText()));
-			}
 			if (StringUtils.isNotBlank(lowPrice.getText())) {
 				item.setLowPrice(new BigDecimal(lowPrice.getText()));
 			}
@@ -391,10 +380,6 @@ public class ItemView extends BaseViewAdapter {
 		lowPrice.setText(lowPriceValue.toString());
 	}
 
-	public void setMarketPrice(BigDecimal marketPriceValue) {
-		marketPrice.setText(marketPriceValue.toString());
-	}
-
 	public void setNumIid(String numIidValue) {
 		numIid.setText(numIidValue);
 	}
@@ -417,12 +402,10 @@ public class ItemView extends BaseViewAdapter {
 		}
 		NewInstance.get(ItemMng.class).update(old.getId(), item.getShopId(),
 				item.getImageByte(), item.getChannel(), item.getTitle(),
-				item.getMarketPrice(), item.getOriginalPrice(),
-				item.getRebateProportion(), item.getRebateFee(),
-				item.getServiceFee(), item.getRealPrice(), item.getProfitFee(),
-				item.getLowPrice(), item.getNumIid());
+				item.getOriginalPrice(), item.getRebateProportion(),
+				item.getRebateFee(), item.getServiceFee(), item.getRealPrice(),
+				item.getProfitFee(), item.getLowPrice(), item.getNumIid());
 		item.setId(old.getId());
-
 		// 更新table选择
 		try {
 			NewInstance.get(TableView_0.class).selectionValue(item);

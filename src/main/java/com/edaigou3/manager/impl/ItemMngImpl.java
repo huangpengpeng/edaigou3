@@ -25,7 +25,7 @@ public class ItemMngImpl implements ItemMng {
 			Double rebateProportion, BigDecimal rebateFee,
 			BigDecimal serviceFee, BigDecimal realPrice) {
 		Item item = new Item(shopId, imageByte, channel, title, url, tbkNumIid,
-				null,originalPrice, rebateProportion, rebateFee, serviceFee,
+				originalPrice, rebateProportion, rebateFee, serviceFee,
 				realPrice, null, null, null, null, null, null, null);
 		item.caleProfieFee();
 		item.init();
@@ -39,6 +39,11 @@ public class ItemMngImpl implements ItemMng {
 
 	public void delete(Long id) {
 		dao.delete(id);
+
+		List<ItemErrors> itemErrors = itemErrorsMng.getByItem(id);
+		for (ItemErrors itemError : itemErrors) {
+			itemErrorsMng.delete(itemError.getId());
+		}
 	}
 
 	public Item getByTbkNumIid(Long tbkNumIid) {
@@ -58,14 +63,13 @@ public class ItemMngImpl implements ItemMng {
 	}
 
 	public void update(Long id, Long shopId, String imageByte, String channel,
-			String title, BigDecimal marketPrice, BigDecimal originalPrice,
+			String title, BigDecimal originalPrice,
 			Double rebateProportion, BigDecimal rebateFee,
 			BigDecimal serviceFee, BigDecimal realPrice, BigDecimal profitFee,
 			BigDecimal lowPrice, Long numIid) {
-		dao.update(id, shopId, imageByte, channel, title, marketPrice,
+		dao.update(id, shopId, imageByte, channel, title,
 				originalPrice, rebateProportion, rebateFee, serviceFee,
 				realPrice, profitFee, lowPrice, numIid);
-
 		checkErrors(id);
 	}
 
@@ -118,6 +122,12 @@ public class ItemMngImpl implements ItemMng {
 
 	public List<Item> query(String status) {
 		return dao.query(status);
+	}
+	
+	public void update(Long id, Double freshRebateProportion,
+			BigDecimal freshOriginalPrice, String freshTitle,
+			BigDecimal freshRealPrice) {
+		dao.update(id, freshRebateProportion, freshOriginalPrice, freshTitle, freshRealPrice);
 	}
 
 	@Autowired

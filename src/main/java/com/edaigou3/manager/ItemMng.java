@@ -14,15 +14,19 @@ public interface ItemMng {
 			BigDecimal serviceFee, BigDecimal realPrice);
 
 	void update(Long id, Long shopId, String imageByte, String channel,
-			String title, BigDecimal marketPrice,BigDecimal originalPrice, Double rebateProportion,
+			String title, BigDecimal originalPrice, Double rebateProportion,
 			BigDecimal rebateFee, BigDecimal serviceFee, BigDecimal realPrice,
 			BigDecimal profitFee, BigDecimal lowPrice, Long numIid);
 
+	void update(Long id, Double freshRebateProportion,
+			BigDecimal freshOriginalPrice, String freshTitle,
+			BigDecimal freshRealPrice);
+
 	public Pagination getPage(Long shopId, Long[] ids, String title,
-			Integer pageNo,Integer pageSize);
-	
+			Integer pageNo, Integer pageSize);
+
 	List<Item> query(String status);
-	
+
 	public void checkErrors(Long id);
 
 	void delete(Long id);

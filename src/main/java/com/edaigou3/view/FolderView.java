@@ -18,6 +18,9 @@ public class FolderView extends BaseViewAdapter {
 	private CTabItem _新增商品;
 	private Composite c_新增商品;
 	private CTabItem _新品发布;
+	private CTabItem _商品过滤;
+	private Composite c_新品发布 ;
+	private Composite c_商品过滤;
 
 	@Override
 	public void createContents(Shell shell) {
@@ -34,10 +37,17 @@ public class FolderView extends BaseViewAdapter {
 		c_新增商品 = new Composite(tabFolder, SWT.NONE);
 		_新增商品.setControl(c_新增商品);
 
-		_新品发布 = new CTabItem(NewInstance.get(FolderView.class).getTabFolder(),
-				SWT.NONE);
+		_新品发布 = new CTabItem(tabFolder, SWT.NONE);
 		_新品发布.setText("新品发布");
 
+		c_新品发布 = new Composite(tabFolder, SWT.NONE);
+		_新品发布.setControl(c_新品发布);
+
+		_商品过滤 = new CTabItem(tabFolder, SWT.NONE);
+		_商品过滤.setText("商品过滤");
+		
+		c_商品过滤 = new Composite(tabFolder, SWT.NONE);
+		_商品过滤.setControl(c_商品过滤);
 	}
 
 	public CTabItem get_新品发布() {
@@ -63,4 +73,17 @@ public class FolderView extends BaseViewAdapter {
 	public Composite getC_新增商品() {
 		return c_新增商品;
 	}
+
+	public Composite getC_新品发布() {
+		return c_新品发布;
+	}
+
+	public CTabItem get_商品过滤() {
+		return _商品过滤;
+	}
+
+	public Composite getC_商品过滤() {
+		return c_商品过滤;
+	}
+	
 }

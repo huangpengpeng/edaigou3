@@ -73,7 +73,8 @@ public class MainView extends IMainView {
 
 		View.addView(NewInstance.get(FolderView.class));
 
-		View.addView(NewInstance.get(BrowserView_1.class));
+		View.addView(NewInstance.get(FolderView.class).getC_新品发布(),
+				NewInstance.get(BrowserView_1.class));
 
 		CTabItem tbtmNewItem_2 = new CTabItem(NewInstance.get(FolderView.class)
 				.getTabFolder(), SWT.NONE);
@@ -417,6 +418,36 @@ public class MainView extends IMainView {
 		lblNewLabel_30.setBounds(1024, 21, 54, 12);
 		lblNewLabel_30.setText("全部修复");
 
+		CTabItem tabItem_7 = new CTabItem(NewInstance.get(FolderView.class)
+				.getTabFolder(), SWT.NONE);
+		tabItem_7.setText("猫价变动");
+
+		Composite composite_10 = new Composite(NewInstance
+				.get(FolderView.class).getTabFolder(), SWT.NONE);
+		tabItem_7.setControl(composite_10);
+
+		Button button_12 = new Button(composite_10, SWT.NONE);
+		button_12.setText("上一页");
+		button_12.setBounds(10, 10, 60, 27);
+
+		CLabel label_12 = new CLabel(composite_10, SWT.NONE);
+		label_12.setText("0/0/0");
+		label_12.setAlignment(SWT.CENTER);
+		label_12.setBounds(82, 10, 67, 23);
+
+		Button button_13 = new Button(composite_10, SWT.NONE);
+		button_13.setText("下一页");
+		button_13.setBounds(158, 10, 60, 27);
+
+		table_7 = new Table(composite_10, SWT.BORDER | SWT.FULL_SELECTION);
+		table_7.setLinesVisible(true);
+		table_7.setHeaderVisible(true);
+		table_7.setBounds(0, 42, 1088, 505);
+
+		Label label_13 = new Label(composite_10, SWT.NONE);
+		label_13.setText("全部下架");
+		label_13.setBounds(1024, 17, 54, 12);
+
 		CTabItem tabItem_2 = new CTabItem(NewInstance.get(FolderView.class)
 				.getTabFolder(), SWT.NONE);
 		tabItem_2.setText("店铺授权");
@@ -459,65 +490,33 @@ public class MainView extends IMainView {
 		btnNewButton_24.setBounds(1035, 5, 43, 22);
 		btnNewButton_24.setText("获取");
 
-		CTabItem tabItem_1 = new CTabItem(NewInstance.get(FolderView.class)
-				.getTabFolder(), SWT.NONE);
-		tabItem_1.setText("商品过滤");
-
-		Composite composite_11 = new Composite(NewInstance
-				.get(FolderView.class).getTabFolder(), SWT.NONE);
-		tabItem_1.setControl(composite_11);
-
-		Label lblNewLabel_31 = new Label(composite_11, SWT.NONE);
+		Label lblNewLabel_31 = new Label(NewInstance.get(FolderView.class)
+				.getC_商品过滤(), SWT.NONE);
 		lblNewLabel_31.setBounds(10, 10, 54, 12);
 		lblNewLabel_31.setText("淘宝店铺");
 
-		Combo combo_10 = new Combo(composite_11, SWT.NONE);
+		Combo combo_10 = new Combo(NewInstance.get(FolderView.class)
+				.getC_商品过滤(), SWT.NONE);
 		combo_10.setBounds(70, 7, 86, 20);
 
-		Label lblNewLabel_32 = new Label(composite_11, SWT.NONE);
+		Label lblNewLabel_32 = new Label(NewInstance.get(FolderView.class)
+				.getC_商品过滤(), SWT.NONE);
 		lblNewLabel_32.setBounds(175, 10, 54, 12);
 		lblNewLabel_32.setText("掌柜昵称");
 
-		text_21 = new Text(composite_11, SWT.BORDER);
+		text_21 = new Text(NewInstance.get(FolderView.class).getC_商品过滤(),
+				SWT.BORDER);
 		text_21.setBounds(238, 7, 97, 18);
 
-		Button btnNewButton_8 = new Button(composite_11, SWT.NONE);
+		Button btnNewButton_8 = new Button(NewInstance.get(FolderView.class)
+				.getC_商品过滤(), SWT.NONE);
 		btnNewButton_8.setBounds(1024, 5, 54, 22);
 		btnNewButton_8.setText("保存");
 
-		table_8 = new Table(composite_11, SWT.BORDER | SWT.FULL_SELECTION);
+		table_8 = new Table(NewInstance.get(FolderView.class).getC_商品过滤(),
+				SWT.BORDER | SWT.FULL_SELECTION);
 		table_8.setBounds(0, 28, 1088, 517);
 		table_8.setHeaderVisible(true);
 		table_8.setLinesVisible(true);
-
-		CTabItem tabItem_7 = new CTabItem(NewInstance.get(FolderView.class)
-				.getTabFolder(), SWT.NONE);
-		tabItem_7.setText("猫价变动");
-
-		Composite composite_10 = new Composite(NewInstance
-				.get(FolderView.class).getTabFolder(), SWT.NONE);
-		tabItem_7.setControl(composite_10);
-
-		Button button_12 = new Button(composite_10, SWT.NONE);
-		button_12.setText("上一页");
-		button_12.setBounds(10, 10, 60, 27);
-
-		CLabel label_12 = new CLabel(composite_10, SWT.NONE);
-		label_12.setText("0/0/0");
-		label_12.setAlignment(SWT.CENTER);
-		label_12.setBounds(82, 10, 67, 23);
-
-		Button button_13 = new Button(composite_10, SWT.NONE);
-		button_13.setText("下一页");
-		button_13.setBounds(158, 10, 60, 27);
-
-		table_7 = new Table(composite_10, SWT.BORDER | SWT.FULL_SELECTION);
-		table_7.setLinesVisible(true);
-		table_7.setHeaderVisible(true);
-		table_7.setBounds(0, 42, 1088, 505);
-
-		Label label_13 = new Label(composite_10, SWT.NONE);
-		label_13.setText("全部下架");
-		label_13.setBounds(1024, 17, 54, 12);
 	}
 }

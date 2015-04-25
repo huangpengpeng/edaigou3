@@ -35,10 +35,23 @@ public interface IBrowserView extends IBaseView {
 			IOperatorProvider operatorProvider, int time);
 	
 	/**
+	 * 请求
+	 * 
+	 * @param url
+	 */
+	public void doRequest(IJavascriptProvider javascriptProvider,
+			IOperatorProvider operatorProvider, int time);
+	
+	/**
 	 * 获取请求内容
 	 * @return
 	 */
 	public String getResponseText();
+	
+	public boolean execute(String javascript);
+	
+	
+	public String getUrl();
 	
 	/**
 	 * 操作提供者
@@ -59,6 +72,16 @@ public interface IBrowserView extends IBaseView {
 	 */
 	public static interface IRequestProvider {
 
+		public String getRequestUrl(IBrowserView browserView);
+	}
+	/**
+	 * 操作请求者
+	 * 
+	 * @author zoro
+	 *
+	 */
+	public static interface IJavascriptProvider {
+		
 		public String getRequestUrl(IBrowserView browserView);
 	}
 }

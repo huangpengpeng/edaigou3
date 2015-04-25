@@ -2,6 +2,7 @@ package com.edaigou3.view._0;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +20,9 @@ import org.springframework.stereotype.Component;
 
 import com.edaigou3.entity.Item;
 import com.edaigou3.entity.Item.ItemStatus;
+import com.edaigou3.entity.ItemErrors;
+import com.edaigou3.entity.ItemErrors.ItemErrorsType;
+import com.edaigou3.manager.ItemErrorsMng;
 import com.edaigou3.manager.ItemMng;
 import com.edaigou3.view.FolderView;
 import com.edaigou3.view.ItemView;
@@ -33,6 +37,8 @@ public class TableView_0 extends ITableView {
 
 	private Table table;
 	private MenuItem _全部导出;
+	private MenuItem _全部上架;
+	private MenuItem _全修低价;
 
 	public void createListenter() {
 		table.addSelectionListener(new SelectionListener() {
@@ -64,6 +70,36 @@ public class TableView_0 extends ITableView {
 								filename);
 					}
 				});
+		_全修低价.addListener(SWT.Selection,
+				new org.eclipse.swt.widgets.Listener() {
+					public void handleEvent(Event arg0) {
+						List<ItemErrors> itemErrors = NewInstance.get(
+								ItemErrorsMng.class).getByErrorType(
+								ItemErrorsType.非低价格.toString());
+						for (ItemErrors itemError : itemErrors) {
+							ItemMng itemMng = NewInstance.get(ItemMng.class);
+							Item item = itemMng.get(itemError.getItemId());
+							if (item == null) {
+								NewInstance.get(ItemErrorsMng.class).delete(
+										itemError.getId());
+								continue;
+							}
+							itemMng.update(
+									item.getId(),
+									item.getShopId(),
+									item.getImageByte(),
+									item.getChannel(),
+									item.getTitle(),
+									item.getOriginalPrice(),
+									item.getRebateProportion(),
+									item.getRebateFee(),
+									item.getServiceFee(),
+									item.getLowPrice().subtract(BigDecimal.ONE),
+									item.getProfitFee(), item.getLowPrice(),
+									item.getNumIid());
+						}
+					}
+				});
 	}
 
 	public void preHandle() {
@@ -79,10 +115,10 @@ public class TableView_0 extends ITableView {
 		Menu menu = new Menu(shell, SWT.POP_UP);
 		_全部导出 = new MenuItem(menu, SWT.CASCADE);
 		_全部导出.setText("全部导出");
-		MenuItem menuItem2 = new MenuItem(menu, SWT.CASCADE);
-		menuItem2.setText("全部上架");
-		MenuItem menuItem3 = new MenuItem(menu, SWT.CASCADE);
-		menuItem3.setText("全修低价");
+		_全部上架 = new MenuItem(menu, SWT.CASCADE);
+		_全部上架.setText("全部上架");
+		_全修低价 = new MenuItem(menu, SWT.CASCADE);
+		_全修低价.setText("全修低价");
 		table.setMenu(menu);
 		super.createContents(shell);
 	}
