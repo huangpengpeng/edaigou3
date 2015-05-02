@@ -96,7 +96,7 @@ public class BrowserView_1 extends BaseBrowserView {
 				doRequest(
 						new com.edaigou3.view.ext._抓售价格Provider.RequestProvider(
 								pageNo++, NewInstance.get(SearchView_1.class)),
-						new _抓售价格Provider(this), 1000);
+						new _抓售价格Provider(this), 3000);
 			}
 		});
 	}
