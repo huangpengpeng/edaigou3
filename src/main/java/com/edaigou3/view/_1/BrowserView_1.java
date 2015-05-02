@@ -84,7 +84,7 @@ public class BrowserView_1 extends BaseBrowserView {
 				}
 				doRequest(
 						new com.edaigou3.view.ext._修售价格Provider.JavascriptProvider(
-								pageNo++), new _修售价格Provider(this), 5000);
+								pageNo++), new _修售价格Provider(this), 3000);
 			}
 		});
 		_抓售价格.addListener(SWT.Selection, new Listener() {

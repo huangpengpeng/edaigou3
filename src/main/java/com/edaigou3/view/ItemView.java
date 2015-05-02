@@ -420,7 +420,6 @@ public class ItemView extends BaseViewAdapter {
 		try {
 			NewInstance.get(TableView_0.class).selectionValue(item);
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 
 		clearText();

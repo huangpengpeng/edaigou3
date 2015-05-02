@@ -67,7 +67,7 @@ public abstract class BaseBrowserView implements IBrowserView {
 		browser.execute(javascriptProvider.getRequestUrl(this));
 		Display.getDefault().timerExec((int) waitingtime, new Runnable() {
 			public void run() {
-				operatorProvider.completed(NewInstance.get(IBrowserView.class));
+				operatorProvider.completed(browserView);
 			}
 		});
 	}
