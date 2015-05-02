@@ -21,6 +21,8 @@ public interface ItemMng {
 	void update(Long id, Double freshRebateProportion,
 			BigDecimal freshOriginalPrice, String freshTitle,
 			BigDecimal freshRealPrice);
+	
+	void update(Long id,String status);
 
 	public Pagination getPage(Long shopId, Long[] ids, String title,String status,
 			Integer pageNo, Integer pageSize);

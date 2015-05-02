@@ -100,6 +100,17 @@ public class TableView_0 extends ITableView {
 						}
 					}
 				});
+		_全部上架.addListener(SWT.Selection,
+				new org.eclipse.swt.widgets.Listener() {
+					public void handleEvent(Event arg0) {
+						List<Item> createItems = NewInstance.get(ItemMng.class)
+								.query(ItemStatus.创建.toString());
+						for (Item item : createItems) {
+							NewInstance.get(ItemMng.class).update(item.getId(),
+									ItemStatus.上架.toString());
+						}
+					}
+				});
 	}
 
 	public void preHandle() {

@@ -34,7 +34,7 @@ public class BrowserView_1 extends BaseBrowserView {
 
 		_同步最低售价 = new Button(composite, SWT.NONE);
 		_同步最低售价.setBounds(320, 8, 84, 22);
-		_同步最低售价.setText("同步最低售价");
+		_同步最低售价.setText("最低售价");
 
 		_抓取编号 = new Button(composite, SWT.NONE);
 		_抓取编号.setBounds(420, 8, 69, 22);
@@ -63,7 +63,7 @@ public class BrowserView_1 extends BaseBrowserView {
 				}
 				doRequest(
 						new com.edaigou3.view.ext._同步最低售价Provider.RequestProvider(
-								pageNo++), new _同步最低售价Provider(this), 1000);
+								pageNo++,NewInstance.get(SearchView_1.class)), new _同步最低售价Provider(this), 1000);
 			}
 		});
 		_抓取编号.addListener(SWT.Selection, new Listener() {
@@ -94,7 +94,7 @@ public class BrowserView_1 extends BaseBrowserView {
 				}
 				doRequest(
 						new com.edaigou3.view.ext._抓售价格Provider.RequestProvider(
-								pageNo++), new _抓售价格Provider(this), 1000);
+								pageNo++,NewInstance.get(SearchView_1.class)), new _抓售价格Provider(this), 1000);
 			}
 		});
 	}

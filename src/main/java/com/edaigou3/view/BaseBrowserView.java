@@ -17,6 +17,7 @@ public abstract class BaseBrowserView implements IBrowserView {
 	private IOperatorProvider operatorProvider;
 	private int waitingtime = 0;
 	private boolean completed = true;
+	private IBrowserView browserView;
 
 	public void doRequest(String url) {
 		browser.setUrl(url);
@@ -29,6 +30,7 @@ public abstract class BaseBrowserView implements IBrowserView {
 	public void createContents(Composite composite) {
 		browser = new Browser(composite, SWT.BORDER);
 		browser.setBounds(0, 33, 1089, 512);
+		browserView=this;
 		browser.addProgressListener(new ProgressListener() {
 			public void completed(ProgressEvent arg0) {
 			}
@@ -39,8 +41,7 @@ public abstract class BaseBrowserView implements IBrowserView {
 					Display.getDefault().timerExec((int) waitingtime,
 							new Runnable() {
 								public void run() {
-									operatorProvider.completed(NewInstance
-											.get(IBrowserView.class));
+									operatorProvider.completed(browserView);
 								}
 							});
 					completed = true;

@@ -15,6 +15,7 @@ import com.edaigou3.entity.ItemErrors;
 import com.edaigou3.entity.ItemErrors.ItemErrorsType;
 import com.edaigou3.manager.ItemErrorsMng;
 import com.edaigou3.manager.ItemMng;
+import com.sun.jndi.url.corbaname.corbanameURLContextFactory;
 
 @Transactional
 @Service
@@ -32,9 +33,9 @@ public class ItemMngImpl implements ItemMng {
 		dao.add(item);
 	}
 
-	public Pagination getPage(Long shopId, Long[] ids, String title,String status,
-			Integer pageNo, Integer pageSize) {
-		return dao.getPage(shopId, ids, title,status, pageNo, pageSize);
+	public Pagination getPage(Long shopId, Long[] ids, String title,
+			String status, Integer pageNo, Integer pageSize) {
+		return dao.getPage(shopId, ids, title, status, pageNo, pageSize);
 	}
 
 	public void delete(Long id) {
@@ -63,13 +64,12 @@ public class ItemMngImpl implements ItemMng {
 	}
 
 	public void update(Long id, Long shopId, String imageByte, String channel,
-			String title, BigDecimal originalPrice,
-			Double rebateProportion, BigDecimal rebateFee,
-			BigDecimal serviceFee, BigDecimal realPrice, BigDecimal profitFee,
-			BigDecimal lowPrice, Long numIid) {
-		dao.update(id, shopId, imageByte, channel, title,
-				originalPrice, rebateProportion, rebateFee, serviceFee,
-				realPrice, profitFee, lowPrice, numIid);
+			String title, BigDecimal originalPrice, Double rebateProportion,
+			BigDecimal rebateFee, BigDecimal serviceFee, BigDecimal realPrice,
+			BigDecimal profitFee, BigDecimal lowPrice, Long numIid) {
+		dao.update(id, shopId, imageByte, channel, title, originalPrice,
+				rebateProportion, rebateFee, serviceFee, realPrice, profitFee,
+				lowPrice, numIid);
 		checkErrors(id);
 	}
 
@@ -78,6 +78,10 @@ public class ItemMngImpl implements ItemMng {
 
 		List<ItemErrors> errors = itemErrorsMng.getByItem(item.getId());
 		for (ItemErrors itemErrors : errors) {
+			if (ItemErrorsType.天猫下架.toString()
+					.equals(itemErrors.getErrorType())) {
+				continue;
+			}
 			itemErrorsMng.delete(itemErrors.getId());
 		}
 
@@ -123,11 +127,16 @@ public class ItemMngImpl implements ItemMng {
 	public List<Item> query(String status) {
 		return dao.query(status);
 	}
-	
+
 	public void update(Long id, Double freshRebateProportion,
 			BigDecimal freshOriginalPrice, String freshTitle,
 			BigDecimal freshRealPrice) {
-		dao.update(id, freshRebateProportion, freshOriginalPrice, freshTitle, freshRealPrice);
+		dao.update(id, freshRebateProportion, freshOriginalPrice, freshTitle,
+				freshRealPrice);
+	}
+
+	public void update(Long id, String status) {
+		dao.update(id, status);
 	}
 
 	@Autowired

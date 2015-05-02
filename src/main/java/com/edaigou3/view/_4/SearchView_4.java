@@ -1,4 +1,4 @@
-package com.edaigou3.view._1;
+package com.edaigou3.view._4;
 
 import java.util.List;
 
@@ -26,7 +26,7 @@ import com.edaigou3.view.base.IMainView.View;
 import com.edaigou3.view.base.ISearchView;
 
 @Component
-public class SearchView_1 implements ISearchView {
+public class SearchView_4 implements ISearchView {
 
 	private ShopView shopView;
 	private Combo _错误类型;
@@ -41,9 +41,11 @@ public class SearchView_1 implements ISearchView {
 		lblNewLabel_18.setBounds(9, 10, 54, 22);
 		lblNewLabel_18.setText("淘宝店铺");
 
-		shopView = new ShopView();
-		View.addView(composite, shopView);
-		shopView.setBounds(69, 7, 86, 20);
+		if (shopView == null) {
+			shopView = new ShopView();
+			View.addView(composite, shopView);
+			shopView.setBounds(69, 7, 86, 20);
+		}
 
 		Label lblNewLabel_19 = new Label(composite, SWT.NONE);
 		lblNewLabel_19.setBounds(168, 10, 54, 22);
@@ -59,7 +61,7 @@ public class SearchView_1 implements ISearchView {
 		shopView.addListener(new Listener() {
 			public void handleEvent() {
 				query(1);
-				NewInstance.get(BrowserView_1.class).fullContents(
+				NewInstance.get(BrowserView_4.class).fullContents(
 						page == null ? 0 : page.getPageNo(),
 						page == null ? 0 : page.getTotalCount());
 			}
@@ -67,7 +69,7 @@ public class SearchView_1 implements ISearchView {
 		_错误类型.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent arg0) {
 				query(1);
-				NewInstance.get(BrowserView_1.class).fullContents(
+				NewInstance.get(BrowserView_4.class).fullContents(
 						page == null ? 0 : page.getPageNo(),
 						page == null ? 0 : page.getTotalCount());
 			}
@@ -101,11 +103,11 @@ public class SearchView_1 implements ISearchView {
 			}
 			
 			page = NewInstance.get(ItemMng.class).getPage(shopView.getNumber(),
-					ids, null, ItemStatus.创建.toString(), pageNo, 1);
+					ids, null, ItemStatus.上架.toString(), pageNo, 1);
 		} else {
 			page = null;
 		}
-		NewInstance.get(ProgressView_1.class).fullContents(page);
+		NewInstance.get(ProgressView_4.class).fullContents(page);
 		return page;
 	}
 

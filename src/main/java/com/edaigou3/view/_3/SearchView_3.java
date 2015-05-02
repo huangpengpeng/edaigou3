@@ -41,7 +41,7 @@ public class SearchView_3 implements ISearchView {
 		lblNewLabel_15.setBounds(359, 12, 54, 22);
 		lblNewLabel_15.setText("淘宝店铺");
 
-		_淘宝店铺 = NewInstance.get(ShopView.class);
+		_淘宝店铺 =new ShopView();
 		View.addView(composite, _淘宝店铺);
 		_淘宝店铺.setBounds(417, 8, 86, 20);
 
@@ -52,10 +52,8 @@ public class SearchView_3 implements ISearchView {
 		_错误类型 = new Combo(composite, SWT.NONE);
 		_错误类型.setBounds(597, 8, 86, 20);
 		_错误类型.add("");
-		_错误类型.add("抓低错误");
+		_错误类型.add("天猫下架");
 		_错误类型.add("非低价格");
-		_错误类型.add("售利过低");
-		_错误类型.add("编号错误");
 		_错误类型.add("店售错误");
 
 		Label lblNewLabel_17 = new Label(composite, SWT.NONE);

@@ -33,4 +33,6 @@ public interface ItemDao {
 	void update(Long id, Double freshRebateProportion,
 			BigDecimal freshOriginalPrice, String freshTitle,
 			BigDecimal freshRealPrice);
+	
+	public void update(Long id, String status);
 }

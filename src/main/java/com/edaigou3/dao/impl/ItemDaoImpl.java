@@ -142,4 +142,13 @@ public class ItemDaoImpl extends JdbcTemplateBaseDao implements ItemDao {
 		}
 		super.update(id, sqlBuilder);
 	}
+
+	public void update(Long id, String status) {
+		SqlBuilder sqlBuilder = new SqlBuilder(
+				"update Item set gmtModify=current_timestamp()");
+		if (status != null) {
+			sqlBuilder.set("status", status);
+		}
+		super.update(id, sqlBuilder);
+	}
 }

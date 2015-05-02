@@ -43,7 +43,7 @@ public class SearchView_2 implements ISearchView {
 
 		Label lblNewLabel_32 = new Label(composite, SWT.NONE);
 		lblNewLabel_32.setBounds(175, 7, 54, 12);
-		lblNewLabel_32.setText("掌柜昵称");
+		lblNewLabel_32.setText("商品编号");
 
 		pNumIid = new Text(composite, SWT.BORDER);
 		pNumIid.setBounds(238, 7, 97, 18);

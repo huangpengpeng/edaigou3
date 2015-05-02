@@ -1,7 +1,6 @@
 package com.edaigou3.view.ext;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.swt.widgets.Display;
@@ -18,6 +17,7 @@ import com.edaigou3.manager.ItemFiltersMng;
 import com.edaigou3.view.ItemView;
 import com.edaigou3.view._1.SearchView_1;
 import com.edaigou3.view.base.IBrowserView;
+import com.edaigou3.view.base.ISearchView;
 import com.edaigou3.view.base.IBrowserView.IOperatorProvider;
 import com.edaigou3.view.base.IBrowserView.IRequestProvider;
 import com.edaigou3.view.base.IMainView.NewInstance;
@@ -100,14 +100,15 @@ public class _同步最低售价Provider implements IOperatorProvider {
 	public static class RequestProvider implements IRequestProvider {
 
 		private Integer pageNo;
+		private ISearchView searchView;
 
-		public RequestProvider(Integer pageNo) {
+		public RequestProvider(Integer pageNo, ISearchView searchView) {
 			this.pageNo = pageNo;
+			this.searchView = searchView;
 		}
 
 		public String getRequestUrl(IBrowserView browserView) {
-			Pagination page = NewInstance.get(SearchView_1.class).query(
-					pageNo++);
+			Pagination page = searchView.query(pageNo++);
 			StringBuffer buffer = new StringBuffer(
 					"http://s.taobao.com/search?q=");
 			item = (Item) page.getList().get(0);

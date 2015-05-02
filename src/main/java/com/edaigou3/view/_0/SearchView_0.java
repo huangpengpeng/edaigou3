@@ -41,7 +41,7 @@ public class SearchView_0 implements ISearchView {
 		lblNewLabel_15.setBounds(359, 12, 54, 22);
 		lblNewLabel_15.setText("淘宝店铺");
 
-		_淘宝店铺 = NewInstance.get(ShopView.class);
+		_淘宝店铺 = new ShopView();
 		View.addView(composite, _淘宝店铺);
 		_淘宝店铺.setBounds(417, 8, 86, 20);
 

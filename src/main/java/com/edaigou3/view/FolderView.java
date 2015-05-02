@@ -26,6 +26,8 @@ public class FolderView extends BaseViewAdapter {
 	private Composite c_商品过滤;
 	private CTabItem _已上架;
 	private Composite c_已上架;
+	private CTabItem _商品同步;
+	private Composite c_商品同步;
 
 	@Override
 	public void createContents(Shell shell) {
@@ -53,14 +55,18 @@ public class FolderView extends BaseViewAdapter {
 
 		c_商品过滤 = new Composite(tabFolder, SWT.NONE);
 		_商品过滤.setControl(c_商品过滤);
-		
-		 _已上架 = new CTabItem(NewInstance.get(FolderView.class)
-				.getTabFolder(), SWT.NONE);
-		 _已上架.setText("已上架");
 
-		 c_已上架 = new Composite(NewInstance.get(FolderView.class)
-				.getTabFolder(), SWT.NONE);
+		_已上架 = new CTabItem(tabFolder, SWT.NONE);
+		_已上架.setText("已上架");
+
+		c_已上架 = new Composite(tabFolder, SWT.NONE);
 		_已上架.setControl(c_已上架);
+
+		_商品同步 = new CTabItem(tabFolder, SWT.NONE);
+		_商品同步.setText("商品同步");
+		
+		c_商品同步 = new Composite(tabFolder, SWT.NONE);
+		_商品同步.setControl(c_商品同步);
 
 		tabFolder.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent arg0) {
@@ -116,5 +122,13 @@ public class FolderView extends BaseViewAdapter {
 
 	public Composite getC_已上架() {
 		return c_已上架;
+	}
+
+	public CTabItem get_商品同步() {
+		return _商品同步;
+	}
+
+	public Composite getC_商品同步() {
+		return c_商品同步;
 	}
 }

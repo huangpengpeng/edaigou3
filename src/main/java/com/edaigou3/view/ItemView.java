@@ -68,7 +68,7 @@ public class ItemView extends BaseViewAdapter {
 		lblNewLabel.setBounds(107, 19, 54, 22);
 		lblNewLabel.setText("淘宝店铺");
 
-		shopView = NewInstance.get(ShopView.class);
+		shopView = new ShopView();
 		View.addView(grpSp, shopView);
 		shopView.setBounds(171, 16, 86, 20);
 

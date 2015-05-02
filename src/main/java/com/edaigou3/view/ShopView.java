@@ -8,16 +8,12 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 
 import com.edaigou3.entity.Shop;
 import com.edaigou3.manager.ShopMng;
 import com.edaigou3.view.base.IBaseView;
 import com.edaigou3.view.base.IMainView.NewInstance;
 
-@Component
-@Scope(value = "prototype")
 public class ShopView implements IBaseView {
 
 	private Combo shopcommbo;
@@ -79,12 +75,12 @@ public class ShopView implements IBaseView {
 		}
 		return shop.getId();
 	}
-	
-	public void clearText(){
+
+	public void clearText() {
 		shopcommbo.setText("请选择");
 	}
-	
-	public void setText(String text){
+
+	public void setText(String text) {
 		shopcommbo.setText(text);
 	}
 }
