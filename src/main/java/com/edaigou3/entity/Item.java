@@ -47,7 +47,7 @@ public class Item extends BaseItem {
 	}
 
 	public enum ItemChannel {
-		普通淘客, 级淘客
+		普通淘客, 高级淘客
 	}
 
 	public enum ItemStatus {

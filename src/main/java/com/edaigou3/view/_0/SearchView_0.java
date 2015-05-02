@@ -54,7 +54,7 @@ public class SearchView_0 implements ISearchView {
 		_错误类型.add("");
 		_错误类型.add("抓低错误");
 		_错误类型.add("非低价格");
-		_错误类型.add("售利过低");
+		_错误类型.add("销利过低");
 		_错误类型.add("编号错误");
 		_错误类型.add("店售错误");
 

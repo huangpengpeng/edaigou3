@@ -15,12 +15,11 @@ import com.edaigou3.entity.Item;
 import com.edaigou3.entity.ItemFilters;
 import com.edaigou3.manager.ItemFiltersMng;
 import com.edaigou3.view.ItemView;
-import com.edaigou3.view._1.SearchView_1;
 import com.edaigou3.view.base.IBrowserView;
-import com.edaigou3.view.base.ISearchView;
 import com.edaigou3.view.base.IBrowserView.IOperatorProvider;
 import com.edaigou3.view.base.IBrowserView.IRequestProvider;
 import com.edaigou3.view.base.IMainView.NewInstance;
+import com.edaigou3.view.base.ISearchView;
 
 public class _同步最低售价Provider implements IOperatorProvider {
 
@@ -43,23 +42,25 @@ public class _同步最低售价Provider implements IOperatorProvider {
 			if (eshops == null || eshops.size() == 0) {
 				continue;
 			}
-			Element eshop = eshops.get(0);
-			String nick = eshop.text();
-			String numIid = eshop.child(0).attr("data-nid");
-			boolean isFlag = false;
-			for (ItemFilters filters : NewInstance.get(ItemFiltersMng.class)
-					.query()) {
-				if (StringUtils.equals(filters.getNick(), nick)) {
-					isFlag = true;
+			try {
+				Element eshop = eshops.get(0);
+				String nick = eshop.text();
+				String numIid = eshop.child(0).attr("data-nid");
+				boolean isFlag = false;
+				for (ItemFilters filters : NewInstance
+						.get(ItemFiltersMng.class).query()) {
+					if (StringUtils.equals(filters.getNick(), nick)) {
+						isFlag = true;
+					}
+					if (StringUtils.equals(numIid,
+							String.valueOf(filters.getpNumIid()))) {
+						isFlag = true;
+					}
 				}
-				if (StringUtils.equals(numIid,
-						String.valueOf(filters.getpNumIid()))) {
-					isFlag = true;
+				if (isFlag) {
+					continue;
 				}
-			}
-
-			if (isFlag) {
-				continue;
+			} catch (Exception e) {
 			}
 			Elements e2s = element.getElementsByClass("title");
 			if (e2s == null || e2s.size() == 0) {

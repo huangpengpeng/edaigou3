@@ -1,42 +1,77 @@
 package com.edaigou3.view.ext;
 
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.springframework.stereotype.Component;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Listener;
 
+import com.common.jdbc.page.Pagination;
 import com.common.util.JsonUtils;
 import com.edaigou3.entity.Item;
+import com.edaigou3.entity.Item.ItemChannel;
 import com.edaigou3.view.ItemView;
 import com.edaigou3.view.base.IBrowserView;
 import com.edaigou3.view.base.IBrowserView.IOperatorProvider;
+import com.edaigou3.view.base.IBrowserView.IRequestProvider;
 import com.edaigou3.view.base.IMainView.JsonFilter;
 import com.edaigou3.view.base.IMainView.MessageBox2;
 import com.edaigou3.view.base.IMainView.NewInstance;
+import com.edaigou3.view.base.ISearchView;
 
-@Component
 public class TbkInfoProvider implements IOperatorProvider {
 
-	private Item item;
+	private static Item item;
+
+	private Listener listener;
+
+	public TbkInfoProvider(Listener listener) {
+		this.listener = listener;
+	}
 
 	public void completed(IBrowserView browserView) {
 		try {
+			System.out.println("4 start completed ");
 			Map<String, Object> result = JsonUtils.toMap(JsonFilter
 					.filter(browserView.getResponseText()));
 			if (!(Boolean) result.get("ok")) {
 				MessageBox2.showErrorMsg("获取失败,检查参数是否正确", null);
 				return;
 			}
-			Item item = toModel(result);
-			if (item == null) {
+
+			Item itemModel = toModel(result);
+			if (itemModel == null) {
 				MessageBox2.showErrorMsg("此商品没有淘客", null);
 				return;
 			}
-			NewInstance.get(ItemView.class).fullContents(item);
+
+			if (listener == null) {
+				NewInstance.get(ItemView.class).fullContents(itemModel);
+			}
+
+			System.out.println("5 end completed ");
+
+			// 500豪秒后执行保存 在执行下一条
+			if (listener != null) {
+
+				if (!ItemChannel.高级淘客.toString().equals(item.getChannel())) {
+					NewInstance.get(ItemView.class).setRebateProportion(
+							item.getRebateProportion());
+				}
+
+				Display.getDefault().timerExec(500, new Runnable() {
+					public void run() {
+						NewInstance.get(ItemView.class).updateSubmit();
+						listener.handleEvent(null);
+					}
+				});
+			}
 		} catch (Exception e) {
 			MessageBox2.showErrorMsg("获取失败,检查是否登录", e);
 		}
@@ -70,10 +105,34 @@ public class TbkInfoProvider implements IOperatorProvider {
 		String tbkNumIid = (String) model.get("userNumberId");
 		BigDecimal originalPrice = BigDecimal.valueOf(((Double) model
 				.get("zkPrice")).intValue());
-		item = new Item(null, imageByteValue, null, title, auctionUrl,
+		return new Item(null, imageByteValue, null, title, auctionUrl,
 				Long.valueOf(tbkNumIid), originalPrice, rebateProportion,
 				rebateFee, rebateFee.multiply(new BigDecimal("0.1")), null,
 				null, null, null, null, null, null, null);
-		return item;
+	}
+
+	public static class RequestProvider implements IRequestProvider {
+
+		private Integer pageNo;
+		private ISearchView searchView;
+
+		public RequestProvider(Integer pageNo, ISearchView searchView) {
+			this.pageNo = pageNo;
+			this.searchView = searchView;
+		}
+
+		public String getRequestUrl(IBrowserView browserView) {
+			Pagination page = searchView.query(pageNo++);
+			item = (Item) page.getList().get(0);
+			StringBuffer buffer = new StringBuffer(
+					"http://pub.alimama.com/pubauc/searchAuctionList.json?q=");
+			try {
+				buffer.append(URLEncoder.encode(item.getUrl(), "UTF-8"));
+			} catch (UnsupportedEncodingException e) {
+			}
+			NewInstance.get(ItemView.class).fullContents(item, true);
+			System.out.println(" 1 url ：" + buffer);
+			return buffer.toString();
+		}
 	}
 }

@@ -39,10 +39,12 @@ public class TableView_0 extends ITableView {
 	private MenuItem _全部导出;
 	private MenuItem _全部上架;
 	private MenuItem _全修低价;
+	private static Integer selectionIndex = 0;
 
 	public void createListenter() {
 		table.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent arg0) {
+				selectionIndex = table.getSelectionIndex();
 				Item item = (Item) arg0.item.getData();
 				NewInstance.get(ItemView.class).fullContents(item, true);
 			}
@@ -171,7 +173,7 @@ public class TableView_0 extends ITableView {
 	}
 
 	public void selectionValue(Object value) {
-		TableItem ti = table.getSelection()[table.getSelectionIndex()];
+		TableItem ti = table.getItems()[selectionIndex];
 		if (ti != null) {
 			ti.setData(value);
 		}

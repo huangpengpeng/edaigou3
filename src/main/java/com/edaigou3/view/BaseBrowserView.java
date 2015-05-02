@@ -18,6 +18,7 @@ public abstract class BaseBrowserView implements IBrowserView {
 	private int waitingtime = 0;
 	private boolean completed = true;
 	private IBrowserView browserView;
+	private Composite composite;
 
 	public void doRequest(String url) {
 		browser.setUrl(url);
@@ -28,19 +29,28 @@ public abstract class BaseBrowserView implements IBrowserView {
 	}
 
 	public void createContents(Composite composite) {
+		this.browserView = this;
+		this.composite = composite;
+		createBrowser(composite);
+	}
+
+	public void createBrowser(Composite composite) {
 		browser = new Browser(composite, SWT.BORDER);
 		browser.setBounds(0, 33, 1089, 512);
-		browserView=this;
 		browser.addProgressListener(new ProgressListener() {
 			public void completed(ProgressEvent arg0) {
 			}
 
 			public void changed(ProgressEvent arg0) {
+				System.out.println("2 changed ProgressEvent ");
 				// arg0.current == arg0.total 此条件会进入多次 利用 completed控制只进入一次
 				if (completed == false && arg0.current == arg0.total) {
+					System.out.println(" changed ProgressEvent time ");
 					Display.getDefault().timerExec((int) waitingtime,
 							new Runnable() {
 								public void run() {
+									System.out
+											.println(" 3 operatorProvider changed ProgressEvent time ");
 									operatorProvider.completed(browserView);
 								}
 							});

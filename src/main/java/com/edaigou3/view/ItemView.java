@@ -196,9 +196,9 @@ public class ItemView extends BaseViewAdapter {
 			rebateProportion
 					.setText(String.valueOf(item.getRebateProportion()));
 		}
-		
+
 		item.caleRebate();
-		
+
 		rebateFee.setText(String.valueOf(item.getRebateFee()));
 		serviceFee.setText(String.valueOf(item.getServiceFee()));
 		originalPrice.setText(String.valueOf(item.getOriginalPrice()));
@@ -207,9 +207,9 @@ public class ItemView extends BaseViewAdapter {
 					new BigDecimal("0.88")));
 		}
 		realPrice.setText(String.valueOf(item.getRealPrice().intValue()));
-		
+
 		item.caleProfieFee();
-		
+
 		profitFee.setText(String.valueOf(item.getProfitFee()));
 		if (item.getLowPrice() != null)
 			lowPrice.setText(String.valueOf(item.getLowPrice()));
@@ -340,9 +340,10 @@ public class ItemView extends BaseViewAdapter {
 											"UTF-8"));
 								} catch (UnsupportedEncodingException e) {
 								}
+								System.out.println(" 1 url ：" + buffer);
 								return buffer.toString();
 							}
-						}, NewInstance.get(TbkInfoProvider.class), 0);
+						}, new TbkInfoProvider(null), 0);
 			}
 		});
 		save.addListener(SWT.Selection, new Listener() {
@@ -384,6 +385,10 @@ public class ItemView extends BaseViewAdapter {
 	public void setLowPrice(BigDecimal lowPriceValue) {
 		lowPrice.setText(lowPriceValue.toString());
 	}
+	
+	public void setRebateProportion(Double rebateProportionValue) {
+		rebateProportion.setText(rebateProportionValue.toString());
+	}
 
 	public void setNumIid(String numIidValue) {
 		numIid.setText(numIidValue);
@@ -415,6 +420,7 @@ public class ItemView extends BaseViewAdapter {
 		try {
 			NewInstance.get(TableView_0.class).selectionValue(item);
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 		clearText();

@@ -1,5 +1,8 @@
 package com.edaigou3.view._4;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -9,8 +12,12 @@ import org.eclipse.swt.widgets.Shell;
 import org.springframework.stereotype.Component;
 
 import com.edaigou3.view.BaseBrowserView;
+import com.edaigou3.view._1.BrowserView_1;
+import com.edaigou3.view.base.IBrowserView;
+import com.edaigou3.view.base.IBrowserView.IRequestProvider;
 import com.edaigou3.view.base.IMainView.NewInstance;
 import com.edaigou3.view.base.IMainView.View;
+import com.edaigou3.view.ext.TbkInfoProvider;
 import com.edaigou3.view.ext._同步最低售价Provider;
 import com.edaigou3.view.ext._抓售价格Provider;
 
@@ -70,6 +77,16 @@ public class BrowserView_4 extends BaseBrowserView {
 						new com.edaigou3.view.ext._抓售价格Provider.RequestProvider(
 								pageNo++, NewInstance.get(SearchView_4.class)),
 						new _抓售价格Provider(this), 1000);
+			}
+		});
+		_同步淘客.addListener(SWT.Selection, new Listener() {
+
+			public void handleEvent(Event arg0) {
+				if (totalCount == 0 || pageNo > totalCount) {
+					return;
+				}
+				doRequest(new TbkInfoProvider.RequestProvider(pageNo++,
+						NewInstance.get(SearchView_4.class)), new TbkInfoProvider(this), 0);
 			}
 		});
 	}

@@ -232,6 +232,5 @@ public class MainView extends IMainView {
 		Label label_10 = new Label(composite_8, SWT.NONE);
 		label_10.setText("全部下架");
 		label_10.setBounds(1024, 17, 54, 12);
-
 	}
 }
