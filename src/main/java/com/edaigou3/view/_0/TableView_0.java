@@ -86,19 +86,16 @@ public class TableView_0 extends ITableView {
 										itemError.getId());
 								continue;
 							}
-							itemMng.update(
-									item.getId(),
-									item.getShopId(),
-									item.getImageByte(),
-									item.getChannel(),
-									item.getTitle(),
-									item.getOriginalPrice(),
+							item.setRealPrice(item.getLowPrice().subtract(
+									BigDecimal.ONE));
+							item.caleProfieFee();
+							itemMng.update(item.getId(), item.getShopId(),
+									item.getImageByte(), item.getChannel(),
+									item.getTitle(), item.getOriginalPrice(),
 									item.getRebateProportion(),
-									item.getRebateFee(),
-									item.getServiceFee(),
-									item.getLowPrice().subtract(BigDecimal.ONE),
-									item.getProfitFee(), item.getLowPrice(),
-									item.getNumIid());
+									item.getRebateFee(), item.getServiceFee(),
+									item.getRealPrice(), item.getProfitFee(),
+									item.getLowPrice(), item.getNumIid());
 						}
 					}
 				});

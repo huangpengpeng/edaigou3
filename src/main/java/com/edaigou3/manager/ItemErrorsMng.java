@@ -13,6 +13,8 @@ public interface ItemErrorsMng {
 	
 	List<ItemErrors>  getByErrorType(String errorType);
 	
+	List<ItemErrors>  getByErrorType(String [] errorTypes);
+	
 	List<ItemErrors>  getByItem(Long itemId);
 	
 	void delete(Long id);

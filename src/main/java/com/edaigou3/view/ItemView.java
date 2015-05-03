@@ -317,12 +317,14 @@ public class ItemView extends BaseViewAdapter {
 		});
 		btnloginhuanleguan.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event arg0) {
-				NewInstance.get(FolderView.class).selection(
-						NewInstance.get(FolderView.class).get_新品发布());
-				NewInstance
-						.get(BrowserView_1.class)
-						.doRequest(
-								"http://tbgr.huanleguang.com/promotion/promo/index/?hpm=1");
+				IBrowserView browserView = NewInstance.get(FolderView.class)
+						.getCurrentBrowserView();
+				browserView
+						.doRequest("http://tbgr.huanleguang.com/promotion/promo/index/?hpm=1");
+				if (browserView instanceof BrowserView_1) {
+					NewInstance.get(FolderView.class).selection(
+							NewInstance.get(FolderView.class).get_新品发布());
+				}
 			}
 		});
 		btnovershot.addListener(SWT.Selection, new Listener() {
@@ -385,7 +387,7 @@ public class ItemView extends BaseViewAdapter {
 	public void setLowPrice(BigDecimal lowPriceValue) {
 		lowPrice.setText(lowPriceValue.toString());
 	}
-	
+
 	public void setRebateProportion(Double rebateProportionValue) {
 		rebateProportion.setText(rebateProportionValue.toString());
 	}

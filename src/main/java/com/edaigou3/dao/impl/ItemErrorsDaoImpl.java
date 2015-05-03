@@ -34,9 +34,10 @@ public class ItemErrorsDaoImpl extends JdbcTemplateBaseDao implements
 	}
 
 	public List<ItemErrors> getByErrorType(String errorType) {
-		SqlBuilder sqlBuilder=new SqlBuilder("select * from ItemErrors where 1=1");
-		
-		if(errorType!=null){
+		SqlBuilder sqlBuilder = new SqlBuilder(
+				"select * from ItemErrors where 1=1");
+
+		if (errorType != null) {
 			sqlBuilder.andEqualTo("errorType", errorType);
 		}
 		return query(sqlBuilder);
@@ -47,11 +48,20 @@ public class ItemErrorsDaoImpl extends JdbcTemplateBaseDao implements
 	}
 
 	public List<ItemErrors> getByItem(Long itemId) {
-		SqlBuilder sqlBuilder=new SqlBuilder("select * from ItemErrors where 1=1");
-		if(itemId!=null){
+		SqlBuilder sqlBuilder = new SqlBuilder(
+				"select * from ItemErrors where 1=1");
+		if (itemId != null) {
 			sqlBuilder.andEqualTo("itemId", itemId);
 		}
 		return query(sqlBuilder);
 	}
 
+	public List<ItemErrors> getByErrorType(String[] errorTypes) {
+		SqlBuilder sqlBuilder = new SqlBuilder(
+				"select * from ItemErrors where 1=1");
+		if (sqlBuilder.ifNotNull(errorTypes)) {
+			sqlBuilder.andIn("errorType", errorTypes);
+		}
+		return query(sqlBuilder);
+	}
 }

@@ -10,8 +10,12 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.springframework.stereotype.Component;
 
+import com.edaigou3.view._1.BrowserView_1;
 import com.edaigou3.view._2.SearchView_2;
+import com.edaigou3.view._4.BrowserView_4;
+import com.edaigou3.view._5.BrowserView_5;
 import com.edaigou3.view.base.BaseViewAdapter;
+import com.edaigou3.view.base.IBrowserView;
 import com.edaigou3.view.base.IMainView.NewInstance;
 
 @Component
@@ -28,6 +32,8 @@ public class FolderView extends BaseViewAdapter {
 	private Composite c_已上架;
 	private CTabItem _商品同步;
 	private Composite c_商品同步;
+	private CTabItem _非低价格_店售错误;
+	private Composite c_非低价格_店售错误;
 
 	@Override
 	public void createContents(Shell shell) {
@@ -64,9 +70,17 @@ public class FolderView extends BaseViewAdapter {
 
 		_商品同步 = new CTabItem(tabFolder, SWT.NONE);
 		_商品同步.setText("商品同步");
-		
+
 		c_商品同步 = new Composite(tabFolder, SWT.NONE);
 		_商品同步.setControl(c_商品同步);
+
+		_非低价格_店售错误 = new CTabItem(NewInstance.get(FolderView.class)
+				.getTabFolder(), SWT.NONE);
+		_非低价格_店售错误.setText("非低价格|店售错误");
+
+		c_非低价格_店售错误 = new Composite(NewInstance.get(FolderView.class)
+				.getTabFolder(), SWT.NONE);
+		_非低价格_店售错误.setControl(c_非低价格_店售错误);
 
 		tabFolder.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent arg0) {
@@ -78,6 +92,22 @@ public class FolderView extends BaseViewAdapter {
 			public void widgetDefaultSelected(SelectionEvent arg0) {
 			}
 		});
+	}
+
+	public IBrowserView getCurrentBrowserView() {
+		if (tabFolder.getSelection().equals(_新品发布)) {
+			return NewInstance.get(BrowserView_1.class);
+		}
+
+		if (tabFolder.getSelection().equals(_商品同步)) {
+			return NewInstance.get(BrowserView_4.class);
+		}
+
+		if (tabFolder.getSelection().equals(_非低价格_店售错误)) {
+			return NewInstance.get(BrowserView_5.class);
+		}
+
+		return NewInstance.get(BrowserView_1.class);
 	}
 
 	public CTabItem get_新品发布() {
@@ -131,4 +161,13 @@ public class FolderView extends BaseViewAdapter {
 	public Composite getC_商品同步() {
 		return c_商品同步;
 	}
+
+	public CTabItem get_非低价格_店售错误() {
+		return _非低价格_店售错误;
+	}
+
+	public Composite getC_非低价格_店售错误() {
+		return c_非低价格_店售错误;
+	}
+
 }

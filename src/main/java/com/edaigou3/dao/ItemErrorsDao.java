@@ -15,4 +15,6 @@ public interface ItemErrorsDao {
 	 List<ItemErrors> getByItem(Long itemId);
 	 
 	 void delete(Long id);
+	 
+	 List<ItemErrors> getByErrorType(String[] errorTypes);
 }

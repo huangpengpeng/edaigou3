@@ -6,11 +6,11 @@ import org.eclipse.swt.widgets.Listener;
 import com.common.jdbc.page.Pagination;
 import com.edaigou3.entity.Item;
 import com.edaigou3.view.ItemView;
-import com.edaigou3.view._1.SearchView_1;
 import com.edaigou3.view.base.IBrowserView;
 import com.edaigou3.view.base.IBrowserView.IJavascriptProvider;
 import com.edaigou3.view.base.IBrowserView.IOperatorProvider;
 import com.edaigou3.view.base.IMainView.NewInstance;
+import com.edaigou3.view.base.ISearchView;
 
 public class _修售价格Provider implements IOperatorProvider {
 
@@ -43,13 +43,15 @@ public class _修售价格Provider implements IOperatorProvider {
 	public static class JavascriptProvider implements IJavascriptProvider {
 
 		private Integer pageNo;
+		private ISearchView searchView;
 
-		public JavascriptProvider(Integer pageNo) {
+		public JavascriptProvider(Integer pageNo,ISearchView searchView) {
 			this.pageNo = pageNo;
+			this.searchView=searchView;
 		}
 
 		public String getRequestUrl(IBrowserView browserView) {
-			Pagination page = NewInstance.get(SearchView_1.class).query(
+			Pagination page = searchView.query(
 					pageNo++);
 			item = (Item) page.getList().get(0);
 			StringBuffer stringBuffer = new StringBuffer(

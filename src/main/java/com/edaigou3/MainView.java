@@ -1,11 +1,9 @@
 package com.edaigou3;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
@@ -24,6 +22,7 @@ import com.edaigou3.view._3.PageView_3;
 import com.edaigou3.view._3.SearchView_3;
 import com.edaigou3.view._3.TableView_3;
 import com.edaigou3.view._4.BrowserView_4;
+import com.edaigou3.view._5.BrowserView_5;
 import com.edaigou3.view.base.IMainView;
 
 @Component
@@ -91,57 +90,10 @@ public class MainView extends IMainView {
 
 		View.addView(NewInstance.get(FolderView.class).getC_商品同步(),
 				NewInstance.get(BrowserView_4.class));
+		
+		View.addView(NewInstance.get(FolderView.class).getC_非低价格_店售错误(),
+				NewInstance.get(BrowserView_5.class));
 
-		CTabItem tabItem = new CTabItem(NewInstance.get(FolderView.class)
-				.getTabFolder(), SWT.NONE);
-		tabItem.setText("非低价格|店售错误");
-
-		Composite composite_5 = new Composite(NewInstance.get(FolderView.class)
-				.getTabFolder(), SWT.NONE);
-		tabItem.setControl(composite_5);
-
-		Combo combo_8 = new Combo(composite_5, SWT.NONE);
-		combo_8.setBounds(70, 10, 86, 20);
-
-		Button button = new Button(composite_5, SWT.NONE);
-		button.setText("操作");
-		button.setBounds(731, 10, 42, 22);
-
-		Button button_1 = new Button(composite_5, SWT.NONE);
-		button_1.setText("上一页");
-		button_1.setBounds(803, 10, 54, 22);
-
-		CLabel label_1 = new CLabel(composite_5, SWT.NONE);
-		label_1.setText("0/0/0");
-		label_1.setAlignment(SWT.CENTER);
-		label_1.setBounds(863, 13, 60, 18);
-
-		Button button_2 = new Button(composite_5, SWT.NONE);
-		button_2.setText("下一页");
-		button_2.setBounds(929, 10, 54, 22);
-
-		Button button_3 = new Button(composite_5, SWT.NONE);
-		button_3.setText("自动");
-		button_3.setBounds(1041, 10, 48, 22);
-
-		Browser browser_1 = new Browser(composite_5, SWT.BORDER);
-		browser_1.setBounds(0, 36, 1089, 512);
-
-		Label label_2 = new Label(composite_5, SWT.NONE);
-		label_2.setText("淘宝店铺");
-		label_2.setBounds(10, 13, 54, 22);
-
-		Button btnRadioButton_4 = new Button(composite_5, SWT.RADIO);
-		btnRadioButton_4.setBounds(504, 14, 69, 16);
-		btnRadioButton_4.setText("退出活动");
-
-		Button btnRadioButton_5 = new Button(composite_5, SWT.RADIO);
-		btnRadioButton_5.setBounds(603, 14, 93, 16);
-		btnRadioButton_5.setText("修改低价");
-
-		Button btnNewButton_22 = new Button(composite_5, SWT.NONE);
-		btnNewButton_22.setBounds(181, 8, 72, 22);
-		btnNewButton_22.setText("全部最低价");
 
 		CTabItem tabItem_3 = new CTabItem(NewInstance.get(FolderView.class)
 				.getTabFolder(), SWT.NONE);

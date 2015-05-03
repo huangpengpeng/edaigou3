@@ -38,6 +38,11 @@ public class ItemErrorsMngImpl implements ItemErrorsMng {
 		return dao.getByItem(itemId);
 	}
 
+
+	public List<ItemErrors> getByErrorType(String[] errorTypes) {
+		return dao.getByErrorType(errorTypes);
+	}
+	
 	@Autowired
 	private ItemErrorsDao dao;
 }
