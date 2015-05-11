@@ -169,8 +169,6 @@ public class ItemView extends BaseViewAdapter {
 		btnloginalimama.setText("登录阿里妈妈");
 	}
 
-	
-	
 	@Override
 	public void fullContents(Object... values) {
 		Item item = (Item) values[0];
@@ -236,6 +234,7 @@ public class ItemView extends BaseViewAdapter {
 			item.setImageByte(ImageUtils.imgToBase64String(image.getImage()));
 			return item;
 		} catch (Exception e) {
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -357,9 +356,12 @@ public class ItemView extends BaseViewAdapter {
 			}
 		});
 	}
-	
-	
-	public void updateSubmit(){
+
+	public void setLowPrice(BigDecimal lowPriceValue) {
+		lowPrice.setText(lowPriceValue.toString());
+	}
+
+	public void updateSubmit() {
 		Item item = getViewToModel();
 		if (item == null) {
 			MessageBox2.showErrorMsg("商品信息错误");
@@ -368,20 +370,26 @@ public class ItemView extends BaseViewAdapter {
 		if (!validate(item)) {
 			return;
 		}
-		Item old = NewInstance.get(TableView.class).getSelectionValue();
+		Item old = NewInstance.get(ItemMng.class).getByTbkNumIid(
+				Long.valueOf(ParamentersUtils.getQueryParams(item.getUrl(),
+						"id")));
 		if (old == null) {
 			MessageBox2.showErrorMsg("操作错误,不能编辑");
 			return;
 		}
-		NewInstance.get(ItemMng.class).update(old.getId(),
-				item.getShopId(), item.getImageByte(),
-				item.getChannel(), item.getTitle(),
+		NewInstance.get(ItemMng.class).update(old.getId(), item.getShopId(),
+				item.getImageByte(), item.getChannel(), item.getTitle(),
 				item.getOriginalPrice(), item.getRebateProportion(),
-				item.getRebateFee(), item.getServiceFee(),
-				item.getRealPrice(), item.getProfitFee(),
-				item.getLowPrice(), item.getNumIid());
+				item.getRebateFee(), item.getServiceFee(), item.getRealPrice(),
+				item.getProfitFee(), item.getLowPrice(), item.getNumIid());
 		item.setId(old.getId());
-		NewInstance.get(TableView.class).selectionValue(item);
+
+		// 更新table选择
+		try {
+			NewInstance.get(TableView.class).selectionValue(item);
+		} catch (Exception e) {
+		}
+
 		clearText();
 	}
 }
