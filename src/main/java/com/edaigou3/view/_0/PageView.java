@@ -11,6 +11,6 @@ public class PageView extends BasePageView {
 
 	@Override
 	public ISearchView getSearchView() {
-		return NewInstance.get(SearchView.class);
+		return NewInstance.get(SearchView_0.class);
 	}
 }

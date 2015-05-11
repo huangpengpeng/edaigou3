@@ -18,7 +18,9 @@ public interface ItemMng {
 			BigDecimal profitFee, BigDecimal lowPrice, Long numIid);
 
 	public Pagination getPage(Long shopId, Long[] ids, String title,
-			Integer pageNo);
+			Integer pageNo,Integer pageSize);
+	
+	public void checkErrors(Long id);
 
 	void delete(Long id);
 

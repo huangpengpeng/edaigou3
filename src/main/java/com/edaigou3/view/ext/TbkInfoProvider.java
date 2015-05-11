@@ -73,11 +73,7 @@ public class TbkInfoProvider implements IOperatorProvider {
 		item = new Item(null, imageByteValue, null, title, auctionUrl,
 				Long.valueOf(tbkNumIid), originalPrice, rebateProportion,
 				rebateFee, rebateFee.multiply(new BigDecimal("0.1")), null,
-				null, null, null, null, null, null);
+				null, null, null, null, null, null,null);
 		return item;
-	}
-
-	public <T> T getObject() {
-		return (T) item;
 	}
 }

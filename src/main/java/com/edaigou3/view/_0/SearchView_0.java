@@ -19,7 +19,7 @@ import com.edaigou3.view.base.IMainView.View;
 import com.edaigou3.view.base.ISearchView;
 
 @Component
-public class SearchView implements ISearchView {
+public class SearchView_0 implements ISearchView {
 
 	private Text _商品标题;
 	private Combo _错误类型;
@@ -96,7 +96,7 @@ public class SearchView implements ISearchView {
 		String title = _商品标题.getText();
 
 		Pagination page = NewInstance.get(ItemMng.class).getPage(shopId, null,
-				title, pageNo);
+				title, pageNo,6);
 
 		NewInstance.get(TableView.class).fullContents(page.getList());
 

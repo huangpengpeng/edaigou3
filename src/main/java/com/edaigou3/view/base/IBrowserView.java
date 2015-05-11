@@ -49,8 +49,6 @@ public interface IBrowserView extends IBaseView {
 	public static interface IOperatorProvider {
 
 		public void completed(IBrowserView browserView);
-		
-		public <T> T getObject();
 	}
 
 	/**

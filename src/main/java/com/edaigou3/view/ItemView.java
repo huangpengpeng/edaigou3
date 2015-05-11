@@ -21,8 +21,9 @@ import com.common.util.ParamentersUtils;
 import com.edaigou3.entity.Item;
 import com.edaigou3.manager.ItemMng;
 import com.edaigou3.manager.ShopMng;
-import com.edaigou3.view._0.SearchView;
+import com.edaigou3.view._0.SearchView_0;
 import com.edaigou3.view._0.TableView;
+import com.edaigou3.view._1.BrowserView_1;
 import com.edaigou3.view.base.BaseViewAdapter;
 import com.edaigou3.view.base.IBrowserView;
 import com.edaigou3.view.base.IBrowserView.IRequestProvider;
@@ -297,7 +298,7 @@ public class ItemView extends BaseViewAdapter {
 			public void handleEvent(Event arg0) {
 				NewInstance.get(FolderView.class).selection(
 						NewInstance.get(FolderView.class).get_新品发布());
-				NewInstance.get(BrowserView.class).doRequest(
+				NewInstance.get(BrowserView_1.class).doRequest(
 						"http://www.alimama.com/member/login.htm");
 			}
 		});
@@ -306,7 +307,7 @@ public class ItemView extends BaseViewAdapter {
 				NewInstance.get(FolderView.class).selection(
 						NewInstance.get(FolderView.class).get_新增商品());
 				final String urlValue = url.getText();
-				NewInstance.get(BrowserView.class).doRequest(
+				NewInstance.get(BrowserView_1.class).doRequest(
 						new IRequestProvider() {
 							public String getRequestUrl(IBrowserView browserView) {
 								StringBuffer buffer = new StringBuffer(
@@ -347,35 +348,40 @@ public class ItemView extends BaseViewAdapter {
 						item.getRebateFee(), item.getServiceFee(),
 						item.getRealPrice());
 				clearText();
-				NewInstance.get(SearchView.class).query(1);
+				NewInstance.get(SearchView_0.class).query(1);
 			}
 		});
 		edit.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event arg0) {
-				Item item = getViewToModel();
-				if (item == null) {
-					MessageBox2.showErrorMsg("商品信息错误");
-					return;
-				}
-				if (!validate(item)) {
-					return;
-				}
-				Item old = NewInstance.get(TableView.class).getSelectionValue();
-				if (old == null) {
-					MessageBox2.showErrorMsg("操作错误,不能编辑");
-					return;
-				}
-				NewInstance.get(ItemMng.class).update(old.getId(),
-						item.getShopId(), item.getImageByte(),
-						item.getChannel(), item.getTitle(),
-						item.getOriginalPrice(), item.getRebateProportion(),
-						item.getRebateFee(), item.getServiceFee(),
-						item.getRealPrice(), item.getProfitFee(),
-						item.getLowPrice(), item.getNumIid());
-				item.setId(old.getId());
-				NewInstance.get(TableView.class).selectionValue(item);
-				clearText();
+				updateSubmit();
 			}
 		});
+	}
+	
+	
+	public void updateSubmit(){
+		Item item = getViewToModel();
+		if (item == null) {
+			MessageBox2.showErrorMsg("商品信息错误");
+			return;
+		}
+		if (!validate(item)) {
+			return;
+		}
+		Item old = NewInstance.get(TableView.class).getSelectionValue();
+		if (old == null) {
+			MessageBox2.showErrorMsg("操作错误,不能编辑");
+			return;
+		}
+		NewInstance.get(ItemMng.class).update(old.getId(),
+				item.getShopId(), item.getImageByte(),
+				item.getChannel(), item.getTitle(),
+				item.getOriginalPrice(), item.getRebateProportion(),
+				item.getRebateFee(), item.getServiceFee(),
+				item.getRealPrice(), item.getProfitFee(),
+				item.getLowPrice(), item.getNumIid());
+		item.setId(old.getId());
+		NewInstance.get(TableView.class).selectionValue(item);
+		clearText();
 	}
 }

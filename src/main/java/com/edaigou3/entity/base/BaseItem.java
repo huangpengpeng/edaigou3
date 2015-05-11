@@ -22,7 +22,7 @@ public class BaseItem extends BaseEntity {
 			Double rebateProportion, BigDecimal rebateFee,
 			BigDecimal serviceFee, BigDecimal realPrice, BigDecimal profitFee,
 			BigDecimal lowPrice, Long numIid, Double freshRebateProportion,
-			BigDecimal freshOriginalPrice, String freshTitle) {
+			BigDecimal freshOriginalPrice, String freshTitle,BigDecimal freshRealPrice) {
 		this.setShopId(shopId);
 		this.setImageByte(imageByte);
 		this.setChannel(channel);
@@ -40,7 +40,7 @@ public class BaseItem extends BaseEntity {
 		this.setFreshRebateProportion(freshRebateProportion);
 		this.setFreshOriginalPrice(freshOriginalPrice);
 		this.setFreshTitle(freshTitle);
-
+		this.setFreshRealPrice(freshRealPrice);
 	}
 
 	/**
@@ -139,6 +139,11 @@ public class BaseItem extends BaseEntity {
 	 * 淘宝客最新标题
 	 */
 	private String freshTitle;
+	
+	/**
+	 * 同步店铺实际销售价格
+	 */
+	private BigDecimal freshRealPrice;
 
 	public Long getShopId() {
 		return shopId;
@@ -274,5 +279,13 @@ public class BaseItem extends BaseEntity {
 
 	public void setImageByte(String imageByte) {
 		this.imageByte = imageByte;
+	}
+
+	public BigDecimal getFreshRealPrice() {
+		return freshRealPrice;
+	}
+
+	public void setFreshRealPrice(BigDecimal freshRealPrice) {
+		this.freshRealPrice = freshRealPrice;
 	}
 }

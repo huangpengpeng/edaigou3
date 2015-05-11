@@ -77,7 +77,7 @@ public class TableView extends ITableView {
 								Item item = (Item) arg0.widget.getData();
 								NewInstance.get(ItemMng.class).delete(
 										item.getId());
-								NewInstance.get(SearchView.class).query(
+								NewInstance.get(SearchView_0.class).query(
 										NewInstance.get(PageView.class)
 												.getPageNo());
 							}

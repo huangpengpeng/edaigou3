@@ -6,15 +6,12 @@ import org.eclipse.swt.browser.ProgressEvent;
 import org.eclipse.swt.browser.ProgressListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.springframework.stereotype.Component;
 
-import com.edaigou3.view.base.BaseViewAdapter;
 import com.edaigou3.view.base.IBrowserView;
 import com.edaigou3.view.base.IMainView.JFrame;
 import com.edaigou3.view.base.IMainView.NewInstance;
 
-@Component
-public class BrowserView extends BaseViewAdapter  implements IBrowserView {
+public abstract  class BaseBrowserView   implements IBrowserView {
 
 	private Browser browser;
 	private IOperatorProvider operatorProvider;
@@ -39,7 +36,7 @@ public class BrowserView extends BaseViewAdapter  implements IBrowserView {
 							new Runnable() {
 								public void run() {
 									operatorProvider.completed(NewInstance
-											.get(BrowserView.class));
+											.get(IBrowserView.class));
 								}
 							});
 					completed = true;

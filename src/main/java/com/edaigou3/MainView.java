@@ -15,11 +15,11 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import org.springframework.stereotype.Component;
 
 import com.edaigou3.view.BasePageView;
-import com.edaigou3.view.BrowserView;
 import com.edaigou3.view.FolderView;
 import com.edaigou3.view.ItemView;
-import com.edaigou3.view._0.SearchView;
+import com.edaigou3.view._0.SearchView_0;
 import com.edaigou3.view._0.TableView;
+import com.edaigou3.view._1.BrowserView_1;
 import com.edaigou3.view.base.IMainView;
 
 @Component
@@ -32,9 +32,6 @@ public class MainView extends IMainView {
 	private Text text_15;
 	private Text text_16;
 	private Text text_17;
-	private Text text_18;
-	private Text text_19;
-	private Text text_20;
 	private Table table_3;
 	private Table table_4;
 	private Table table_5;
@@ -76,60 +73,7 @@ public class MainView extends IMainView {
 
 		View.addView(NewInstance.get(FolderView.class));
 
-		Composite composite_1 = new Composite(NewInstance.get(FolderView.class)
-				.getTabFolder(), SWT.NONE);
-		NewInstance.get(FolderView.class).get_新品发布().setControl(composite_1);
-
-		Label lblNewLabel_18 = new Label(composite_1, SWT.NONE);
-		lblNewLabel_18.setBounds(9, 10, 54, 22);
-		lblNewLabel_18.setText("淘宝店铺");
-
-		Combo combo_4 = new Combo(composite_1, SWT.NONE);
-		combo_4.setBounds(69, 7, 86, 20);
-
-		Label lblNewLabel_19 = new Label(composite_1, SWT.NONE);
-		lblNewLabel_19.setBounds(168, 10, 54, 22);
-		lblNewLabel_19.setText("错误类型");
-
-		Combo combo_5 = new Combo(composite_1, SWT.NONE);
-		combo_5.setBounds(228, 7, 86, 20);
-
-		Button btnRadioButton = new Button(composite_1, SWT.NONE);
-		btnRadioButton.setBounds(420, 8, 84, 22);
-		btnRadioButton.setText("同步最低售价");
-
-		Button btnRadioButton_1 = new Button(composite_1, SWT.NONE);
-		btnRadioButton_1.setBounds(520, 8, 69, 22);
-		btnRadioButton_1.setText("抓取编号");
-
-		Button btnRadioButton_2 = new Button(composite_1, SWT.NONE);
-		btnRadioButton_2.setBounds(608, 8, 75, 22);
-		btnRadioButton_2.setText("修售价格");
-
-		Button btnRadioButton_3 = new Button(composite_1, SWT.NONE);
-		btnRadioButton_3.setBounds(695, 8, 80, 22);
-		btnRadioButton_3.setText("抓售价格");
-
-		View.addView(composite_1, NewInstance.get(BrowserView.class));
-
-
-		text_18 = new Text(composite_1, SWT.BORDER);
-		text_18.setBounds(902, 10, 32, 18);
-
-		Label label_6 = new Label(composite_1, SWT.NONE);
-		label_6.setText("/");
-		label_6.setBounds(940, 13, 6, 12);
-
-		text_19 = new Text(composite_1, SWT.BORDER);
-		text_19.setBounds(952, 10, 32, 18);
-
-		Label label_7 = new Label(composite_1, SWT.NONE);
-		label_7.setText("/");
-		label_7.setBounds(990, 13, 6, 12);
-
-		text_20 = new Text(composite_1, SWT.BORDER);
-		text_20.setBackground(SWTResourceManager.getColor(SWT.COLOR_RED));
-		text_20.setBounds(1002, 10, 32, 18);
+		View.addView(NewInstance.get(BrowserView_1.class));
 
 		CTabItem tbtmNewItem_2 = new CTabItem(NewInstance.get(FolderView.class)
 				.getTabFolder(), SWT.NONE);
@@ -230,7 +174,7 @@ public class MainView extends IMainView {
 				NewInstance.get(BasePageView.class));
 
 		View.addView(NewInstance.get(FolderView.class).getC_新增商品(),
-				NewInstance.get(SearchView.class));
+				NewInstance.get(SearchView_0.class));
 
 		View.addView(NewInstance.get(FolderView.class).getC_新增商品(),
 				NewInstance.get(TableView.class));
