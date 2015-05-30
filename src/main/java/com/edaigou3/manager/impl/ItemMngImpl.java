@@ -15,7 +15,6 @@ import com.edaigou3.entity.ItemErrors;
 import com.edaigou3.entity.ItemErrors.ItemErrorsType;
 import com.edaigou3.manager.ItemErrorsMng;
 import com.edaigou3.manager.ItemMng;
-import com.sun.jndi.url.corbaname.corbanameURLContextFactory;
 
 @Transactional
 @Service
@@ -112,7 +111,8 @@ public class ItemMngImpl implements ItemMng {
 
 		// 当同步店铺实际售价不为空 并且 实际销售价格和同步价格不一致
 		if (item.getFreshRealPrice() != null
-				&& item.getRealPrice().compareTo(item.getFreshRealPrice()) != 0) {
+				&& item.getRealPrice().intValue() != item.getFreshRealPrice()
+						.intValue()) {
 			itemErrorsMng.add(item.getId(), ItemErrorsType.店售错误.toString());
 		}
 
@@ -125,8 +125,8 @@ public class ItemMngImpl implements ItemMng {
 
 		// 当同步店铺实际售价不为空 并且 实际销售价格和同步价格不一致
 		if (item.getFreshOriginalPrice() != null
-				&& item.getOriginalPrice().compareTo(
-						item.getFreshOriginalPrice()) != 0) {
+				&& item.getOriginalPrice().intValue() != item
+						.getFreshOriginalPrice().intValue()) {
 			itemErrorsMng.add(item.getId(), ItemErrorsType.猫价变动.toString());
 		}
 	}
@@ -138,7 +138,7 @@ public class ItemMngImpl implements ItemMng {
 	public void update(Long id, Double freshRebateProportion,
 			BigDecimal freshOriginalPrice, String freshTitle,
 			BigDecimal freshRealPrice) {
-		
+
 		dao.update(id, freshRebateProportion, freshOriginalPrice, freshTitle,
 				freshRealPrice);
 

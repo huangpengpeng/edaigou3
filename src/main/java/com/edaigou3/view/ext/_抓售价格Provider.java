@@ -36,7 +36,6 @@ public class _抓售价格Provider implements IOperatorProvider {
 		this.listener = listener;
 	}
 
-	@SuppressWarnings("unused")
 	public void completed(IBrowserView browserView) {
 		ItemErrorsMng errorsMng = NewInstance.get(ItemErrorsMng.class);
 		if (browserView.getResponseText().contains("宝贝不存在")) {

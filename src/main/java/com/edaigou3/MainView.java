@@ -39,7 +39,7 @@ public class MainView extends IMainView {
 	/**
 	 * Launch the application.
 	 * 
-	 * @param args
+	 * @param args 
 	 */
 	public static void main(String[] args) {
 		MainView window = new MainView();
