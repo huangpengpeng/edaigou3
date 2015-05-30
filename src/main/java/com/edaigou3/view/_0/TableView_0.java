@@ -37,6 +37,7 @@ public class TableView_0 extends ITableView {
 	private Table table;
 	private MenuItem _全部导出;
 	private MenuItem _全部上架;
+	private MenuItem _强制上架;
 	private MenuItem _全修低价;
 	private MenuItem _利润排序;
 	private static Integer selectionIndex = 0;
@@ -113,6 +114,17 @@ public class TableView_0 extends ITableView {
 						}
 					}
 				});
+		_强制上架.addListener(SWT.Selection,
+				new org.eclipse.swt.widgets.Listener() {
+					public void handleEvent(Event arg0) {
+						List<Item> createItems = NewInstance.get(ItemMng.class)
+								.query(ItemStatus.创建.toString());
+						for (Item item : createItems) {
+							NewInstance.get(ItemMng.class).update(item.getId(),
+									ItemStatus.上架.toString());
+						}
+					}
+				});
 		_利润排序.addListener(SWT.Selection,
 				new org.eclipse.swt.widgets.Listener() {
 					public void handleEvent(Event arg0) {
@@ -140,6 +152,8 @@ public class TableView_0 extends ITableView {
 		_全部导出.setText("全部导出");
 		_全部上架 = new MenuItem(menu, SWT.CASCADE);
 		_全部上架.setText("全部上架");
+		_强制上架 = new MenuItem(menu, SWT.CASCADE);
+		_强制上架.setText("强制上架");
 		_全修低价 = new MenuItem(menu, SWT.CASCADE);
 		_全修低价.setText("全修低价");
 		_利润排序 = new MenuItem(menu, SWT.CASCADE);

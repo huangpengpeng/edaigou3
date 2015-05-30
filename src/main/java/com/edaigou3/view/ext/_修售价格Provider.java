@@ -24,12 +24,12 @@ public class _修售价格Provider implements IOperatorProvider {
 
 	public void completed(IBrowserView browserView) {
 
-		StringBuffer stringBuffer = new StringBuffer("$(\"#J_check"
-				+ item.getNumIid() + "\").click();");
-		stringBuffer.append("$('#J_SpecPrice_" + item.getNumIid() + "').val('");
-		stringBuffer.append(item.getRealPrice() + "');$('#J_SpecPrice_"
-				+ item.getNumIid() + "').change();");
-		stringBuffer.append("KISSY.all('#J_BtmAddToPromo')[0].click();");
+		StringBuffer stringBuffer = new StringBuffer("$('#J_ItemInput"+item.getNumIid()+"').click();");
+		stringBuffer.append("$('.normal > input').focus();");
+		stringBuffer.append("$('.normal > input').val('"+item.getRealPrice()+"');");
+		stringBuffer.append("$('.normal > input').blur();");
+		stringBuffer.append("$('.normal > input').change();");
+		stringBuffer.append("$('.main-menus-backward > button').click();");
 		browserView.execute(stringBuffer.toString());
 
 		// 1秒后执行保存 在执行下一条
@@ -54,11 +54,13 @@ public class _修售价格Provider implements IOperatorProvider {
 			Pagination page = searchView.query(pageNo++);
 			item = (Item) page.getList().get(0);
 			StringBuffer stringBuffer = new StringBuffer(
-					"$('#J_SearchTitle').focus();");
-			stringBuffer.append("$(\"#J_SearchTitle\").val(\""
-					+ item.getTitle() + "\");");
-			stringBuffer.append("$('#J_SearchTitle').blur();");
-			stringBuffer.append("$('#J_SearchBtn').click();");
+					"");
+			stringBuffer
+					.append("$('.ng-isolate-scope[ng-model=\"temp.q\"]').val('"
+							+ item.getNumIid()+ "');");
+			stringBuffer
+					.append("$('.ng-isolate-scope[ng-model=\"temp.q\"]').change();");
+			stringBuffer.append("$('.ui-search-btn').click();");
 			NewInstance.get(ItemView.class).fullContents(item, true);
 			return stringBuffer.toString();
 		}
