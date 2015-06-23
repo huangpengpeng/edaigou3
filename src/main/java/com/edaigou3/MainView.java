@@ -106,16 +106,15 @@ public class MainView extends IMainView {
 
 		View.addView(NewInstance.get(FolderView.class).getC_天猫下架(),
 				NewInstance.get(TableView_6.class));
-		
+
 		View.addView(NewInstance.get(FolderView.class).getC_售利过低(),
 				NewInstance.get(PageView_7.class));
-		
+
 		View.addView(NewInstance.get(FolderView.class).getC_售利过低(),
 				NewInstance.get(SearchView_7.class));
-		
+
 		View.addView(NewInstance.get(FolderView.class).getC_售利过低(),
 				NewInstance.get(TableView_7.class));
-
 
 		CTabItem tabItem_5 = new CTabItem(NewInstance.get(FolderView.class)
 				.getTabFolder(), SWT.NONE);
