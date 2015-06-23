@@ -24,9 +24,11 @@ public class _修售价格Provider implements IOperatorProvider {
 
 	public void completed(IBrowserView browserView) {
 
-		StringBuffer stringBuffer = new StringBuffer("$('#J_ItemInput"+item.getNumIid()+"').click();");
+		StringBuffer stringBuffer = new StringBuffer(
+				"$(\".ui-checkbox > input[ng-disabled='$val.cache.disabled']\").click();");
 		stringBuffer.append("$('.normal > input').focus();");
-		stringBuffer.append("$('.normal > input').val('"+item.getRealPrice()+"');");
+		stringBuffer.append("$('.normal > input').val('" + item.getRealPrice()
+				+ "');");
 		stringBuffer.append("$('.normal > input').blur();");
 		stringBuffer.append("$('.normal > input').change();");
 		stringBuffer.append("$('.main-menus-backward > button').click();");
@@ -53,11 +55,10 @@ public class _修售价格Provider implements IOperatorProvider {
 		public String getRequestUrl(IBrowserView browserView) {
 			Pagination page = searchView.query(pageNo++);
 			item = (Item) page.getList().get(0);
-			StringBuffer stringBuffer = new StringBuffer(
-					"");
+			StringBuffer stringBuffer = new StringBuffer("");
 			stringBuffer
 					.append("$('.ng-isolate-scope[ng-model=\"temp.q\"]').val('"
-							+ item.getNumIid()+ "');");
+							+ item.getNumIid() + "');");
 			stringBuffer
 					.append("$('.ng-isolate-scope[ng-model=\"temp.q\"]').change();");
 			stringBuffer.append("$('.ui-search-btn').click();");
