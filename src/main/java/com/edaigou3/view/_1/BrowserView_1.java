@@ -23,6 +23,7 @@ public class BrowserView_1 extends BaseBrowserView {
 	private Button _抓取编号;
 	private Button _修售价格;
 	private Button _抓售价格;
+	
 
 	public void createContents(Shell shell) {
 	}
