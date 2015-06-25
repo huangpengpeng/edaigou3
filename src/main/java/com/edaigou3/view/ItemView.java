@@ -26,6 +26,7 @@ import com.edaigou3.view._0.TableView_0;
 import com.edaigou3.view._1.BrowserView_1;
 import com.edaigou3.view.base.BaseViewAdapter;
 import com.edaigou3.view.base.IBrowserView;
+import com.edaigou3.view.base.IMainView;
 import com.edaigou3.view.base.IBrowserView.IRequestProvider;
 import com.edaigou3.view.base.IMainView.MessageBox2;
 import com.edaigou3.view.base.IMainView.NewInstance;
@@ -46,6 +47,7 @@ public class ItemView extends BaseViewAdapter {
 	private Text profitFee;
 	private Text lowPrice;
 	private Text numIid;
+	private Button btnzhaqualimama;
 	private Button btnloginalimama;
 	private Button btnloginhuanleguan;
 	private Button btnovershot;
@@ -165,6 +167,10 @@ public class ItemView extends BaseViewAdapter {
 		edit.setBounds(996, 72, 41, 22);
 		edit.setText("编辑");
 
+		btnzhaqualimama = new Button(grpSp, SWT.NONE);
+		btnzhaqualimama.setBounds(797, 44, 80, 22);
+		btnzhaqualimama.setText("高级淘客");
+		
 		btnloginalimama = new Button(grpSp, SWT.NONE);
 		btnloginalimama.setBounds(797, 72, 80, 22);
 		btnloginalimama.setText("登录阿里妈妈");
@@ -391,6 +397,12 @@ public class ItemView extends BaseViewAdapter {
 		edit.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event arg0) {
 				updateSubmit();
+			}
+		});
+		btnzhaqualimama.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event arg0) {
+				AdvancedView advancedView=new AdvancedView(IMainView.shell, SWT.BORDER | SWT.MIN);
+				advancedView.open();
 			}
 		});
 	}

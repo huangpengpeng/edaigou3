@@ -16,7 +16,7 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 public abstract class IMainView {
 
-	protected static Shell shell;
+	public static Shell shell;
 	protected Display display;
 
 	public abstract void createShell();
