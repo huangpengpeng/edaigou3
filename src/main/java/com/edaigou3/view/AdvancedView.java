@@ -1,5 +1,7 @@
 package com.edaigou3.view;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -87,7 +89,7 @@ public class AdvancedView extends Dialog {
 		loginalimamaBtn.setText("登录阿里");
 
 		alimamaShopUrl = new Text(advancedViewShell, SWT.BORDER);
-		alimamaShopUrl.setBounds(10, 34, 874, 18);
+		alimamaShopUrl.setBounds(10, 34, 588, 18);
 
 		browser = new Browser(advancedViewShell, SWT.NONE);
 		browser.setBounds(10, 58, 874, 507);
@@ -97,6 +99,18 @@ public class AdvancedView extends Dialog {
 		btnPop.addSelectionListener(zhauqListener);
 		btnPop.setBounds(720, 8, 72, 22);
 		btnPop.setText("抓取比例");
+
+		text_100 = new Text(advancedViewShell, SWT.BORDER);
+		text_100.setText("100");
+		text_100.setBounds(812, 34, 24, 18);
+
+		text_30 = new Text(advancedViewShell, SWT.BORDER);
+		text_30.setText("30");
+		text_30.setBounds(849, 34, 24, 18);
+		
+		text_1 = new Text(advancedViewShell, SWT.BORDER);
+		text_1.setText("我有推广渠道，希望可以合作 QQ :330659459");
+		text_1.setBounds(625, 34, 167, 18);
 		browser.addProgressListener(new ProgressListener() {
 			public void completed(ProgressEvent arg0) {
 			}
@@ -108,7 +122,7 @@ public class AdvancedView extends Dialog {
 						public void run() {
 							doShopNumbers(browser.getText());
 							PageNo1++;
-							if (PageNo1 < PAGENO) {
+							if (PageNo1 < Integer.valueOf(text_100.getText())) {
 								searchListener.widgetSelected(null);
 							}
 						}
@@ -150,8 +164,9 @@ public class AdvancedView extends Dialog {
 					String txtNumber = matcher.group();
 					txtNumber = txtNumber.replace(
 							"\"avgCommissionToString\":\"", "").trim();
-					if (Double.parseDouble(txtNumber) > BIMIN) {
-						return true;
+					if (Double.parseDouble(txtNumber) > Integer
+							.parseInt(text_30.getText())) {
+						return !text.contains("exsitApplyList");
 					}
 				}
 				return false;
@@ -170,6 +185,10 @@ public class AdvancedView extends Dialog {
 				return;
 			}
 			bilizhuaqu = false;
+			if (PageNo2 == shopNumbers.size()) {
+				MessageBox2.showErrorMsg("比例抓取完成");
+				return;
+			}
 			StringBuffer urlBuffer = new StringBuffer(
 					"http://pub.alimama.com/shopdetail/campaigns.json?oriMemberId=");
 			urlBuffer.append(shopNumbers.toArray()[PageNo2]);
@@ -200,16 +219,22 @@ public class AdvancedView extends Dialog {
 				return;
 			}
 			StringBuffer urlBuffer = new StringBuffer(
-					"http://pub.alimama.com/pubauc/searchAuctionList.json?spm=a219t.7473494.1998155389.3.NGFPZH&user_type=1&q=");
-			urlBuffer.append(search);
+					"http://pub.alimama.com/pubauc/searchAuctionList.json?spm=a219t.7473494.1998155389.3.NGFPZH&sort=_commrate&user_type=1&q=");
+			try {
+				urlBuffer.append(URLEncoder.encode(search,"UTF-8"));
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
 			urlBuffer.append("&toPage=").append(PageNo1);
 			browser.setUrl(urlBuffer.toString());
 		}
 	};
 
-	private Integer PAGENO=100, BIMIN=30;
 	private Set<String> shopNumbers = new HashSet<String>();
 	private Set<String> shopNumbersCon = new HashSet<String>();
 	private Integer PageNo1 = 0, PageNo2 = 0;
 	private boolean shopzhuaqu = true, bilizhuaqu = true;
+	private Text text_100;
+	private Text text_30;
+	private Text text_1;
 }
