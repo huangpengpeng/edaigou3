@@ -34,7 +34,7 @@ import com.edaigou3.view.base.IMainView;
 @Component
 public class MainView extends IMainView {
 
-	private Table table_4;
+	private Table table;
 	
 	/**
 	 * Launch the application.
@@ -137,10 +137,10 @@ public class MainView extends IMainView {
 		button_7.setText("下一页");
 		button_7.setBounds(158, 10, 60, 27);
 
-		table_4 = new Table(composite_7, SWT.BORDER | SWT.FULL_SELECTION);
-		table_4.setLinesVisible(true);
-		table_4.setHeaderVisible(true);
-		table_4.setBounds(0, 42, 1088, 505);
+		table = new Table(composite_7, SWT.BORDER | SWT.FULL_SELECTION);
+		table.setLinesVisible(true);
+		table.setHeaderVisible(true);
+		table.setBounds(0, 42, 1088, 505);
 
 		Label label_8 = new Label(composite_7, SWT.NONE);
 		label_8.setText("全部下架");
