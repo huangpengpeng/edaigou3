@@ -21,7 +21,7 @@ import com.edaigou3.view.ext.Column;
 import com.edaigou3.view.ext.Column.Listener;
 
 @Component
-public class TableView extends ITableView {
+public class TableView_0 extends ITableView {
 
 	private Table table;
 
@@ -78,7 +78,7 @@ public class TableView extends ITableView {
 								NewInstance.get(ItemMng.class).delete(
 										item.getId());
 								NewInstance.get(SearchView_0.class).query(
-										NewInstance.get(PageView.class)
+										NewInstance.get(PageView_0.class)
 												.getPageNo());
 							}
 						}) };

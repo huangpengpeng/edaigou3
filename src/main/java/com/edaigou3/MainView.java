@@ -18,7 +18,7 @@ import com.edaigou3.view.BasePageView;
 import com.edaigou3.view.FolderView;
 import com.edaigou3.view.ItemView;
 import com.edaigou3.view._0.SearchView_0;
-import com.edaigou3.view._0.TableView;
+import com.edaigou3.view._0.TableView_0;
 import com.edaigou3.view._1.BrowserView_1;
 import com.edaigou3.view.base.IMainView;
 
@@ -177,7 +177,7 @@ public class MainView extends IMainView {
 				NewInstance.get(SearchView_0.class));
 
 		View.addView(NewInstance.get(FolderView.class).getC_新增商品(),
-				NewInstance.get(TableView.class));
+				NewInstance.get(TableView_0.class));
 
 		CTabItem tbtmNewItem_4 = new CTabItem(NewInstance.get(FolderView.class)
 				.getTabFolder(), SWT.NONE);

@@ -22,7 +22,7 @@ import com.edaigou3.entity.Item;
 import com.edaigou3.manager.ItemMng;
 import com.edaigou3.manager.ShopMng;
 import com.edaigou3.view._0.SearchView_0;
-import com.edaigou3.view._0.TableView;
+import com.edaigou3.view._0.TableView_0;
 import com.edaigou3.view._1.BrowserView_1;
 import com.edaigou3.view.base.BaseViewAdapter;
 import com.edaigou3.view.base.IBrowserView;
@@ -386,7 +386,7 @@ public class ItemView extends BaseViewAdapter {
 
 		// 更新table选择
 		try {
-			NewInstance.get(TableView.class).selectionValue(item);
+			NewInstance.get(TableView_0.class).selectionValue(item);
 		} catch (Exception e) {
 		}
 

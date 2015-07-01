@@ -98,9 +98,9 @@ public class SearchView_0 implements ISearchView {
 		Pagination page = NewInstance.get(ItemMng.class).getPage(shopId, null,
 				title, pageNo,6);
 
-		NewInstance.get(TableView.class).fullContents(page.getList());
+		NewInstance.get(TableView_0.class).fullContents(page.getList());
 
-		NewInstance.get(PageView.class).fullContents(page);
+		NewInstance.get(PageView_0.class).fullContents(page);
 		return page;
 	}
 }

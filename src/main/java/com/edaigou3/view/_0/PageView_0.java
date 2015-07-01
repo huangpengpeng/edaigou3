@@ -7,7 +7,7 @@ import com.edaigou3.view.base.IMainView.NewInstance;
 import com.edaigou3.view.base.ISearchView;
 
 @Component
-public class PageView extends BasePageView {
+public class PageView_0 extends BasePageView {
 
 	@Override
 	public ISearchView getSearchView() {
