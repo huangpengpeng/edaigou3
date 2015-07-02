@@ -1,5 +1,9 @@
 package com.edaigou3.view._0;
 
+import java.util.List;
+
+import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
@@ -12,6 +16,8 @@ import org.eclipse.swt.widgets.Text;
 import org.springframework.stereotype.Component;
 
 import com.common.jdbc.page.Pagination;
+import com.edaigou3.entity.ItemErrors;
+import com.edaigou3.manager.ItemErrorsMng;
 import com.edaigou3.manager.ItemMng;
 import com.edaigou3.view.ShopView;
 import com.edaigou3.view.base.IMainView.NewInstance;
@@ -34,7 +40,7 @@ public class SearchView_0 implements ISearchView {
 		lblNewLabel_15.setBounds(359, 12, 54, 22);
 		lblNewLabel_15.setText("淘宝店铺");
 
-		_淘宝店铺=NewInstance.get(ShopView.class);
+		_淘宝店铺 = NewInstance.get(ShopView.class);
 		View.addView(composite, _淘宝店铺);
 		_淘宝店铺.setBounds(417, 8, 86, 20);
 
@@ -50,7 +56,6 @@ public class SearchView_0 implements ISearchView {
 		_错误类型.add("售利过低");
 		_错误类型.add("编号错误");
 		_错误类型.add("店售错误");
-		
 
 		Label lblNewLabel_17 = new Label(composite, SWT.NONE);
 		lblNewLabel_17.setBounds(701, 13, 56, 17);
@@ -93,10 +98,20 @@ public class SearchView_0 implements ISearchView {
 
 		String errorType = _错误类型.getText();
 
+		Long[] ids = ArrayUtils.EMPTY_LONG_OBJECT_ARRAY;
+		List<ItemErrors> itemErrors = NewInstance.get(ItemErrorsMng.class)
+				.getByErrorType(errorType);
+		for (ItemErrors error : itemErrors) {
+			ids = (Long[]) ArrayUtils.add(ids, error.getItemId());
+		}
+		if(StringUtils.isNotBlank(errorType) && ArrayUtils.isEmpty(ids)){
+			ids=(Long[]) ArrayUtils.add(ids, 0L);
+		}
+		
 		String title = _商品标题.getText();
 
-		Pagination page = NewInstance.get(ItemMng.class).getPage(shopId, null,
-				title, pageNo,6);
+		Pagination page = NewInstance.get(ItemMng.class).getPage(shopId, ids,
+				title, pageNo, 6);
 
 		NewInstance.get(TableView_0.class).fullContents(page.getList());
 

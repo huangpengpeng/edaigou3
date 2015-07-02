@@ -1,6 +1,7 @@
 package com.edaigou3.manager;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import com.common.jdbc.page.Pagination;
 import com.edaigou3.entity.Item;
@@ -19,6 +20,8 @@ public interface ItemMng {
 
 	public Pagination getPage(Long shopId, Long[] ids, String title,
 			Integer pageNo,Integer pageSize);
+	
+	List<Item> query(String status);
 	
 	public void checkErrors(Long id);
 

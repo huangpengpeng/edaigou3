@@ -17,14 +17,12 @@ public class Item extends BaseItem {
 			Double rebateProportion, BigDecimal rebateFee,
 			BigDecimal serviceFee, BigDecimal realPrice, BigDecimal profitFee,
 			BigDecimal lowPrice, Long numIid, Double freshRebateProportion,
-			BigDecimal freshOriginalPrice, String freshTitle,BigDecimal freshRealPrice) {
+			BigDecimal freshOriginalPrice, String freshTitle,
+			BigDecimal freshRealPrice) {
 		super(shopId, imageByte, channel, title, url, tbkNumIid, originalPrice,
 				rebateProportion, rebateFee, serviceFee, realPrice, profitFee,
 				lowPrice, numIid, freshRebateProportion, freshOriginalPrice,
-				freshTitle,freshRealPrice);
-	}
-
-	public void init() {
+				freshTitle, freshRealPrice);
 	}
 
 	public void caleProfieFee() {
@@ -40,6 +38,20 @@ public class Item extends BaseItem {
 				.setScale(2, BigDecimal.ROUND_HALF_UP));
 		this.setServiceFee(getRebateFee().multiply(new BigDecimal("0.1"))
 				.setScale(2, BigDecimal.ROUND_HALF_UP));
+	}
+
+	public void init() {
+		if (getStatus() == null) {
+			setStatus(ItemStatus.创建.toString());
+		}
+	}
+
+	public enum ItemChannel {
+		普通淘客, 级淘客
+	}
+
+	public enum ItemStatus {
+		创建, 上架, 下架
 	}
 
 	private static final long serialVersionUID = 7519304894586925507L;

@@ -33,8 +33,8 @@ public class ItemMngImpl implements ItemMng {
 	}
 
 	public Pagination getPage(Long shopId, Long[] ids, String title,
-			Integer pageNo,Integer pageSize) {
-		return dao.getPage(shopId, ids, title, pageNo,pageSize);
+			Integer pageNo, Integer pageSize) {
+		return dao.getPage(shopId, ids, title, pageNo, pageSize);
 	}
 
 	public void delete(Long id) {
@@ -78,6 +78,8 @@ public class ItemMngImpl implements ItemMng {
 
 		// 当最低价格小于等于0时，说明抓取错误
 		if (item.getLowPrice() == null
+				|| new BigDecimal(Integer.MAX_VALUE).compareTo(item
+						.getLowPrice()) == 0
 				|| item.getLowPrice().compareTo(BigDecimal.ZERO) <= 0) {
 			itemErrorsMng.add(item.getId(), ItemErrorsType.抓低错误.toString());
 		}
@@ -113,9 +115,12 @@ public class ItemMngImpl implements ItemMng {
 		}
 	}
 
+	public List<Item> query(String status) {
+		return dao.query(status);
+	}
+
 	@Autowired
 	private ItemErrorsMng itemErrorsMng;
 	@Autowired
 	private ItemDao dao;
-
 }

@@ -144,6 +144,11 @@ public class BaseItem extends BaseEntity {
 	 * 同步店铺实际销售价格
 	 */
 	private BigDecimal freshRealPrice;
+	
+	/**
+	 * 状态
+	 */
+	private String status;
 
 	public Long getShopId() {
 		return shopId;
@@ -247,6 +252,14 @@ public class BaseItem extends BaseEntity {
 
 	public void setNumIid(Long numIid) {
 		this.numIid = numIid;
+	}
+	
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public Double getFreshRebateProportion() {

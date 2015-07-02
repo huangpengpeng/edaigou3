@@ -52,17 +52,17 @@ public class SearchView_1 implements ISearchView {
 		shopView.addListener(new Listener() {
 			public void handleEvent() {
 				query(1);
-				BrowserView_1.pageNo = page == null ? 0 : page.getPageNo();
-				BrowserView_1.totalCount = page == null ? 0 : page
-						.getTotalCount();
+				NewInstance.get(BrowserView_1.class).fullContents(
+						page == null ? 0 : page.getPageNo(),
+						page == null ? 0 : page.getTotalCount());
 			}
 		});
 		_错误类型.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent arg0) {
 				query(1);
-				BrowserView_1.pageNo = page == null ? 0 : page.getPageNo();
-				BrowserView_1.totalCount = page == null ? 0 : page
-						.getTotalCount();
+				NewInstance.get(BrowserView_1.class).fullContents(
+						page == null ? 0 : page.getPageNo(),
+						page == null ? 0 : page.getTotalCount());
 			}
 
 			public void widgetDefaultSelected(SelectionEvent arg0) {
