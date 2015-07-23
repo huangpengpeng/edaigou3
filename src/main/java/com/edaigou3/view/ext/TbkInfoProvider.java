@@ -114,7 +114,7 @@ public class TbkInfoProvider implements IOperatorProvider {
 				.get("calCommission"));
 		String title = (String) model.get("title");
 		String auctionUrl = (String) model.get("auctionUrl");
-		String tbkNumIid = (String) model.get("userNumberId");
+		String tbkNumIid =String.valueOf(model.get("userNumberId"));
 		BigDecimal originalPrice = BigDecimal.valueOf(((Double) model
 				.get("zkPrice")).intValue());
 		return new Item(null, imageByteValue, null, title, auctionUrl,
@@ -137,13 +137,14 @@ public class TbkInfoProvider implements IOperatorProvider {
 			Pagination page = searchView.query(pageNo++);
 			item = (Item) page.getList().get(0);
 			StringBuffer buffer = new StringBuffer(
-					"http://pub.alimama.com/pubauc/searchAuctionList.json?q=");
+					"http://pub.alimama.com/pubauc/searchAuctionList.json?q={q}&toPage=1&perPagesize=40&_input_charset=utf-8");
+			String url="";
 			try {
-				buffer.append(URLEncoder.encode(item.getUrl(), "UTF-8"));
+				url=buffer.toString().replace("{q}", URLEncoder.encode(item.getUrl(), "UTF-8"));
 			} catch (UnsupportedEncodingException e) {
 			}
 			NewInstance.get(ItemView.class).fullContents(item, true);
-			return buffer.toString();
+			return url;
 		}
 	}
 }

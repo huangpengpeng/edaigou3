@@ -354,13 +354,13 @@ public class ItemView extends BaseViewAdapter {
 						new IRequestProvider() {
 							public String getRequestUrl(IBrowserView browserView) {
 								StringBuffer buffer = new StringBuffer(
-										"http://pub.alimama.com/pubauc/searchAuctionList.json?q=");
+										"http://pub.alimama.com/pubauc/searchAuctionList.json?q={q}&toPage=1&perPagesize=40&_input_charset=utf-8");
+								String url="";
 								try {
-									buffer.append(URLEncoder.encode(urlValue,
-											"UTF-8"));
+									url=buffer.toString().replace("{q}", URLEncoder.encode(urlValue, "UTF-8"));
 								} catch (UnsupportedEncodingException e) {
 								}
-								return buffer.toString();
+								return url;
 							}
 						}, new TbkInfoProvider(null), 0);
 			}

@@ -21,6 +21,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import sun.print.resources.serviceui;
+
 import com.edaigou3.view.base.IMainView.MessageBox2;
 
 public class AdvancedView extends Dialog {
@@ -145,12 +147,12 @@ public class AdvancedView extends Dialog {
 
 			protected void doShopNumbers(String text) {
 				Pattern pattern = Pattern
-						.compile("(\"userNumberId\":\"){1}[\\w\\.\\-/:]+(\",\")");
+						.compile("(\"userNumberId\":){1}[\\w\\.\\-/:]+(,\")");
 				Matcher matcher = pattern.matcher(text);
 				while (matcher.find()) {
 					String txtNumber = matcher.group()
-							.replace("\"userNumberId\":\"", "")
-							.replace("\",\"", "");
+							.replace("\"userNumberId\":", "")
+							.replace(",\"", "");
 					System.out.println(txtNumber);
 					shopNumbers.add(txtNumber);
 				}
@@ -164,6 +166,7 @@ public class AdvancedView extends Dialog {
 					String txtNumber = matcher.group();
 					txtNumber = txtNumber.replace(
 							"\"avgCommissionToString\":\"", "").trim();
+					System.out.println(txtNumber);
 					if (Double.parseDouble(txtNumber) > Integer
 							.parseInt(text_30.getText())) {
 						return !text.contains("exsitApplyList");
@@ -219,14 +222,15 @@ public class AdvancedView extends Dialog {
 				return;
 			}
 			StringBuffer urlBuffer = new StringBuffer(
-					"http://pub.alimama.com/pubauc/searchAuctionList.json?spm=a219t.7473494.1998155389.3.NGFPZH&sort=_commrate&user_type=1&q=");
+					"http://pub.alimama.com/pubauc/searchAuctionList.json?q={q}&toPage={toPage}&user_type=1&perPagesize=10&_input_charset=utf-8");
+			String url="";
 			try {
-				urlBuffer.append(URLEncoder.encode(search,"UTF-8"));
+				url = urlBuffer.toString().replace("{q}", URLEncoder.encode(search, "utf-8"))
+						.replace("{toPage}", PageNo1 + "");
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
-			urlBuffer.append("&toPage=").append(PageNo1);
-			browser.setUrl(urlBuffer.toString());
+			browser.setUrl(url);
 		}
 	};
 

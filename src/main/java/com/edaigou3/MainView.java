@@ -30,7 +30,7 @@ import com.edaigou3.view._7.PageView_7;
 import com.edaigou3.view._7.SearchView_7;
 import com.edaigou3.view._7.TableView_7;
 import com.edaigou3.view.base.IMainView;
-
+ 
 @Component
 public class MainView extends IMainView {
 
@@ -82,7 +82,7 @@ public class MainView extends IMainView {
 
 		View.addView(NewInstance.get(FolderView.class).getC_已上架(),
 				NewInstance.get(TableView_3.class));
-
+                                   
 		View.addView(NewInstance.get(FolderView.class).getC_新增商品(),
 				NewInstance.get(PageView_0.class));
 
