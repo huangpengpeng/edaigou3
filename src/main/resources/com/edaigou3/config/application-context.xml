@@ -12,10 +12,9 @@
            http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 
 	<context:component-scan
-		base-package="com.edaigou3.view,com.edaigou3.dao.impl,com.edaigou3.manager.impl" />
+		base-package="com.edaigou3.view,com.edaigou3.dao.impl,com.edaigou3.manager.impl,com.edaigou3.taobao" />
 
-	<bean id="annotationPropertyConfigurer"
-		class="com.common.web.springmvc.PropertyPlaceholderConfigurer">
+	<bean id="annotationPropertyConfigurer" class="com.common.web.springmvc.PropertyPlaceholderConfigurer">
 		<property name="locations">
 			<list>
 				<value>classpath:/com/edaigou3/config/config.properties
@@ -64,4 +63,18 @@
 
 	<!-- 事务声明方式是注解 -->
 	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<bean class="com.taobao.api.DefaultTaobaoClient">
+		<constructor-arg>
+			<value>http://gw.api.taobao.com/router/rest</value>
+		</constructor-arg>
+
+		<constructor-arg>
+			<value>21416327</value>
+		</constructor-arg>
+
+		<constructor-arg>
+			<value>e239a05b97d973c886ce4a71a3339efd</value>
+		</constructor-arg>
+	</bean>
 </beans>

@@ -10,6 +10,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.springframework.stereotype.Component;
 
+import com.edaigou3.taobao.SkuApi;
 import com.edaigou3.view.FolderView;
 import com.edaigou3.view.ItemView;
 import com.edaigou3.view._0.PageView_0;

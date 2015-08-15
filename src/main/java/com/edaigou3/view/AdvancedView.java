@@ -147,7 +147,7 @@ public class AdvancedView extends Dialog {
 
 			protected void doShopNumbers(String text) {
 				Pattern pattern = Pattern
-						.compile("(\"userNumberId\":){1}[\\w\\.\\-/:]+(,\")");
+						.compile("(\"userNumberId\":){1}{2}[\\d\\w\\.\\-/:]+(,\")");
 				Matcher matcher = pattern.matcher(text);
 				while (matcher.find()) {
 					String txtNumber = matcher.group()
@@ -160,7 +160,7 @@ public class AdvancedView extends Dialog {
 
 			protected boolean doNumbers(String text) {
 				Pattern pattern = Pattern
-						.compile(("(\"avgCommissionToString\":\"){1}[\\w\\.\\-/:]+( )"));
+						.compile(("(\"avgCommissionToStrings\":\"){1}{2}[\\d\\w\\.\\-/:]+( )"));
 				Matcher matcher = pattern.matcher(text);
 				while (matcher.find()) {
 					String txtNumber = matcher.group();
@@ -196,7 +196,7 @@ public class AdvancedView extends Dialog {
 					"http://pub.alimama.com/shopdetail/campaigns.json?oriMemberId=");
 			urlBuffer.append(shopNumbers.toArray()[PageNo2]);
 			alimamaShopUrl
-					.setText("http://pub.alimama.com/myunion.htm?spm=a219t.7473494.1998155389.3.NGFPZH#!/promo/self/shop_detail?userNumberId="
+					.setText("http://pub.alimama.com/myunions.htm?spm=a219t.7473494.1998155389.3.NGFPZH#!/promo/self/shop_detail?userNumberid="
 							+ shopNumbers.toArray()[PageNo2]);
 			if (shopNumbersCon.contains(shopNumbers.toArray()[PageNo2])) {
 				MessageBox2.showErrorMsg("重复");

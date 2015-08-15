@@ -14,6 +14,8 @@ import org.eclipse.swt.widgets.Widget;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
+import com.edaigou3.taobao.SkuApi;
+
 public abstract class IMainView {
 
 	public static Shell shell;
@@ -78,6 +80,9 @@ public abstract class IMainView {
 		createContents();
 		showPosition();
 		open();
+
+		// 测试
+		SkuApi skuapi = NewInstance.get(SkuApi.class);
 	}
 
 	/**
