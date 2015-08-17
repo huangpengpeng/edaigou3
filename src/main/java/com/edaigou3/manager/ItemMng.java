@@ -21,11 +21,11 @@ public interface ItemMng {
 	void update(Long id, Double freshRebateProportion,
 			BigDecimal freshOriginalPrice, String freshTitle,
 			BigDecimal freshRealPrice);
-	
-	void update(Long id,String status);
 
-	public Pagination getPage(Long shopId, Long[] ids, String title,String status,
-			Integer pageNo, Integer pageSize,String sort);
+	void update(Long id, String status);
+
+	public Pagination getPage(Long shopId, Long[] ids, String title,
+			String status, Integer pageNo, Integer pageSize, String sort);
 
 	List<Item> query(String status);
 
@@ -40,4 +40,15 @@ public interface ItemMng {
 	Item getByNumIid(Long numIid);
 
 	Item get(Long id);
+
+	/**
+	 * 
+	 * 描述:从淘宝客更新数据到淘宝
+	 * 
+	 * @param shopId
+	 * @param sessionKey
+	 * @author liyixing 2015年8月15日 下午5:54:11
+	 * @return 
+	 */
+	String syncItem(Long shopId, String sessionKey,boolean updatePrice);
 }

@@ -1,7 +1,9 @@
 package com.edaigou3.manager.impl;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,8 @@ import com.edaigou3.entity.ItemErrors;
 import com.edaigou3.entity.ItemErrors.ItemErrorsType;
 import com.edaigou3.manager.ItemErrorsMng;
 import com.edaigou3.manager.ItemMng;
+import com.edaigou3.taobao.SkuApi;
+import com.edaigou3.taobao.SkuApi.Sku;
 
 @Transactional
 @Service
@@ -149,8 +153,89 @@ public class ItemMngImpl implements ItemMng {
 		dao.update(id, status);
 	}
 
+	public String syncItem(Long shopId, String sessionKey, boolean updatePrice) {
+		int pageNo = 0;
+		Pagination page = null;
+		// 成功
+		int success = 0;
+		// 失败
+		int failure = 0;
+
+		do {
+			try {
+				// 循环处理
+				page = getPage(shopId, null, null, null, pageNo, 1,
+						" order by id asc");
+
+				if (page.getList().size() > 0) {
+					Item item = (Item) page.getList().get(0);
+
+					if (item.getTbkNumIid() != null && item.getNumIid() != null) {
+						// 读取店铺本身的sku
+						List<Sku> skuOfMy = skuApi.getSkuProperties(item
+								.getNumIid());
+
+						// SKU组合，按照属性排列
+						Map<String, Sku> skuByProperties = new HashMap<String, Sku>();
+						// SKU组合，按照属性排列
+						Map<String, Sku> sourceSkuByProperties = new HashMap<String, Sku>();
+
+						// 读取淘宝客的sku
+						List<Sku> skuOfSource = skuApi.getSkuProperties(item
+								.getTbkNumIid());
+
+						for (Sku sku : skuOfMy) {
+							skuByProperties.put(sku.getProperties(), sku);
+						}
+
+						// 重新生成
+						for (Sku sku : skuOfSource) {
+							sourceSkuByProperties.put(sku.getProperties(), sku);
+							sku.setNumId(item.getNumIid());
+
+							if (skuByProperties.get(sku.getProperties()) == null) {
+								// 增加原始的
+								if (skuOfMy.size() > 0) {
+									sku.setPrice(skuOfMy.get(0).getPrice());
+								}
+								skuApi.add(sku, sessionKey);
+							} else {
+								// 修改
+								skuApi.update(sku, sessionKey, updatePrice);
+							}
+						}
+
+						// 修改标题
+						// 获取对方的SKU属性描述
+						if (skuOfSource.size() > 0) {
+							skuApi.updateSkuAlias(skuOfSource.get(0),
+									sessionKey);
+						}
+
+						for (Sku sku : skuOfMy) {
+							if (sourceSkuByProperties.get(sku.getProperties()) == null) {
+								// 删除原始的
+								skuApi.deleteSku(sku, sessionKey);
+							}
+						}
+					}
+
+					success++;
+					pageNo++;
+				}
+			} catch (Exception e) {
+				failure++;
+			}
+
+		} while (!page.isLastPage());
+
+		return "成功" + success + "失败" + failure;
+	}
+
 	@Autowired
 	private ItemErrorsMng itemErrorsMng;
 	@Autowired
 	private ItemDao dao;
+	@Autowired
+	private SkuApi skuApi;
 }
