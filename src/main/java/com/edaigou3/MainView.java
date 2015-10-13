@@ -5,7 +5,9 @@ import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.springframework.stereotype.Component;
@@ -39,7 +41,7 @@ public class MainView extends IMainView {
 	/**
 	 * Launch the application.
 	 * 
-	 * @param args 
+	 * @param args
 	 */
 	public static void main(String[] args) {
 		MainView window = new MainView();

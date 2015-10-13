@@ -22,6 +22,7 @@ import com.edaigou3.manager.ItemErrorsMng;
 import com.edaigou3.manager.ItemMng;
 import com.edaigou3.view.FolderView;
 import com.edaigou3.view.ItemView;
+import com.edaigou3.view._1.BrowserView_1;
 import com.edaigou3.view.base.IMainView.NewInstance;
 import com.edaigou3.view.base.ITableView;
 import com.edaigou3.view.ext.Column;
@@ -115,7 +116,7 @@ public class TableView_3 extends ITableView {
 				new Column("profitFee", "实际利润", 100, Column.PUTONG),
 				new Column("lowPrice", "最低售价", 100, Column.PUTONG),
 				new Column("numIid", "商品编号", 100, Column.PUTONG),
-				new Column(null, "操作", 50, Column.BUTTON, "删除", new Listener() {
+				new Column(null, "操作", 30, Column.BUTTON, "删除", new Listener() {
 					public void handleEvent(Event arg0) {
 						Item item = (Item) arg0.widget.getData();
 						NewInstance.get(ItemMng.class).delete(item.getId());
@@ -123,11 +124,22 @@ public class TableView_3 extends ITableView {
 								NewInstance.get(PageView_3.class).getPageNo());
 					}
 				}),
-				new Column(null, "操作", 50, Column.BUTTON, "创建", new Listener() {
+				new Column(null, "操作", 30, Column.BUTTON, "创建", new Listener() {
 					public void handleEvent(Event arg0) {
 						Item item = (Item) arg0.widget.getData();
 						NewInstance.get(ItemMng.class).update(item.getId(),
 								ItemStatus.创建.toString());
+						NewInstance.get(SearchView_3.class).query(
+								NewInstance.get(PageView_3.class).getPageNo());
+					}
+				}),
+				new Column(null, "操作", 40, Column.BUTTON, "下架", new Listener() {
+					public void handleEvent(Event arg0) {
+						Item item = (Item) arg0.widget.getData();
+						NewInstance.get(BrowserView_1.class).doRequest(
+								"http://tbgr.huanleguang.com/itemlibrary/index/delisting/?item_id="
+										+ item.getNumIid() + "&hpm=1");
+						NewInstance.get(ItemMng.class).delete(item.getId());
 						NewInstance.get(SearchView_3.class).query(
 								NewInstance.get(PageView_3.class).getPageNo());
 					}

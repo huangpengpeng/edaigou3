@@ -60,10 +60,16 @@ public class _抓售价格Provider implements IOperatorProvider {
 		List<Map<String, Object>> priceUnits = (List<Map<String, Object>>) itemInfoModel
 				.get("priceUnits");
 		Map<String, Object> zoroMap = priceUnits.get(0);
+		BigDecimal price=null;
+		try {
+			 price = new BigDecimal(zoroMap.get("price").toString());
+		} catch (Exception e) {
+			return;
+		}
 		NewInstance.get(ItemMng.class).update(item.getId(), null, null, null,
-				new BigDecimal(zoroMap.get("price").toString()));
+				price);
 		// 500豪秒后执行保存 在执行下一条
-		Display.getDefault().timerExec(1000, new Runnable() {
+		Display.getDefault().timerExec(500, new Runnable() {
 			public void run() {
 				listener.handleEvent(null);
 			}

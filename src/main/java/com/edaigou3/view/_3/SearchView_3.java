@@ -56,6 +56,7 @@ public class SearchView_3 implements ISearchView {
 		_错误类型.add("天猫下架");
 		_错误类型.add("非低价格");
 		_错误类型.add("店售错误");
+		_错误类型.add(ItemErrorsType.销利过低.toString());
 		_错误类型.add(ItemErrorsType.猫价变动.toString());
 
 		Label lblNewLabel_17 = new Label(composite, SWT.NONE);

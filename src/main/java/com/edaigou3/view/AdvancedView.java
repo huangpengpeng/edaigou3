@@ -21,8 +21,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-import sun.print.resources.serviceui;
-
 import com.edaigou3.view.base.IMainView.MessageBox2;
 
 public class AdvancedView extends Dialog {
@@ -111,7 +109,7 @@ public class AdvancedView extends Dialog {
 		text_30.setBounds(849, 34, 24, 18);
 		
 		text_1 = new Text(advancedViewShell, SWT.BORDER);
-		text_1.setText("我有推广渠道，希望可以合作 QQ :330659459");
+		text_1.setText("我有推广渠道，希望可以合作 QQ :330659459  推广网站：www.23gou.cn");
 		text_1.setBounds(625, 34, 167, 18);
 		browser.addProgressListener(new ProgressListener() {
 			public void completed(ProgressEvent arg0) {
@@ -153,9 +151,11 @@ public class AdvancedView extends Dialog {
 					String txtNumber = matcher.group()
 							.replace("\"userNumberId\":", "")
 							.replace(",\"", "");
-					System.out.println(txtNumber);
+					// System.out.println(txtNumber);
 					shopNumbers.add(txtNumber);
 				}
+
+				System.out.println("shopNumbers size:" + shopNumbers.size());
 			}
 
 			protected boolean doNumbers(String text) {

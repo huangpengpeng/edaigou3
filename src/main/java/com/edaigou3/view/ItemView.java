@@ -48,6 +48,7 @@ public class ItemView extends BaseViewAdapter {
 	private Text lowPrice;
 	private Text numIid;
 	private Button btnzhaqualimama;
+	private Button btnpiliang;
 	private Button btnloginalimama;
 	private Button btnloginhuanleguan;
 	private Button btnovershot;
@@ -170,6 +171,10 @@ public class ItemView extends BaseViewAdapter {
 		btnzhaqualimama = new Button(grpSp, SWT.NONE);
 		btnzhaqualimama.setBounds(797, 44, 80, 22);
 		btnzhaqualimama.setText("高级淘客");
+		
+		btnpiliang = new Button(grpSp, SWT.NONE);
+		btnpiliang.setBounds(897, 44, 80, 22);
+		btnpiliang.setText("批量商品");
 		
 		btnloginalimama = new Button(grpSp, SWT.NONE);
 		btnloginalimama.setBounds(797, 72, 80, 22);
@@ -403,6 +408,12 @@ public class ItemView extends BaseViewAdapter {
 			public void handleEvent(Event arg0) {
 				AdvancedView advancedView=new AdvancedView(IMainView.shell, SWT.BORDER | SWT.MIN);
 				advancedView.open();
+			}
+		});
+		btnpiliang.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event arg0) {
+				PiliangView piliangView=new PiliangView(IMainView.shell, SWT.BORDER | SWT.MIN);
+				piliangView.open();
 			}
 		});
 	}

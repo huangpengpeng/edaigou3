@@ -21,7 +21,13 @@ public class ShopView implements IBaseView {
 	private Listener listener;
 
 	public void createContents(Shell shell) {
-
+		shopcommbo = new Combo(shell, SWT.NONE);
+		List<Shop> shops = NewInstance.get(ShopMng.class).query();
+		shopcommbo.setText("请选择");
+		shopcommbo.add("请选择");
+		for (Shop shop : shops) {
+			shopcommbo.add(shop.getNick());
+		}
 	}
 
 	public void createContents(Composite composite) {

@@ -63,7 +63,12 @@ public class TbkInfoProvider implements IOperatorProvider {
 			if (listener != null) {
 				if (itemModel == null) {
 					NewInstance.get(ItemErrorsMng.class).add(item.getId(),
-							ItemErrorsType.淘客错误.toString());
+							ItemErrorsType.天猫下架.toString());
+					Display.getDefault().timerExec(1000, new Runnable() {
+						public void run() {
+							listener.handleEvent(null);
+						}
+					});
 					return;
 				}
 

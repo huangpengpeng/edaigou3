@@ -1,5 +1,11 @@
 package com.edaigou3.view.ext;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Listener;
 import org.jsoup.Jsoup;
@@ -27,12 +33,20 @@ public class _抓取编号Provider implements IOperatorProvider {
 	}
 
 	public void completed(IBrowserView browserView) {
-		Document document = Jsoup.parse(browserView.getResponseText());
-		Elements itemtitles = document.getElementsByClass("item-title");
-		if (itemtitles != null && itemtitles.size() > 0) {
-			String href = itemtitles.get(0).attr("href");
-			NewInstance.get(ItemView.class).setNumIid(
-					ParamentersUtils.getQueryParams(href, "id"));
+		String text=browserView.getResponseText();
+		
+		Pattern pattern = Pattern
+				.compile("(\\?id=){1}[\\w\\.\\-/:]+(\\\\)");
+		Matcher matcher = pattern.matcher(text);
+		String txtNumber="";
+		while (matcher.find()) {
+		txtNumber = matcher.group().replace("?id=", "").replace("\\", "");
+		System.out.println(txtNumber);
+		}
+		
+		
+		if(StringUtils.isNotBlank(txtNumber)){
+			NewInstance.get(ItemView.class).setNumIid(txtNumber);
 		}
 
 		browserView.setText("");
@@ -58,11 +72,15 @@ public class _抓取编号Provider implements IOperatorProvider {
 			Pagination page = NewInstance.get(SearchView_1.class).query(
 					pageNo++);
 			StringBuffer buffer = new StringBuffer(
-					"http://sell.taobao.com/auction/merchandise/auction_list.htm?type=11");
+					"http://tbgr.huanleguang.com/itemlibrary/index/list/?q=[q]&pageSize=10&approve_status=onsale&hpm=1");
 			item = (Item) page.getList().get(0);
-			buffer.append("&&searchKeyword=").append(item.getTitle());
 			NewInstance.get(ItemView.class).fullContents(item, true);
-			return buffer.toString();
+			try {
+				return buffer.toString().replace("[q]",URLEncoder.encode(item.getTitle(),"UTF-8"));
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+			return null;
 		}
 	}
 }

@@ -47,7 +47,12 @@ public class ItemMngImpl implements ItemMng {
 	}
 
 	public Item getByTbkNumIid(Long tbkNumIid) {
+		try{
 		return dao.getByTbkNumIid(tbkNumIid);
+		}catch(Exception e){
+			System.out.println(tbkNumIid+"======");
+			throw new IllegalStateException(e.getMessage());
+		}
 	}
 
 	public Item getByTitle(String title) {

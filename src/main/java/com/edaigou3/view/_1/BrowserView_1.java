@@ -65,7 +65,7 @@ public class BrowserView_1 extends BaseBrowserView {
 				doRequest(
 						new com.edaigou3.view.ext._同步最低售价Provider.RequestProvider(
 								pageNo++, NewInstance.get(SearchView_1.class)),
-						new _同步最低售价Provider(this), 3000);
+						new _同步最低售价Provider(this), 1000);
 			}
 		});
 		_抓取编号.addListener(SWT.Selection, new Listener() {
@@ -75,7 +75,7 @@ public class BrowserView_1 extends BaseBrowserView {
 				}
 				doRequest(
 						new com.edaigou3.view.ext._抓取编号Provider.RequestProvider(
-								pageNo++), new _抓取编号Provider(this), 3000);
+								pageNo++), new _抓取编号Provider(this), 1000);
 			}
 		});
 		_修售价格.addListener(SWT.Selection, new Listener() {
@@ -90,7 +90,6 @@ public class BrowserView_1 extends BaseBrowserView {
 			}
 		});
 		_抓售价格.addListener(SWT.Selection, new Listener() {
-
 			public void handleEvent(Event arg0) {
 				if (totalCount == 0 || pageNo > totalCount) {
 					return;

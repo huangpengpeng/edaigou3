@@ -1,6 +1,10 @@
 package com.edaigou3.view.ext;
 
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
+import java.net.URLEncoder;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.swt.widgets.Display;
@@ -11,6 +15,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.common.jdbc.page.Pagination;
+import com.common.util.JsonUtils;
 import com.edaigou3.entity.Item;
 import com.edaigou3.entity.ItemFilters;
 import com.edaigou3.manager.ItemFiltersMng;
@@ -18,7 +23,7 @@ import com.edaigou3.view.ItemView;
 import com.edaigou3.view.base.IBrowserView;
 import com.edaigou3.view.base.IBrowserView.IOperatorProvider;
 import com.edaigou3.view.base.IBrowserView.IRequestProvider;
-import com.edaigou3.view.base.IMainView.MessageBox2;
+import com.edaigou3.view.base.IMainView.JsonFilter;
 import com.edaigou3.view.base.IMainView.NewInstance;
 import com.edaigou3.view.base.ISearchView;
 
@@ -33,20 +38,15 @@ public class _同步最低售价Provider implements IOperatorProvider {
 	}
 
 	public void completed(final IBrowserView browserView) {
-
 		// 获取最低价格
-		Document document = Jsoup.parse(browserView.getResponseText());
-		Elements elements = document.getElementsByClass("item");
+		Map<String, Object> result = JsonUtils.toMap(JsonFilter
+				.filter(browserView.getResponseText()));
+		List<Map<String,Object>> listItem=(List<Map<String, Object>>) result.get("listItem");
 		BigDecimal lowPrice = new BigDecimal(Integer.MAX_VALUE);
-		for (Element element : elements) {
-			Elements eshops = element.getElementsByClass("shop");
-			if (eshops == null || eshops.size() == 0) {
-				continue;
-			}
+		for (Map<String,Object> element : listItem) {
 			try {
-				Element eshop = eshops.get(0);
-				String nick = eshop.text();
-				String numIid = eshop.child(0).attr("data-nid");
+				String nick = (String) element.get("nick");
+				String numIid = (String) element.get("item_id");
 				boolean isFlag = false;
 				for (ItemFilters filters : NewInstance
 						.get(ItemFiltersMng.class).query()) {
@@ -63,18 +63,9 @@ public class _同步最低售价Provider implements IOperatorProvider {
 				}
 			} catch (Exception e) {
 			}
-			Elements e2s = element.getElementsByClass("title");
-			if (e2s == null || e2s.size() == 0) {
-				continue;
-			}
-			Element e2 = e2s.get(0);
-			e2s = element.getElementsByClass("price");
-			if (e2s == null || e2s.size() == 0) {
-				continue;
-			}
-			Element eP2 = e2s.get(0);
-			String title = e2.text();
-			String price = eP2.text().replace("¥", "");
+			String title = (String) element.get("name");
+			System.out.println(title);
+			String price = (String) element.get("price");
 			if (!StringUtils.startsWith(org.springframework.util.StringUtils
 					.trimAllWhitespace(title),
 					org.springframework.util.StringUtils.trimAllWhitespace(item
@@ -86,11 +77,8 @@ public class _同步最低售价Provider implements IOperatorProvider {
 						price) : lowPrice;
 			} catch (Exception e) {
 			}
-
 		}
-
 		NewInstance.get(ItemView.class).setLowPrice(lowPrice);
-
 		// 500豪秒后执行保存 在执行下一条
 		Display.getDefault().timerExec(500, new Runnable() {
 			public void run() {
@@ -113,11 +101,14 @@ public class _同步最低售价Provider implements IOperatorProvider {
 		public String getRequestUrl(IBrowserView browserView) {
 			Pagination page = searchView.query(pageNo++);
 			StringBuffer buffer = new StringBuffer(
-					"http://s.taobao.com/search?q=");
+					"http://s.m.taobao.com/search?event_submit_do_new_search_auction=1&_input_charset=utf-8&topSearch=1&atype=b&searchfrom=1&action=home%3Aredirect_app_action&from=1&q=[q]&sst=1&n=20&buying=buyitnow&m=api4h5&abtest=%24abtest&wlsort=%24abtest&page=1");
 			item = (Item) page.getList().get(0);
-			buffer.append(item.getTitle());
 			NewInstance.get(ItemView.class).fullContents(item, true);
-			return buffer.toString();
+			try {
+				return buffer.toString().replace("[q]",URLEncoder.encode( item.getTitle(), "UTF-8"));
+			} catch (UnsupportedEncodingException e) {
+				return null;
+			}
 		}
 
 	}
